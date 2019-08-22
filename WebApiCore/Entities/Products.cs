@@ -64,12 +64,9 @@ namespace WebApiCore.Entities
         public double Pro_OutletPrice { get; set; }
 
         /// <summary>
-        /// Tiene aplicado un descuento
+        /// Determina si tiene aplicado un descuento
         /// </summary>
-        public bool ProIsOutlet { get; set; }
-
-
-
+        public bool Pro_IsOutlet { get; set; }
 
         /// <summary>
         /// Nombre de la imágen principal del producto.

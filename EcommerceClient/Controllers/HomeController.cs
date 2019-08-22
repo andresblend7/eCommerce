@@ -19,12 +19,6 @@ namespace EcommerceClient.Controllers
 
         public ActionResult Index()
         {
-           int x = this.webApi.GetNumero();
-            ClaseA obj = new ClaseA() {
-                asd = 32
-                ass = 21
-
-            };
             return View();
         }
 
