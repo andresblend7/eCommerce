@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApiCore.Entities
 {
-    public class Users
+    public class Dic_Users
     {
         public int Id { get; set; }
 
@@ -15,8 +15,10 @@ namespace WebApiCore.Entities
         [ForeignKey("Rol")]
         public int Use_RolIdFk { get; set; }
 
-        [ForeignKey("Use_RolIdFk")]
-        public Rol Rol { get; set; }
+        /// <summary>
+        /// Dinero ficticio que tendrá cada usuario
+        /// </summary>
+        public int Use_Money { get; set; }
 
         [Required]
         [MaxLength(64)]
@@ -25,6 +27,9 @@ namespace WebApiCore.Entities
         [MaxLength(64)]
         public string Use_LastName { get; set; }
 
+        /// <summary>
+        /// Email es la lalve de acceso a la aplicación.
+        /// </summary>
         [Required]
         [EmailAddress]
         [MaxLength(32)]
@@ -43,5 +48,8 @@ namespace WebApiCore.Entities
         public DateTime Use_CreationDate { get; set; }
 
         public bool Use_Status { get; set; }
+
+        [ForeignKey("Use_RolIdFk")]
+        public Dic_Rol Rol { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace WebApiCore.Entities
     /// <summary>
     /// Subcategorias / tags de los productos
     /// </summary>
-    public class SubCategories
+    public class Dic_SubCategories
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace WebApiCore.Entities
         public int Sca_CategoryIdFk { get; set; }
 
         [ForeignKey("Sca_CategoryIdFk")]
-        public Categories Category { get; set; }
+        public Dic_Categories Category { get; set; }
 
         [Required]
         [ForeignKey("Users")]
@@ -30,7 +30,7 @@ namespace WebApiCore.Entities
 
 
         [ForeignKey("Sca_CreationUserIdFk")]
-        public Users CreatorUser { get; set; }
+        public Dic_Users CreatorUser { get; set; }
 
         /// <summary>
         /// Nombre de la subcategoria

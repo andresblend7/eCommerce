@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApiCore.Entities
 {
-    public class Cities
+    public class Dic_Cities
     {
         public int Id { get; set; }
 

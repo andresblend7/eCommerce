@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApiCore.Entities
 {
-    public class Products
+    public class Dic_Products
     {
         public int Id { get; set; }
         /// <summary>
@@ -82,14 +82,14 @@ namespace WebApiCore.Entities
         public bool Pro_status { get; set; }
 
         [ForeignKey("Pro_CategoryIdFk")]
-        public Categories PrincipalCategory { get; set; }
+        public Dic_Categories PrincipalCategory { get; set; }
 
 
         [ForeignKey("Pro_CreationUserIdFk")]
-        public Users CreatorUser { get; set; }
+        public Dic_Users CreatorUser { get; set; }
 
         [ForeignKey("Pro_CityIdFk")]
-        public Cities Ciudad { get; set; }
+        public Dic_Cities Ciudad { get; set; }
 
     }
 }
