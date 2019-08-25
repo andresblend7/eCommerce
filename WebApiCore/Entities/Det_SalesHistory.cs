@@ -10,7 +10,7 @@ namespace WebApiCore.Entities
     /// <summary>
     /// Histórico de ventas de los productos de forma detalleada
     /// </summary>
-    public class SalesHistory_Detail
+    public class Det_SalesHistory
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace WebApiCore.Entities
         public int Shi_SaleIdFk { get; set; }
 
         [ForeignKey("Shi_SaleIdFk")]
-        public Sales Sale { get; set; }
+        public Dic_Sales Sale { get; set; }
 
         /// <summary>
         /// Id del usuario que compró
@@ -33,7 +33,7 @@ namespace WebApiCore.Entities
 
 
         [ForeignKey("Shi_BuyerIdFk")]
-        public Users UserBuyer { get; set; }
+        public Dic_Users UserBuyer { get; set; }
 
         /// <summary>
         /// Id del producto comprado
@@ -43,7 +43,7 @@ namespace WebApiCore.Entities
         public int Shi_ProductIdFk { get; set; }
 
         [ForeignKey("Shi_ProductIdFk")]
-        public Products Producto { get; set; }
+        public Dic_Products Producto { get; set; }
 
 
         /// <summary>

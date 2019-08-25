@@ -9,16 +9,15 @@ namespace WebApiCore.DataAccess
         {
 
         }
-
-
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Categories> Categories { get; set; }
-        public DbSet<Images_Products> Images_Products { get; set; }
-        public DbSet<Products> Products { get; set; }
-        public DbSet<Products_SubCategories> Products_SubCategories { get; set; }
-        public DbSet<Rol> Rol { get; set; }
-        public DbSet<Sales> Sales { get; set; }
-        public DbSet<SalesHistory_Detail> SalesHistory_Details { get; set; }
-        public DbSet<SubCategories> SubCategories { get; set; }
+        public DbSet<Dic_Users> Dic_Users { get; set; }
+        public DbSet<Dic_Categories> Dic_Categories { get; set; }
+        public DbSet<Det_Images_Products> Det_Images_Products { get; set; }
+        public DbSet<Dic_Products> Dic_Products { get; set; }
+        public DbSet<Dic_Rol> Dic_Rol { get; set; }
+        public DbSet<Dic_Cities> Dic_Cities { get; set; }
+        public DbSet<Dic_Sales> Dic_Sales { get; set; }
+        public DbSet<Dic_SubCategories> Dic_SubCategories { get; set; }
+        public DbSet<Det_SalesHistory> Det_SalesHistory { get; set; }
+        public DbSet<Det_Products_SubCategories> Det_Products_SubCategories { get; set; }
     }
 }

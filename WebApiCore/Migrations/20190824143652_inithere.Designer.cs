@@ -10,8 +10,8 @@ using WebApiCore.DataAccess;
 namespace WebApiCore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190821192234_initial1.2")]
-    partial class initial12
+    [Migration("20190824143652_inithere")]
+    partial class inithere
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,33 +21,7 @@ namespace WebApiCore.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebApiCore.Entities.Categories", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Cat_CreationDate");
-
-                    b.Property<int>("Cat_CreationUserIdFk");
-
-                    b.Property<string>("Cat_Description")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Cat_Name")
-                        .IsRequired()
-                        .HasMaxLength(32);
-
-                    b.Property<bool>("Cat_Status");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Cat_CreationUserIdFk");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("WebApiCore.Entities.Images_Products", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Det_Images_Products", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -67,52 +41,10 @@ namespace WebApiCore.Migrations
 
                     b.HasIndex("Imp_ProductIdFk");
 
-                    b.ToTable("Images_Products");
+                    b.ToTable("Det_Images_Products");
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.Products", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Pro_CategoryIdFk");
-
-                    b.Property<DateTime>("Pro_CreationDate");
-
-                    b.Property<int>("Pro_CreationUserIdFk");
-
-                    b.Property<int>("Pro_Description")
-                        .HasMaxLength(512);
-
-                    b.Property<string>("Pro_GuId")
-                        .IsRequired()
-                        .HasMaxLength(64);
-
-                    b.Property<string>("Pro_Name")
-                        .IsRequired()
-                        .HasMaxLength(32);
-
-                    b.Property<double>("Pro_Price");
-
-                    b.Property<string>("Pro_PrincipalImage")
-                        .IsRequired()
-                        .HasMaxLength(64);
-
-                    b.Property<int>("Pro_Stock");
-
-                    b.Property<bool>("Pro_status");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Pro_CategoryIdFk");
-
-                    b.HasIndex("Pro_CreationUserIdFk");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("WebApiCore.Entities.Products_SubCategories", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Det_Products_SubCategories", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,48 +62,10 @@ namespace WebApiCore.Migrations
 
                     b.HasIndex("Psc_SubCategoryIdFk");
 
-                    b.ToTable("Products_SubCategories");
+                    b.ToTable("Det_Products_SubCategories");
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.Rol", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Rol_Description")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Rol_Name")
-                        .HasMaxLength(16);
-
-                    b.Property<bool>("Rol_status");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rol");
-                });
-
-            modelBuilder.Entity("WebApiCore.Entities.Sales", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Sal_BuyerId");
-
-                    b.Property<double>("Sal_TotalPrice");
-
-                    b.Property<DateTime>("Shi_SaleDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Sal_BuyerId");
-
-                    b.ToTable("Sales");
-                });
-
-            modelBuilder.Entity("WebApiCore.Entities.SalesHistory_Detail", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Det_SalesHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,10 +91,139 @@ namespace WebApiCore.Migrations
 
                     b.HasIndex("Shi_SaleIdFk");
 
-                    b.ToTable("SalesHistory_Details");
+                    b.ToTable("Det_SalesHistory");
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.SubCategories", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Categories", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Cat_CreationDate");
+
+                    b.Property<int>("Cat_CreationUserIdFk");
+
+                    b.Property<string>("Cat_Description")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Cat_Name")
+                        .IsRequired()
+                        .HasMaxLength(32);
+
+                    b.Property<bool>("Cat_Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Cat_CreationUserIdFk");
+
+                    b.ToTable("Dic_Categories");
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Cities", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Cit_Name")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Dic_Cities");
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Products", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Pro_CategoryIdFk");
+
+                    b.Property<int>("Pro_CityIdFk");
+
+                    b.Property<DateTime>("Pro_CreationDate");
+
+                    b.Property<int>("Pro_CreationUserIdFk");
+
+                    b.Property<string>("Pro_Description")
+                        .HasMaxLength(512);
+
+                    b.Property<string>("Pro_GuId")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<bool>("Pro_IsOutlet");
+
+                    b.Property<string>("Pro_Name")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<decimal>("Pro_OutletPrice");
+
+                    b.Property<decimal>("Pro_Price");
+
+                    b.Property<string>("Pro_PrincipalImage")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<int>("Pro_Stock");
+
+                    b.Property<bool>("Pro_status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Pro_CategoryIdFk");
+
+                    b.HasIndex("Pro_CityIdFk");
+
+                    b.HasIndex("Pro_CreationUserIdFk");
+
+                    b.ToTable("Dic_Products");
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Rol", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Rol_Description")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Rol_Name")
+                        .HasMaxLength(16);
+
+                    b.Property<bool>("Rol_Status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Dic_Rol");
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Sales", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Sal_BuyerId");
+
+                    b.Property<double>("Sal_TotalPrice");
+
+                    b.Property<DateTime>("Shi_SaleDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Sal_BuyerId");
+
+                    b.ToTable("Dic_Sales");
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_SubCategories", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -227,10 +250,10 @@ namespace WebApiCore.Migrations
 
                     b.HasIndex("Sca_CreationUserIdFk");
 
-                    b.ToTable("SubCategories");
+                    b.ToTable("Dic_SubCategories");
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.Users", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Users", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -256,6 +279,8 @@ namespace WebApiCore.Migrations
                     b.Property<string>("Use_LastName")
                         .HasMaxLength(64);
 
+                    b.Property<int>("Use_Money");
+
                     b.Property<string>("Use_Phone")
                         .HasMaxLength(16);
 
@@ -267,93 +292,98 @@ namespace WebApiCore.Migrations
 
                     b.HasIndex("Use_RolIdFk");
 
-                    b.ToTable("Users");
+                    b.ToTable("Dic_Users");
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.Categories", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Det_Images_Products", b =>
                 {
-                    b.HasOne("WebApiCore.Entities.Users", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("Cat_CreationUserIdFk")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebApiCore.Entities.Images_Products", b =>
-                {
-                    b.HasOne("WebApiCore.Entities.Products", "Product")
+                    b.HasOne("WebApiCore.Entities.Dic_Products", "Product")
                         .WithMany()
                         .HasForeignKey("Imp_ProductIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.Products", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Det_Products_SubCategories", b =>
                 {
-                    b.HasOne("WebApiCore.Entities.Categories", "PrincipalCategory")
-                        .WithMany()
-                        .HasForeignKey("Pro_CategoryIdFk")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WebApiCore.Entities.Users", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("Pro_CreationUserIdFk")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebApiCore.Entities.Products_SubCategories", b =>
-                {
-                    b.HasOne("WebApiCore.Entities.Products", "Product")
+                    b.HasOne("WebApiCore.Entities.Dic_Products", "Product")
                         .WithMany()
                         .HasForeignKey("Psc_ProductIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebApiCore.Entities.SubCategories", "SubCategory")
+                    b.HasOne("WebApiCore.Entities.Dic_SubCategories", "SubCategory")
                         .WithMany()
                         .HasForeignKey("Psc_SubCategoryIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.Sales", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Det_SalesHistory", b =>
                 {
-                    b.HasOne("WebApiCore.Entities.Users", "UserBuyer")
-                        .WithMany()
-                        .HasForeignKey("Sal_BuyerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebApiCore.Entities.SalesHistory_Detail", b =>
-                {
-                    b.HasOne("WebApiCore.Entities.Users", "UserBuyer")
+                    b.HasOne("WebApiCore.Entities.Dic_Users", "UserBuyer")
                         .WithMany()
                         .HasForeignKey("Shi_BuyerIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebApiCore.Entities.Products", "Producto")
+                    b.HasOne("WebApiCore.Entities.Dic_Products", "Producto")
                         .WithMany()
                         .HasForeignKey("Shi_ProductIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebApiCore.Entities.Sales", "Sale")
+                    b.HasOne("WebApiCore.Entities.Dic_Sales", "Sale")
                         .WithMany()
                         .HasForeignKey("Shi_SaleIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.SubCategories", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Categories", b =>
                 {
-                    b.HasOne("WebApiCore.Entities.Categories", "Category")
+                    b.HasOne("WebApiCore.Entities.Dic_Users", "CreatorUser")
+                        .WithMany()
+                        .HasForeignKey("Cat_CreationUserIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Products", b =>
+                {
+                    b.HasOne("WebApiCore.Entities.Dic_Categories", "PrincipalCategory")
+                        .WithMany()
+                        .HasForeignKey("Pro_CategoryIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApiCore.Entities.Dic_Cities", "Ciudad")
+                        .WithMany()
+                        .HasForeignKey("Pro_CityIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApiCore.Entities.Dic_Users", "CreatorUser")
+                        .WithMany()
+                        .HasForeignKey("Pro_CreationUserIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Sales", b =>
+                {
+                    b.HasOne("WebApiCore.Entities.Dic_Users", "UserBuyer")
+                        .WithMany()
+                        .HasForeignKey("Sal_BuyerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Dic_SubCategories", b =>
+                {
+                    b.HasOne("WebApiCore.Entities.Dic_Categories", "Category")
                         .WithMany()
                         .HasForeignKey("Sca_CategoryIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebApiCore.Entities.Users", "CreatorUser")
+                    b.HasOne("WebApiCore.Entities.Dic_Users", "CreatorUser")
                         .WithMany()
                         .HasForeignKey("Sca_CreationUserIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApiCore.Entities.Users", b =>
+            modelBuilder.Entity("WebApiCore.Entities.Dic_Users", b =>
                 {
-                    b.HasOne("WebApiCore.Entities.Rol", "Rol")
+                    b.HasOne("WebApiCore.Entities.Dic_Rol", "Rol")
                         .WithMany()
                         .HasForeignKey("Use_RolIdFk")
                         .OnDelete(DeleteBehavior.Cascade);

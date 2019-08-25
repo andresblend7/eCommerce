@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApiCore.Entities
 {
-    public class Products
+    public class Dic_Products
     {
         public int Id { get; set; }
         /// <summary>
@@ -17,16 +17,7 @@ namespace WebApiCore.Entities
         [ForeignKey("Categories")]
         public int Pro_CategoryIdFk { get; set; }
 
-        [ForeignKey("Pro_CategoryIdFk")]
-        public Categories PrincipalCategory { get; set; }
-
-        /// <summary>
-        /// Guid del producto.
-        /// </summary>
-        [Required]
-        [MaxLength(64)]
-        public string Pro_GuId { get; set; }
-
+       
         /// <summary>
         /// Usuario que creó el producto.
         /// </summary>
@@ -34,9 +25,19 @@ namespace WebApiCore.Entities
         [ForeignKey("Users")]
         public int Pro_CreationUserIdFk { get; set; }
 
-        [ForeignKey("Pro_CreationUserIdFk")]
-        public Users CreatorUser { get; set; }
+        /// <summary>
+        /// Foránea del id de la ciudad.
+        /// </summary>
+        [Required]
+        public int Pro_CityIdFk { get; set; }
 
+        /// <summary>
+        /// Guid del producto.
+        /// </summary>
+        [Required]
+        [MaxLength(64)]
+        public string Pro_GuId { get; set; }
+     
         [Required]
         [MaxLength(64)]
         public string Pro_Name { get; set; }
@@ -50,7 +51,7 @@ namespace WebApiCore.Entities
         /// <summary>
         /// Precio original del producto
         /// </summary>
-        public double Pro_Price { get; set; }
+        public decimal Pro_Price { get; set; }
 
         /// <summary>
         /// Stock Disponible del producto
@@ -61,7 +62,7 @@ namespace WebApiCore.Entities
         /// <summary>
         /// Precio con descuento.
         /// </summary>
-        public double Pro_OutletPrice { get; set; }
+        public decimal Pro_OutletPrice { get; set; }
 
         /// <summary>
         /// Determina si tiene aplicado un descuento
@@ -79,6 +80,16 @@ namespace WebApiCore.Entities
         public DateTime Pro_CreationDate { get; set; }
 
         public bool Pro_status { get; set; }
+
+        [ForeignKey("Pro_CategoryIdFk")]
+        public Dic_Categories PrincipalCategory { get; set; }
+
+
+        [ForeignKey("Pro_CreationUserIdFk")]
+        public Dic_Users CreatorUser { get; set; }
+
+        [ForeignKey("Pro_CityIdFk")]
+        public Dic_Cities Ciudad { get; set; }
 
     }
 }

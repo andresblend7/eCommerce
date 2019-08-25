@@ -10,7 +10,7 @@ namespace WebApiCore.Entities
     /// <summary>
     /// Relación de las subcategorias que tiene un producto
     /// </summary>
-    public class Products_SubCategories
+    public class Det_Products_SubCategories
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace WebApiCore.Entities
         public int Psc_ProductIdFk { get; set; }
 
         [ForeignKey("Psc_ProductIdFk")]
-        public Products Product { get; set; }
+        public Dic_Products Product { get; set; }
 
         /// <summary>
         /// Id de la subcategoría relacionada.
@@ -32,7 +32,7 @@ namespace WebApiCore.Entities
         public int Psc_SubCategoryIdFk { get; set; }
 
         [ForeignKey("Psc_SubCategoryIdFk")]
-        public SubCategories SubCategory { get; set; }
+        public Dic_SubCategories SubCategory { get; set; }
 
         public bool Psc_Status { get; set; }
 

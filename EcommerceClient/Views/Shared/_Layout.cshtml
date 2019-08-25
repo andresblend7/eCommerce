@@ -5,55 +5,116 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
-    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <!-- Compiled and minified CSS -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.8/css/mdb.min.css" rel="stylesheet">
+    @*<link href="~/Content/css/bootstrap.css" rel="stylesheet" />*@
     <link href="~/Content/css/Site.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <!--Navbar -->
+    <nav class="mb-1 navbar navbar-expand-lg navbar-light bg-white">
         <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+                aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
+            <ul class="navbar-nav ml-auto mr-5 nav-flex-icons">
+
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link waves-effect waves-light">
+                        <i class="fas fa-shopping-cart text-corp"></i> Carrito
+                    </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
+                    <a class="nav-link dropdown-toggle text-black" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user text-corp"></i> Perfil
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                         aria-labelledby="navbarDropdownMenuLink-333">
+                        <a class="dropdown-item" data-toggle="modal" data-target="#modalLogin">Login</a>
+                        <a class="dropdown-item" href="#">Carrito</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
         </div>
     </nav>
-    <div class="container body-content">
+    <!--/.Navbar -->
+    <!-- Modal Login-->
+    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLogin"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class=" col-md-12 text-center">
+
+                            <!-- Default form login -->
+                            <form class="text-center border border-light p-5" action="#!">
+
+                                <p class="h4 mb-4">Ingresar</p>
+
+                                <!-- Email -->
+                                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+                                <!-- Password -->
+                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+
+
+
+                                <!-- Sign in button -->
+                                <button class="btn btn-info btn-block my-4" type="submit">Ingresar!</button>
+
+                                <!-- Register -->
+                                <p>
+                                    Not a member?
+                                    <a href="">Register</a>
+                                </p>
+
+
+
+                            </form>
+                            <!-- Default form login -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container pt-4">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-        </footer>
     </div>
-    <script src="~/Scripts/jquery.js"></script>
-    <script src="~/Scripts/Popper.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    @RenderSection("scripts", required: false)
+
+    <!-- Compiled and minified JavaScript -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.8/js/mdb.min.js"></script>
+    @*@RenderSection("scripts", required: false)*@
 </body>
 </html>

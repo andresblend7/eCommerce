@@ -10,7 +10,7 @@ namespace WebApiCore.Entities
     /// <summary>
     /// Información básica de la venta.
     /// </summary>
-    public class Sales
+    public class Dic_Sales
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace WebApiCore.Entities
         public int Sal_BuyerId { get; set; }
 
         [ForeignKey("Sal_BuyerId")]
-        public Users UserBuyer { get; set; }
+        public Dic_Users UserBuyer { get; set; }
 
         /// <summary>
         /// Precio total de la venta

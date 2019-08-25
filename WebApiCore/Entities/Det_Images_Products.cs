@@ -7,7 +7,7 @@ namespace WebApiCore.Entities
     /// <summary>
     /// Relación de imágenes y productos.
     /// </summary>
-    public class Images_Products
+    public class Det_Images_Products
     {
         public int id { get; set; }
 
@@ -27,6 +27,6 @@ namespace WebApiCore.Entities
         public bool Imp_Status { get; set; }
 
         [ForeignKey("Imp_ProductIdFk")]
-        public Products Product { get; set; }
+        public Dic_Products Product { get; set; }
     }
 }

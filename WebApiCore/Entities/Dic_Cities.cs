@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace WebApiCore.Entities
 {
-    public class Rol
+    public class Dic_Cities
     {
         public int Id { get; set; }
-        [MaxLength(16)]
-        public string Rol_Name { get; set; }
-        [MaxLength(128)]
-        public string Rol_Description { get; set; }
-        public bool Rol_status { get; set; }
 
+        [Required]
+        [MaxLength(64)]
+        public string Cit_Name { get; set; }
+        
     }
 }
