@@ -11,6 +11,7 @@ namespace EcommerceClient.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            ViewBag.HOLA = "ASD";
             return View();
         }
     }
