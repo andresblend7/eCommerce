@@ -1,1 +1,11 @@
-﻿
+﻿.text-black {
+    color : #212121;
+}
+
+.full-width {
+    width:100%;
+}
+
+.text-corp {
+    color: #1e88e5;
+}
