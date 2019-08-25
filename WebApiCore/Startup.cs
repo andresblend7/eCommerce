@@ -37,7 +37,7 @@ namespace WebApiCore
             );
 
             //Inyectamos los ModelStructures
-            services.AddScoped<CategoriesModel>();
+            services.AddScoped<ICoreModel, CoreModel>();
 
 
             //Se utiliza la configuración del DataAccess/Mapper/ProfileConfig

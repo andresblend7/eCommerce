@@ -10,8 +10,8 @@ using WebApiCore.DataAccess;
 namespace WebApiCore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190823182411_Adjusts")]
-    partial class Adjusts
+    [Migration("20190824143652_inithere")]
+    partial class inithere
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

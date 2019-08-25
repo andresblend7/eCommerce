@@ -18,11 +18,11 @@ namespace WebApiCore.DataAccess.Models
             this.db = dbContext;
         }
 
-        public async void  AddAsync<TEntity>(TEntity entity) where TEntity : class
+        public async Task<bool>AddAsync<TEntity>(TEntity entity) where TEntity : class
         {
 
             await this.db.Set<TEntity>().AddAsync(entity);
-
+            return await this.SaveAsync();
         }
 
         public Task<int> CountAsync<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
@@ -30,25 +30,26 @@ namespace WebApiCore.DataAccess.Models
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : class
         {
-            throw new NotImplementedException();
+            var context = this.db.Set<TEntity>();
+            context.Remove(entity);
+
+            return await this.SaveAsync();
         }
 
-        public void DeleteAsync<TEntity>(TEntity entity) where TEntity : class
+        /// <summary>
+        /// Método Encargado de retornar una sola unidad
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<TEntity> GetOneAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            throw new NotImplementedException();
-        }
+            var entitiy = this.db.Set<TEntity>().Where(predicate);
 
-        public IQueryable<TEntity> GetAll<TEntity>() where TEntity : class
-        {
-            //Obtenemos todos los elementos de la base de datos
-            return this.db.Set<TEntity>();
-        }
-
-        public Task<TEntity> GetOneAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
-        {
-            throw new NotImplementedException();
+            return await entitiy.FirstOrDefaultAsync();
+             
         }
 
         public virtual async Task<bool> SaveAsync()
@@ -57,24 +58,29 @@ namespace WebApiCore.DataAccess.Models
             return await this.db.SaveChangesAsync() > 0;
         }
 
-        public IQueryable<TEntity> SearchAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public async Task<List<TEntity>> SearchAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            throw new NotImplementedException();
+            var entitiy = this.db.Set<TEntity>().Where(predicate);
+
+            var result = await entitiy.ToListAsync();
+
+            return result;
         }
 
-        public void UpdateAsync<TEntity>(TEntity entity) where TEntity : class
+  
+
+        public Task<bool> UpdateAsync<TEntity>(TEntity entity) where TEntity : class
         {
-            throw new NotImplementedException();
+            var context = this.db.Set<TEntity>();
+            context.Update(entity);
+            return this.SaveAsync();
+
         }
 
-        public Task<bool> UpdateAsync<TEntity>(TEntity entity, string propertyName) where TEntity : class
+        IQueryable<TEntity> ICoreModel.GetAllAsync<TEntity>()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateAsync<TEntity>(TEntity entity, List<string> propertiesName) where TEntity : class
-        {
-            throw new NotImplementedException();
+            //Obtenemos todos los elementos de la base de datos
+            return this.db.Set<TEntity>();
         }
     }
 }
