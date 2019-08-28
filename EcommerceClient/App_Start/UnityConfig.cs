@@ -1,6 +1,6 @@
 using EcommerceClient.Services;
 using System;
-
+using System.Net.Http;
 using Unity;
 using Unity.Injection;
 
@@ -44,7 +44,7 @@ namespace EcommerceClient
             // container.LoadConfiguration();
 
             // TODO: Register your type's mappings here.
-            container.RegisterType<IWebApiCoreService, WebApiCoreService>( new InjectionConstructor(15));
+            container.RegisterType<IWebApiCoreService, WebApiCoreService>(new InjectionConstructor(new HttpClient()));
         }
     }
 }

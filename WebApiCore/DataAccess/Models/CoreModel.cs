@@ -38,6 +38,13 @@ namespace WebApiCore.DataAccess.Models
             return await this.SaveAsync();
         }
 
+        public async Task<List<TEntity>> GetAllAsync<TEntity>() where TEntity : class
+        {
+            //Obtenemos todos los elementos de la base de datos
+            return await this.db.Set<TEntity>().ToListAsync();
+        }
+
+    
         /// <summary>
         /// Método Encargado de retornar una sola unidad
         /// </summary>
@@ -77,10 +84,6 @@ namespace WebApiCore.DataAccess.Models
 
         }
 
-        IQueryable<TEntity> ICoreModel.GetAllAsync<TEntity>()
-        {
-            //Obtenemos todos los elementos de la base de datos
-            return this.db.Set<TEntity>();
-        }
+     
     }
 }

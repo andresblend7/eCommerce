@@ -12,9 +12,9 @@ namespace WebApiCore.DataAccess.Models
     public interface ICoreModel
     {
         //Metodo encargado de agregar una entidad a la base de datos
-        Task<bool> AddAsync<TEntity>(TEntity entity) where TEntity : class;     
+        Task<bool> AddAsync<TEntity>(TEntity entity) where TEntity : class;
         //Metoeo encargado de consultar todo los registros
-        IQueryable<TEntity> GetAllAsync<TEntity>() where TEntity : class;
+        Task<List<TEntity>>GetAllAsync<TEntity>() where TEntity : class;
         //Metodo encargado de buscar registros segun la predicado
         Task<List<TEntity>> SearchAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
         //Metodo encargado de consultar un solo registro segun el predicado

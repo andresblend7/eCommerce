@@ -19,6 +19,7 @@ namespace EcommerceClient.Controllers
 
         public ActionResult Index()
         {
+            this.webApi.GetAsync();
             return View();
         }
 

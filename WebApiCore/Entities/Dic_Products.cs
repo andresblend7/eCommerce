@@ -37,6 +37,12 @@ namespace WebApiCore.Entities
         [Required]
         [MaxLength(64)]
         public string Pro_GuId { get; set; }
+
+        /// <summary>
+        /// Condición del producto {nuevo / usado}
+        /// </summary>
+        [Required]
+        public bool Pro_Condition { get; set; }
      
         [Required]
         [MaxLength(64)]
