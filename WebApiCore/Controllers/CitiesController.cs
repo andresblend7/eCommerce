@@ -17,7 +17,7 @@ namespace WebApiCore.Controllers
         private readonly ICoreModel model;
         private readonly IMapper mapper;
 
-        private readonly Expression<Func<Dic_Cities, bool>> predicate = null;
+        private  Expression<Func<Dic_Cities, bool>> predicate = null;
 
         public CitiesController(ICoreModel model, IMapper mapper)
         {
@@ -39,11 +39,20 @@ namespace WebApiCore.Controllers
         }
 
         //// GET: api/Cities/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Cities>> Get(int id)
+        {
+            this.predicate = x => x.Id == id;
+
+            //Obtenemos todas las ciudades
+            var entities = await this.model.GetOneAsync(this.predicate);
+
+            //Mapeamos la entidad al structure
+            var city = this.mapper.Map<Cities>(entities);
+
+            return city;
+
+        }
 
         // POST: api/Cities
         [HttpPost]
