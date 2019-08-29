@@ -149,6 +149,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Html\HtmlHelperExtension.cs" />
     <Compile Include="Models\Structure\Categories.cs" />
     <Compile Include="Models\Structure\Cities.cs" />
     <Compile Include="Models\Structure\Rol.cs" />
@@ -160,15 +161,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\MdBootstrap.css" />
     <Content Include="Content\css\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\Core\Core.js" />
     <Content Include="Scripts\Home\Home.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\MdBootstrap.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Popper.js" />
+    <Content Include="Scripts\Vue.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -195,6 +200,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="libman.json" />
     <Content Include="Areas\Administrator\Views\web.config" />
+    <Content Include="Content\font\roboto\Roboto-Light.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Bold.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Medium.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Regular.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Thin.ttf" />
     <None Include="packages.config" />
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>

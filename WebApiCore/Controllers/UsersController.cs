@@ -45,6 +45,27 @@ namespace WebApiCore.Controllers
             return listaUsers;
         }
 
+        /// <summary>
+        /// Método para realizar la autorización de login
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("Auth")]
+        public async Task<ActionResult<Users>> AutorizeUser(string email, string hashedpass) {
+
+            this.predicate = x => x.Use_Email == email && x.Use_HashPassword == hashedpass;
+            
+            //Buscamos el usuario que cumpla las condiciones de logeo
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            //mapeamos el usuario
+            var user = this.mapper.Map<Users>(entity);
+
+            if (user == null)
+                return BadRequest("Usuario no existe");
+
+            return user;
+        }
+
         // POST: api/Usuarios
         [HttpPost]
         public void Post([FromBody] string value)
@@ -63,10 +84,6 @@ namespace WebApiCore.Controllers
         {
         }
 
-        /// <summary>
-        /// Método encargado de decir hola
-        /// </summary>
-        public void hol() {
-        }
+   
     }
 }

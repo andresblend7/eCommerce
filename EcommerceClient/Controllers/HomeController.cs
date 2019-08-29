@@ -28,14 +28,20 @@ namespace EcommerceClient.Controllers
             var model = new HomeVModel() {
                 Cities = cities
             };
-
-            var queryString = new NameValueCollection();
-            queryString.Add("id", ""+5);
-
-            var cityTest = await this.webApi.GetAsync<Cities>("Cities", queryString);
+            
+            //Petición por id
+            //var cityTest = await this.webApi.GetAsync<Cities>("Cities/5");
             
             return View(model);
         }
+
+
+        public async Task<JsonResult> Login(string email, string pass) {
+
+            return Json(new { control = true, data = $"{email} {pass}" }, JsonRequestBehavior.AllowGet);
+
+        }
+
 
         public ActionResult About()
         {

@@ -1,13 +1,19 @@
 ﻿let vueHome = new Vue({
     el: '#home-view',
     data: {
-        return :{
-            msg: 'eCommerce',
-            cities: $model.Cities
+        msg: 'eCommerce',
+        cities: [{}]
+    },
+    methods: {
+        //Método encargado de inicializar la información.
+        initData: function ($model) {
+
+            //Ciudades 
+            this.cities = $model.cities;
         }
+
     },
     mounted: function () {
-        console.log(this.cities);
     }
 
 });

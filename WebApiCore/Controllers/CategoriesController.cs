@@ -49,7 +49,7 @@ namespace WebApiCore.Controllers
         }
 
         // GET: api/Categories/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Categories>> Get(int id)
         {
             //Construimos el predicado:
