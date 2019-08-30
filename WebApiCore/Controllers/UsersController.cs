@@ -61,7 +61,7 @@ namespace WebApiCore.Controllers
             var user = this.mapper.Map<Users>(entity);
 
             if (user == null)
-                return BadRequest("Usuario no existe");
+                return NotFound("Usuario no existe");
 
             return user;
         }

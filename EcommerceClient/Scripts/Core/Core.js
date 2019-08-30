@@ -5,7 +5,7 @@
         var settings = {
             type: 'POST',
             url: $controller + '/'+ $action,
-            data: { $data },
+            data:  $data ,
             success: function (response) {
                 $callBackSuccess(response);
             },

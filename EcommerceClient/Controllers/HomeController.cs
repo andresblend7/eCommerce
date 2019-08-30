@@ -38,7 +38,20 @@ namespace EcommerceClient.Controllers
 
         public async Task<JsonResult> Login(string email, string pass) {
 
-            return Json(new { control = true, data = $"{email} {pass}" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                //Enviamos las credenciales para la autenticación
+                var authUser = await this.webApi.PostASync<Users>("users/Auth", new { email = email, hashedpass = pass });
+
+                var control = (authUser != null);
+
+                return Json(new { control , data = authUser }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ Login" }, JsonRequestBehavior.AllowGet);
+            }
 
         }
 

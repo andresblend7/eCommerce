@@ -64,7 +64,7 @@
                             <div class=" col-md-12 text-center">
 
                                 <!-- Default form login -->
-                                <form class="text-center border border-light p-5" action="#!">
+                               
 
                                     <p class="h4 mb-4">Ingresar</p>
 
@@ -78,15 +78,18 @@
 
                                     <!-- Sign in button -->
                                     <button class="btn btn-info btn-block my-4" type="submit" v-on:click="login()">Ingresar!</button>
-
+                                    
+                                    <p>
+                                        {{logginMsg}}
+                                    </p>
+                                
                                     <!-- Register -->
                                     <p>
                                         Not a member?
                                         <a href="">Register</a>
                                     </p>
 
-
-                                </form>
+                                
                                 <!-- Default form login -->
 
                             </div>
@@ -127,20 +130,26 @@
             data: {
                 user: {
                     email: 'email@email.com',
-
                     pass: '123'
-                }
+                },
+                logginMsg :"---"
             },
             methods: {
 
                 login: function () {
                     $Core.Ajax("Home", "Login", { email: this.user.email, pass: this.user.pass }, function ($respuesta) {
-
                         console.log($respuesta);
+
+                        if ($respuesta.control) {
+                            vueAppMenu.logginMsg = "Usuario autenticado correctamente.";
+                            setTimeout(()=>location.reload() , 1200);
+                        } else {
+                            vueAppMenu.logginMsg = "Usuario no existe";
+                        }
 
                     }, function ($respuesta) {
-    
-                        console.log($respuesta);
+
+                            alert("ERROR ", $respuesta);
 
                     });
                 }

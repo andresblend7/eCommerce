@@ -144,6 +144,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ProductsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -160,6 +161,7 @@
     <Compile Include="Services\WebApiCoreService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\Admin.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\MdBootstrap.css" />
     <Content Include="Content\css\Site.css" />
@@ -189,9 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administrator\Controllers\" />
     <Folder Include="Areas\Administrator\Models\" />
-    <Folder Include="Areas\Administrator\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -205,6 +205,9 @@
     <Content Include="Content\font\roboto\Roboto-Medium.ttf" />
     <Content Include="Content\font\roboto\Roboto-Regular.ttf" />
     <Content Include="Content\font\roboto\Roboto-Thin.ttf" />
+    <Content Include="Areas\Administrator\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Administrator\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Products\Create.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>

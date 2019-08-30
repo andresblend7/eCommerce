@@ -18,6 +18,7 @@ namespace EcommerceClient.Services
         /// <returns></returns>
         Task<TResult> GetAsync<TResult, TModel>(string actionName, NameValueCollection parameters= null) where TResult : class;  
         Task<TResult> GetAsync<TResult>(string actionName, object parameters = null) where TResult : class;
+        Task<TResult> PostASync<TResult>(string actionName, object parameters = null) where TResult : class;
 
     }
 }
