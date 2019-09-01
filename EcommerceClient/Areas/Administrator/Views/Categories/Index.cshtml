@@ -39,18 +39,18 @@
                                     <div class="row">
                                         <div class="col-md-4 text-center p-0 m-0">
                                             <!-- Default switch -->
-                                            <div class="custom-control custom-switch">
+                                            <div class="custom-control custom-switch" data-toggle="tooltip" title="Cambiar estado">
                                                 <input type="checkbox" class="custom-control-input cursor-pointer" :id="'swt-'+idx" :checked="(category.status)" v-on:change="changeStatus(category, idx)">
                                                 <label class="custom-control-label cursor-pointer" :for="'swt-'+idx"></label>
                                             </div>
 
                                         </div>
-                                        <div class="col-md-4 text-center p-0 m-0 cursor-pointer" v-on:click="setTarget(category)" data-toggle="modal" data-target="#modalCreate">
-                                            <i class="fas fa-edit text-warning"></i>
+                                        <div class="col-md-4 text-center p-0 m-0 cursor-pointer"  v-on:click="setTarget(category)" data-toggle="modal" data-target="#modalCreate">
+                                            <i class="fas fa-edit text-warning" data-toggle="tooltip" title="Editar"></i>
                                         </div>
 
                                         <div class="col-md-4 text-center pr-1 pl-0 m-0 cursor-pointer" data-toggle="modal" data-target="#modalConfirmacion" v-on:click="setTarget(category)">
-                                            <i class="fas fa-trash text-danger"></i>
+                                            <i class="fas fa-trash text-danger" data-toggle="tooltip" title="Eliminar"></i>
                                         </div>
 
                                     </div>
@@ -141,9 +141,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-info" v-on:click="processCategory()" :disabled="loading">
-                            <i class="fas fa-save">
-                                Guardar
-                            </i>
+                            <i class="fas fa-save"></i>
+                            Guardar
                         </button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     </div>

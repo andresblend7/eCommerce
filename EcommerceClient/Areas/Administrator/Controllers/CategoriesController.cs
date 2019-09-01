@@ -27,7 +27,8 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             var categories = await this.webApi.GetAsync<List<Categories>>("categories");
 
             //Instanciamos el viewModel
-            this.viewModel = new CategoriesVModel() {
+            this.viewModel = new CategoriesVModel()
+            {
                 Categories = categories
             };
 
@@ -57,7 +58,8 @@ namespace EcommerceClient.Areas.Administrator.Controllers
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        public async Task<JsonResult> Update(Categories category) {
+        public async Task<JsonResult> Update(Categories category)
+        {
 
             try
             {
@@ -95,7 +97,8 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             }
         }
 
-        public async Task<JsonResult> Delete(int id) {
+        public async Task<JsonResult> Delete(int id)
+        {
 
             try
             {
@@ -111,7 +114,25 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             }
 
         }
-       
 
+        #region SubCategorias
+
+        /// <summary>
+        /// Vista admin de las subcategorias
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> SubCategories()
+        {
+            var subModel = new SubCategoriesVModel() {
+                //Obtenemos solo las categorias activas
+                Categories = await this.webApi.GetAsync<List<Categories>>("categories", new { state = true}),
+                SubCategories = 
+                
+            };
+
+            return View();
+        }
+
+        #endregion
     }
 }
