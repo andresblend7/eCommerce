@@ -23,6 +23,19 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.CreationUser, src => src.MapFrom(o => o.Cat_CreationUserIdFk))
                 .ForMember(x => x.Status, src => src.MapFrom(o => o.Cat_Status)).ReverseMap();
 
+
+            //SubCategorias
+            CreateMap<Dic_SubCategories, SubCategories>()
+                .ForMember(x => x.Name, src => src.MapFrom(o => o.Sca_Name))
+                .ForMember(x => x.Description, src => src.MapFrom(o => o.Sca_Description))
+                .ForMember(x => x.Category, src => src.MapFrom(o => o.Category))
+                .ForMember(x => x.CategoryId, src => src.MapFrom(o => o.Sca_CategoryIdFk))
+                .ForMember(x => x.CreationUser, src => src.MapFrom(o => o.Sca_CreationUserIdFk))
+                .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Sca_CreationDate))
+                .ForMember(x => x.Status, src => src.MapFrom(o => o.Sca_Status)).ReverseMap();
+     
+
+
             //Ciudades
             CreateMap<Dic_Cities, Cities>()
                 .ForMember(x => x.Name, src => src.MapFrom(o => o.Cit_Name)).ReverseMap();

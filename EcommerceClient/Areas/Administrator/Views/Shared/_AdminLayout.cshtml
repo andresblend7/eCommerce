@@ -89,7 +89,7 @@
                             Admin
                         </span>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                    <a href="@Url.Action("SubCategories", "Categories", new { Area = "Administrator"})" class="list-group-item list-group-item-action bg-dark text-white">
                         <span class="menu-collapsed">
                             SubCategorias
                         </span>
@@ -158,6 +158,41 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js"></script>
 
+        <!-- Modales auxiliares-->
+        <!-- Central Modal Medium Success -->
+        <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-notify modal-success" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Hecho!</p>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                            <p>
+                                {{ succsessMsg }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+        <script>
+            menuAdminVueApp = new Vue({
+                el: '#resultModal',
+                data: {
+                    succsessMsg: "default"
+                }
+            });
+
+        </script>
 
         <div class="col mt-4">
             @RenderBody()
@@ -167,10 +202,6 @@
 
     </div><!-- body-row END -->
     <!-- /#page-content-wrapper -->
-
-   
- 
-
 
     <!-- Menu Toggle Script -->
     <script>
@@ -209,6 +240,8 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
     </script>
+
+
 
     <!--/. Sidebar navigation -->
 

@@ -59,7 +59,8 @@
 
         var settings = {
             type: 'POST',
-            url: $controller + '/' + $action,
+            url: $action,
+            //url: $controller + '/' + $action,
             data: $data,
             success: function (response) {
                 $callBackSuccess(response);

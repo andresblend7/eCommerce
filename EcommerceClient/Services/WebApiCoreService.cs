@@ -84,7 +84,7 @@ namespace EcommerceClient.Services
         /// <param name="actionName">Nombre del controlador [/CustomMethod]</param>
         /// <param name="parameters">Parámetros queryString</param>
         /// <returns></returns>
-        public async Task<TResult> PostASync<TResult>(string actionName, object parameters = null)
+        public async Task<TResult> PostAsync<TResult>(string actionName, object parameters = null)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace EcommerceClient.Services
         /// <param name="actionName">Nombre del controlador [/CustomMethod]</param>
         /// <param name="parameters">Parámetros queryString</param>
         /// <returns></returns>
-        public async Task<TResult> PostASync<TResult, TModel>(string actionName, TModel entity, object parameters = null) where TModel : class
+        public async Task<TResult> PostAsync<TResult, TModel>(string actionName, TModel entity, object parameters = null) where TModel : class
         {
             try
             {

@@ -20,8 +20,8 @@ namespace WebApiCore.DataAccess.Models
 
         public async Task<bool>AddAsync<TEntity>(TEntity entity) where TEntity : class
         {
-
-            await this.db.Set<TEntity>().AddAsync(entity);
+            var context =  this.db.Set<TEntity>();
+            await context.AddAsync(entity);
             return await this.SaveAsync();
         }
 
@@ -38,10 +38,10 @@ namespace WebApiCore.DataAccess.Models
             return await this.SaveAsync();
         }
 
-        public async Task<List<TEntity>> GetAllAsync<TEntity>() where TEntity : class
+        public IQueryable<TEntity> GetAllAsync<TEntity>() where TEntity : class
         {
             //Obtenemos todos los elementos de la base de datos
-            return await this.db.Set<TEntity>().ToListAsync();
+            return this.db.Set<TEntity>();
         }
 
     

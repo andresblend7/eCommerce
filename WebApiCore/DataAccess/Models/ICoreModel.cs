@@ -14,7 +14,7 @@ namespace WebApiCore.DataAccess.Models
         //Metodo encargado de agregar una entidad a la base de datos
         Task<bool> AddAsync<TEntity>(TEntity entity) where TEntity : class;
         //Metoeo encargado de consultar todo los registros
-        Task<List<TEntity>>GetAllAsync<TEntity>() where TEntity : class;
+        IQueryable<TEntity>GetAllAsync<TEntity>() where TEntity : class;
         //Metodo encargado de buscar registros segun la predicado
         Task<List<TEntity>> SearchAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
         //Metodo encargado de consultar un solo registro segun el predicado

@@ -42,7 +42,7 @@ namespace EcommerceClient.Areas.Administrator.Controllers
                 category.CreationUser = 1;
 
                 //Enviamos la categoria al webApi para su creación
-                var result = await this.webApi.PostASync<bool, Categories>("Categories", category, null);
+                var result = await this.webApi.PostAsync<bool, Categories>("Categories", category, null);
 
                 return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
             }
@@ -126,12 +126,36 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             var subModel = new SubCategoriesVModel() {
                 //Obtenemos solo las categorias activas
                 Categories = await this.webApi.GetAsync<List<Categories>>("categories", new { state = true}),
-                SubCategories = 
-                
+                SubCategories = await this.webApi.GetAsync<List<SubCategories>>("SubCategories")
+
             };
 
-            return View();
+            return View(subModel);
         }
+
+
+        public async Task<JsonResult> AddSubCategory(SubCategories subCategory)
+        {
+
+            try
+            {
+                //Agregamos los datos básicos
+                subCategory.CreationUser = 1;
+
+                //Enviamos la categoria al webApi para su creación
+                var result = await this.webApi.PostAsync<bool, SubCategories>("SubCategories", subCategory, null);
+
+
+                return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ Delete" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
 
         #endregion
     }

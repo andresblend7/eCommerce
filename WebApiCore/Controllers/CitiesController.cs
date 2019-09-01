@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using EcommerceClient.Models.Structure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using WebApiCore.DataAccess.Models;
@@ -30,7 +32,7 @@ namespace WebApiCore.Controllers
         public async Task<ActionResult<List<Cities>>> Get()
         {
             //Obtenemos todas las ciudades
-            var entities = await this.model.GetAllAsync<Dic_Cities>();
+            var entities =  await this.model.GetAllAsync<Dic_Cities>().ToListAsync();
 
             //Mapeamos la entidad al structure
             var cities =this.mapper.Map<List<Cities>>(entities);

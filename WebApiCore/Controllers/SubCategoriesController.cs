@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ST = EcommerceClient.Models.Structure;
+using EcommerceClient.Models.Structure;
 using System.Linq.Expressions;
 using WebApiCore.Entities;
 using WebApiCore.DataAccess.Models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using WebApiCore.DataAccess;
 
 namespace WebApiCore.Controllers
 {
@@ -20,33 +22,41 @@ namespace WebApiCore.Controllers
         private readonly ICoreModel model;
         private readonly IMapper mapper;
 
+        private readonly AppDbContext db;
+
+
         private Expression<Func<Dic_SubCategories, bool>> predicate = null;
 
-        public SubCategoriesController(ICoreModel model, IMapper mapper)
+        public SubCategoriesController(ICoreModel model, IMapper mapper, AppDbContext db)
         {
             this.model = model;
             this.mapper = mapper;
+
+            this.db = db;
         }
 
 
         // GET: api/SubCategories
         [HttpGet]
-        public async Task<IEnumerable<ST.>> Get(bool? state = null)
+        public async Task<IEnumerable<SubCategories>> Get(bool? state = null)
         {
             //Preparamos el predicado de acuerdo a la petición
             if (state != null)
-                this.predicate = x => x.Cat_Status == state;
+                this.predicate = x => x.Sca_Status == state;
             else
                 this.predicate = x => x.Id > 0;
 
-            //Obtenemos las Categorias segun el predicado creado
-            var entities = await this.model.SearchAsync(this.predicate);
+            //Obtenemos las subcategorias con su categoria principal
+            var entities =  await this.model.GetAllAsync<Dic_SubCategories>()
+                                            .Where(this.predicate)
+                                            .Include(x=> x.Category)
+                                            .ToListAsync();
 
             //Mapeamos el diccionario al model Structure
-            var categories = this.mapList(entities);
+            var subCategories = this.mapper.Map<List<SubCategories>>(entities);
 
             //Retornamos las entidades ordenadas de forma descendente
-            return categories.OrderByDescending(x => x.Id);
+            return subCategories.OrderByDescending(x => x.Id);
         }
 
         // GET: api/SubCategories/5
@@ -58,8 +68,31 @@ namespace WebApiCore.Controllers
 
         // POST: api/SubCategories
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<bool>> PostAsync([FromBody] SubCategories data)
         {
+            //Mapeamos el structure model al diccionario
+            //var entity = this.mapper.Map<Dic_SubCategories>(data);
+
+            var entity = new Dic_SubCategories() {
+                Sca_CategoryIdFk = data.CategoryId,
+                Sca_Name= data.Name,
+                Sca_Status = data.Status,
+                Sca_Description= data.Description,
+                Sca_CreationUserIdFk = data.CreationUser
+                
+            };
+
+
+            //Agregamos la fecha de creación.
+            entity.Sca_CreationDate = DateTime.Now;
+
+            var m = await this.db.Dic_SubCategories.AddAsync(entity);
+
+
+            //Creamos la entidad en la base de datos.
+            var result = await this.db.SaveChangesAsync();
+
+            return (result>0);
         }
 
         // PUT: api/SubCategories/5

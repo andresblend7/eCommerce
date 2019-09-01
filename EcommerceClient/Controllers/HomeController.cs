@@ -41,7 +41,7 @@ namespace EcommerceClient.Controllers
             try
             {
                 //Enviamos las credenciales para la autenticación
-                var authUser = await this.webApi.PostASync<Users>("users/Auth", new { email = email, hashedpass = pass });
+                var authUser = await this.webApi.PostAsync<Users>("users/Auth", new { email = email, hashedpass = pass });
 
                 var control = (authUser != null);
 
