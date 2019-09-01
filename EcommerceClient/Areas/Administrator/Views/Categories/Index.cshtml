@@ -9,8 +9,8 @@
             <div class="col-md-11 mr-0 pr-0">
                 <h4 class="card-header">Categorias</h4>
             </div>
-            <div class="col-md-1 card-header ml-0 pl-0">
-                <a data-toggle="modal" data-target="#modalCreate" class="btn-floating btn-lg btn-primary text-white">
+            <div class="col-md-1 card-header ml-0 pl-0 text-right pr-4">
+                <a data-toggle="modal" data-target="#modalCreate" v-on:click="restartCategory()" class="btn-floating btn-lg btn-primary text-white">
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
@@ -30,27 +30,29 @@
                         </thead>
                         <tbody>
                             <tr v-for="(category, idx) in categories">
-                                <th scope="row">{{idx+1}}</th>
+                                <th scope="row">{{ idx+1}}</th>
                                 <td>{{ category.name }}</td>
                                 <td>{{ category.description }}</td>
                                 <td>{{ ( category.status) ? 'Activo'  : 'Inactivo' }}</td>
-                                <td class="text-center">
+                                <td class="text-center ">
 
                                     <div class="row">
                                         <div class="col-md-4 text-center p-0 m-0">
                                             <!-- Default switch -->
-                                            <div class="custom-control custom-switch ">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitches">
-                                                <label class="custom-control-label" for="customSwitches"></label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input cursor-pointer" :id="'swt-'+idx" :checked="(category.status)" v-on:change="changeStatus(category, idx)">
+                                                <label class="custom-control-label cursor-pointer" :for="'swt-'+idx"></label>
                                             </div>
 
                                         </div>
-                                        <div class="col-md-4 text-center p-0 m-0">
-                                            <i class="fas fa-trash text-danger"></i>
-                                        </div>
-                                        <div class="col-md-4 text-center p-0 m-0">
+                                        <div class="col-md-4 text-center p-0 m-0 cursor-pointer" v-on:click="setTarget(category)" data-toggle="modal" data-target="#modalCreate">
                                             <i class="fas fa-edit text-warning"></i>
                                         </div>
+
+                                        <div class="col-md-4 text-center pr-1 pl-0 m-0 cursor-pointer" data-toggle="modal" data-target="#modalConfirmacion" v-on:click="setTarget(category)">
+                                            <i class="fas fa-trash text-danger"></i>
+                                        </div>
+
                                     </div>
 
                                 </td>
@@ -62,17 +64,44 @@
             </div>
         </div>
 
+        <!-- Central Modal Medium Success -->
+        <div class="modal fade" id="successCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-notify modal-success" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Hecho!</p>
+                    </div>
 
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                            <p>
+                                {{ succsessMsg }}
+                            </p>
+                        </div>
+                    </div>
+
+                 
+                
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+        <!-- Central Modal Medium Success-->
         <!--Modal Create-->
-
-        <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        <div class="modal fade right" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
              aria-hidden="true">
             <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">
-                            Crear una categoria
+                            {{ (flagEdit) ? 'Editar' : 'Crear' }} una categoria
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -81,8 +110,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <!-- Card -->
-                                <div class="">
+                           
 
                                     <!-- Card body -->
                                     <div class="card-body">
@@ -107,13 +135,12 @@
                                         <!-- Material form register -->
                                     </div>
                                     <!-- Card body -->
-                                </div>
-                                <!-- Card -->
+                            
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-info" v-on:click="createCategory()">
+                        <button type="button" class="btn btn-info" v-on:click="processCategory()" :disabled="loading">
                             <i class="fas fa-save">
                                 Guardar
                             </i>
@@ -123,6 +150,32 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Confirmación -->
+        <div class="modal fade right" id="modalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalPreviewLabel">
+                           Confirmación
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Eliminar esta categoria permanentemente?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteCategory()">Eliminar</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+
+
     </div>
     <!-- App -->
 <script src="~/Areas/Administrator/Scripts/Categories/Categories.js"></script>
@@ -130,6 +183,7 @@
 <script>
 
     let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
 
     $( document ).ready(function() {
         categoriesAppVue.initData($model);

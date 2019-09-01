@@ -3,20 +3,64 @@
     //Método encargado de hacer UpperCase a las keys de un objeto
     PrepareObject: function ($obj) {
 
-        console.log("prepare", $obj.length);
+        //Comprobamos si es un array
+        if (!Array.isArray($obj)) {
 
-        $obj.keys(o).reduce((c, k) => (c[k.toLowerCase()] = o[k], c), {});
+            let a = $obj;
+            for (var key in a) {
+                var temp;
+                if (a.hasOwnProperty(key)) {
+                    temp = a[key];
+                    delete a[key];
+                    a[key.charAt(0).toUpperCase() + key.substring(1)] = temp;
+                }
+            }
+            $obj = a;
 
-        return $obj;
+        } else {
+
+            for (var i = 0; i < $obj.length; i++) {
+                var a = $obj[i];
+                for (var key in a) {
+                    var temp;
+                    if (a.hasOwnProperty(key)) {
+                        temp = a[key];
+                        delete a[key];
+                        a[key.charAt(0).toUpperCase() + key.substring(1)] = temp;
+                    }
+                }
+                $obj[i] = a;
+            }
+        }
 
     },
 
+    ReloadPage: function () {
+        location.reload();
+    },
+
+    Notificate: function ($type, $text, $time = 1000) {
+        new Noty({
+            type: $type,
+            progressBar: false,
+            timeout: $time,
+            text: $text,
+            theme: 'metroui',
+            animation: {
+                open: 'animated bounceInRight', // Animate.css class names
+                close: 'animated bounceOutRight', // Animate.css class names
+                  speed: 0 // opening & closing animation speed
+            }
+        }).show();
+    },
+
+    //Middleware para las peticiones ajax
     Ajax: function ($controller, $action, $data, $callBackSuccess, $callBackError) {
 
         var settings = {
             type: 'POST',
-            url: $controller + '/'+ $action,
-            data:  $data ,
+            url: $controller + '/' + $action,
+            data: $data,
             success: function (response) {
                 $callBackSuccess(response);
             },

@@ -45,7 +45,8 @@ namespace WebApiCore.Controllers
             //Mapeamos el diccionario al model Structure
             var categories = this.mapList(entities);
 
-            return categories;
+            //Retornamos las entidades ordenadas de forma descendente
+            return categories.OrderByDescending(x => x.Id);
         }
 
         // GET: api/Categories/5
@@ -80,8 +81,34 @@ namespace WebApiCore.Controllers
             return result;
         }
 
+        [HttpPut("ChangeStatus")]
+        public async Task<ActionResult<bool>> ChangeStatus(int id)
+        {
+
+            this.predicate = x => x.Id == id;
+
+            //Obtenemos la entidad a actualizar
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return NotFound(Errors.ENTITYNOTFOUND);
+
+            //Cambiamos el estado
+            entity.Cat_Status = !entity.Cat_Status;
+
+            //Hacemos la actualización
+            return await this.model.UpdateAsync(entity);
+
+        }
+
+        /// <summary>
+        /// Método encargado de la actualización de los datos básicos de una categoria
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         // PUT: api/Dic_Categories/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "Put")]
         public async Task<ActionResult<bool>> Put(int id, [FromBody] Categories data)
         {
             if (id != data.Id)
@@ -93,8 +120,9 @@ namespace WebApiCore.Controllers
             if (entity == null)
                 return BadRequest(Errors.ENTITYNOTFOUND);
 
+            //Actualizamos los datos básicos
             entity.Cat_Name = data.Name;
-            entity.Cat_Status = data.Status;
+            entity.Cat_Description = data.Description;
 
             return await this.model.UpdateAsync(entity);
 
@@ -107,7 +135,8 @@ namespace WebApiCore.Controllers
 
             this.predicate = x => x.Id == id;
 
-            var entity = this.model.GetOneAsync(this.predicate);
+            //Comprobamos que existe una entidad con ese Id
+            var entity = await this.model.GetOneAsync(this.predicate);
 
             if (entity == null)
                 return BadRequest(Errors.ENTITYNOTFOUND);
@@ -120,7 +149,8 @@ namespace WebApiCore.Controllers
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public List<Categories> mapList(List<Dic_Categories> source) {
+        public List<Categories> mapList(List<Dic_Categories> source)
+        {
 
             return this.mapper.Map<List<Categories>>(source);
 

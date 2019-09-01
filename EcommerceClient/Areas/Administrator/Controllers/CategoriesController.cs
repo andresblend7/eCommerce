@@ -21,10 +21,10 @@ namespace EcommerceClient.Areas.Administrator.Controllers
         }
 
         // GET: Administrator/Categories
-        public async Task<ActionResult>Index()
+        public async Task<ActionResult> Index()
         {
             //Obtenemos las categorias existentes.
-            var categories =  await this.webApi.GetAsync<List<Categories>>("categories");
+            var categories = await this.webApi.GetAsync<List<Categories>>("categories");
 
             //Instanciamos el viewModel
             this.viewModel = new CategoriesVModel() {
@@ -38,10 +38,12 @@ namespace EcommerceClient.Areas.Administrator.Controllers
         {
             try
             {
-                var  x = 31;
-               
+                category.CreationUser = 1;
 
-                return Json(new { control = true, data = x }, JsonRequestBehavior.AllowGet);
+                //Enviamos la categoria al webApi para su creación
+                var result = await this.webApi.PostASync<bool, Categories>("Categories", category, null);
+
+                return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
@@ -49,5 +51,67 @@ namespace EcommerceClient.Areas.Administrator.Controllers
                 return Json(new { control = false, data = "Error 500 _ Create" }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        /// <summary>
+        /// Método encargado de la actualización de los datos básicos de una categoria
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> Update(Categories category) {
+
+            try
+            {
+                //Enviamos la categoria al webApi para su creación
+                var result = await this.webApi.PutAsync<bool, Categories>($"Categories/{category.Id}", category, null);
+
+                return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ Update" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        /// <summary>
+        /// Cambia el status de la categoria
+        /// </summary>
+        /// <param name="id"> id primary de la categoria</param>
+        /// <returns></returns>
+        public async Task<JsonResult> ChangeStatus(int id)
+        {
+            try
+            {
+                //Enviamos la categoria al webApi para su creación
+                var result = await this.webApi.PutAsync<bool>("Categories/ChangeStatus", new { id });
+
+                return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ ChangeStatus" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public async Task<JsonResult> Delete(int id) {
+
+            try
+            {
+                //Enviamos la categoria al webApi para su eliminación
+                var result = await this.webApi.DeleteAsync("Categories", id);
+
+                return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ Delete" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+       
+
     }
 }

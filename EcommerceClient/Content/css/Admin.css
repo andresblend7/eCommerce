@@ -1,4 +1,6 @@
-﻿
+﻿.cursor-pointer{
+    cursor:pointer;
+}
 
 .btn-floating {
     border-radius: 50%;
