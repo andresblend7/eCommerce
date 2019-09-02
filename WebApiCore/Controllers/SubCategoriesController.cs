@@ -1,16 +1,15 @@
-﻿using System;
+﻿using AutoMapper;
+using EcommerceClient.Models.Structure;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using EcommerceClient.Models.Structure;
 using System.Linq.Expressions;
-using WebApiCore.Entities;
+using System.Threading.Tasks;
 using WebApiCore.DataAccess.Models;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using WebApiCore.DataAccess;
+using WebApiCore.Entities;
+using WebApiCore.Helpers.Messages;
 
 namespace WebApiCore.Controllers
 {
@@ -22,23 +21,21 @@ namespace WebApiCore.Controllers
         private readonly ICoreModel model;
         private readonly IMapper mapper;
 
-        private readonly AppDbContext db;
 
 
         private Expression<Func<Dic_SubCategories, bool>> predicate = null;
 
-        public SubCategoriesController(ICoreModel model, IMapper mapper, AppDbContext db)
+        public SubCategoriesController(ICoreModel model, IMapper mapper)
         {
             this.model = model;
             this.mapper = mapper;
 
-            this.db = db;
         }
 
 
         // GET: api/SubCategories
         [HttpGet]
-        public async Task<IEnumerable<SubCategories>> Get(bool? state = null)
+        public async Task<IEnumerable<SubCategory>> Get(bool? state = null)
         {
             //Preparamos el predicado de acuerdo a la petición
             if (state != null)
@@ -53,7 +50,7 @@ namespace WebApiCore.Controllers
                                             .ToListAsync();
 
             //Mapeamos el diccionario al model Structure
-            var subCategories = this.mapper.Map<List<SubCategories>>(entities);
+            var subCategories = this.mapper.Map<List<SubCategory>>(entities);
 
             //Retornamos las entidades ordenadas de forma descendente
             return subCategories.OrderByDescending(x => x.Id);
@@ -68,43 +65,88 @@ namespace WebApiCore.Controllers
 
         // POST: api/SubCategories
         [HttpPost]
-        public async Task<ActionResult<bool>> PostAsync([FromBody] SubCategories data)
+        public async Task<ActionResult<bool>> PostAsync([FromBody] SubCategory data)
         {
             //Mapeamos el structure model al diccionario
-            //var entity = this.mapper.Map<Dic_SubCategories>(data);
-
-            var entity = new Dic_SubCategories() {
-                Sca_CategoryIdFk = data.CategoryId,
-                Sca_Name= data.Name,
-                Sca_Status = data.Status,
-                Sca_Description= data.Description,
-                Sca_CreationUserIdFk = data.CreationUser
-                
-            };
-
+            var entity = this.mapper.Map<Dic_SubCategories>(data);
 
             //Agregamos la fecha de creación.
             entity.Sca_CreationDate = DateTime.Now;
 
-            var m = await this.db.Dic_SubCategories.AddAsync(entity);
+            var result = await this.model.AddAsync<Dic_SubCategories>(entity);
 
-
-            //Creamos la entidad en la base de datos.
-            var result = await this.db.SaveChangesAsync();
-
-            return (result>0);
+            return result;
         }
 
-        // PUT: api/SubCategories/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+       
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
+            //Comprobamos que existe la entidad
+            this.predicate = x => x.Id == id;
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return BadRequest(Errors.ENTITYNOTFOUND);
+
+            return await this.model.DeleteAsync(entity);
+
+        }
+
+        /// <summary>
+        /// Método Encargado de cambiar el estado de una entidad (Activo / inactivo)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("ChangeStatus")]
+        public async Task<ActionResult<bool>> ChangeStatus(int id)
+        {
+
+            this.predicate = x => x.Id == id;
+
+            //Obtenemos la entidad a actualizar
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return NotFound(Errors.ENTITYNOTFOUND);
+
+            //Cambiamos el estado
+            entity.Sca_Status = !entity.Sca_Status;
+
+            //Hacemos la actualización
+            return await this.model.UpdateAsync(entity);
+
+        }
+
+        // PUT: api/SubCategories/5
+        /// <summary>
+        /// Método encargado de la actualización de los datos básicos de una SubCategoria
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<ActionResult<bool>> Put(int id, [FromBody] SubCategory data)
+        {
+            if (id != data.Id)
+                return BadRequest(Errors.INCORRECTDATA);
+
+            //Comprobamos que existe la entidad
+            this.predicate = x => x.Id == id;
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return BadRequest(Errors.ENTITYNOTFOUND);
+
+            //Actualizamos los datos básicos
+            entity.Sca_Name = data.Name;
+            entity.Sca_Description = data.Description;
+            entity.Sca_CategoryIdFk = data.CategoryId;
+
+            return await this.model.UpdateAsync(entity);
+
         }
     }
 }

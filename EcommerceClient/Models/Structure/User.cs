@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EcommerceClient.Models.Structure
 {
-    public class Users
+    public class User
     {
         public int Id { get; set; }
 

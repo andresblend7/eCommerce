@@ -30,16 +30,16 @@ namespace WebApiCore.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
-        public async Task<List<Users>> Get()
+        public async Task<List<User>> Get()
         {
             //Seteamos la tabla para obtener los registros.
             this.predicate = x => x.Id > 0;
 
             var entities =  await this.model.SearchAsync(this.predicate);
-            List<Users> listaUsers = new List<Users>();
+            List<User> listaUsers = new List<User>();
 
             //Se mapea el diccionario d ela base de datos al model structure
-            listaUsers = this.mapper.Map<List<Users>>(entities);
+            listaUsers = this.mapper.Map<List<User>>(entities);
           
 
             return listaUsers;
@@ -50,7 +50,7 @@ namespace WebApiCore.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("Auth")]
-        public async Task<ActionResult<Users>> AutorizeUser(string email, string hashedpass) {
+        public async Task<ActionResult<User>> AutorizeUser(string email, string hashedpass) {
 
             this.predicate = x => x.Use_Email == email && x.Use_HashPassword == hashedpass;
             
@@ -58,7 +58,7 @@ namespace WebApiCore.Controllers
             var entity = await this.model.GetOneAsync(this.predicate);
 
             //mapeamos el usuario
-            var user = this.mapper.Map<Users>(entity);
+            var user = this.mapper.Map<User>(entity);
 
             if (user == null)
                 return NotFound("Usuario no existe");

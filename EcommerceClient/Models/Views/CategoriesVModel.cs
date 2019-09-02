@@ -10,11 +10,11 @@ namespace EcommerceClient.Models.Views
     {
         public CategoriesVModel()
         {
-            this.Categories = new List<Categories>();
+            this.Categories = new List<Category>();
         }
-        public List<Categories> Categories { get; set; }
+        public List<Category> Categories { get; set; }
 
-        public Categories Category { get; set; }
+        public Category Category { get; set; }
 
     }
 }

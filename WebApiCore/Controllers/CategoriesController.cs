@@ -31,7 +31,7 @@ namespace WebApiCore.Controllers
 
         // GET: api/Dic_Categories
         [HttpGet]
-        public async Task<IEnumerable<Categories>> Get(bool? state = null)
+        public async Task<IEnumerable<Category>> Get(bool? state = null)
         {
             //Preparamos el predicado de acuerdo a la petición
             if (state != null)
@@ -51,7 +51,7 @@ namespace WebApiCore.Controllers
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Categories>> Get(int id)
+        public async Task<ActionResult<Category>> Get(int id)
         {
             //Construimos el predicado:
             this.predicate = x => x.Id == id;
@@ -68,7 +68,7 @@ namespace WebApiCore.Controllers
 
         // POST: api/Dic_Categories
         [HttpPost]
-        public async Task<ActionResult<bool>> PostAsync([FromBody] Categories data)
+        public async Task<ActionResult<bool>> PostAsync([FromBody] Category data)
         {
             //Mapeamos el structure model al diccionario
             var entity = this.mapper.Map<Dic_Categories>(data);
@@ -81,6 +81,11 @@ namespace WebApiCore.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Método Encargado de cambiar el estado de una entidad (Activo / inactivo)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPut("ChangeStatus")]
         public async Task<ActionResult<bool>> ChangeStatus(int id)
         {
@@ -109,7 +114,7 @@ namespace WebApiCore.Controllers
         /// <returns></returns>
         // PUT: api/Dic_Categories/5
         [HttpPut("{id}", Name = "Put")]
-        public async Task<ActionResult<bool>> Put(int id, [FromBody] Categories data)
+        public async Task<ActionResult<bool>> Put(int id, [FromBody] Category data)
         {
             if (id != data.Id)
                 return BadRequest(Errors.INCORRECTDATA);
@@ -149,10 +154,10 @@ namespace WebApiCore.Controllers
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public List<Categories> mapList(List<Dic_Categories> source)
+        public List<Category> mapList(List<Dic_Categories> source)
         {
 
-            return this.mapper.Map<List<Categories>>(source);
+            return this.mapper.Map<List<Category>>(source);
 
         }
 
@@ -161,9 +166,9 @@ namespace WebApiCore.Controllers
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        private Categories map(Dic_Categories source)
+        private Category map(Dic_Categories source)
         {
-            return this.mapper.Map<Categories>(source);
+            return this.mapper.Map<Category>(source);
         }
     }
 }

@@ -10,6 +10,7 @@
         },
         categories:[],
         subCategories: [],
+        subcategoryTarget: 0,
         flagEdit: false,
         loading: false,
         succsessMsg:"default"
@@ -56,16 +57,16 @@
                 //Edición de una categoria
 
                 //Realizamos la petición
-                $Core.Ajax("Categories", "Update", this.category, function ($response) {
+                $Core.Ajax("Categories", "UpdateSubCategory", this.subcategory, function ($response) {
 
                     //Validamos la creación de la categoria
                     if ($response.control) {
 
                         $("#modalCreate").modal("hide");
 
-                        categoriesAppVue.succsessMsg = "SubCategoría actualizada satisfactoriamente.";
+                        menuAdminVueApp.succsessMsg = "Subcategoria Actualizada satisfactoriamente.";
 
-                        $("#successCategory").modal("show");
+                        $("#resultModal").modal("show");
 
                         //Actualizamos la página
                         setTimeout(() => $Core.ReloadPage(), 1700);
@@ -81,6 +82,40 @@
 
             }
 
+        },
+
+        setTarget: function ($target) {
+            this.subcategoryTarget = $target.id;
+
+            Object.assign(this.subcategory, $target);
+
+            this.flagEdit = true;
+        },
+
+        changeStatus: function ($subCategory, $index) {
+
+            console.log($subCategory);
+
+            //Realizamos la petición
+            $Core.Ajax("Categories", "ChangeStatusSubCategory", { id: $subCategory.id }, function ($response) {
+
+                //Validamos la creación de la categoria
+                if ($response.control) {
+
+                    $Core.Notificate('success', 'Estado actualizado');
+
+                    //Actualizamos el objeto
+                    subCategoriesAppVue.subCategories[$index].status = !$subCategory.status;
+
+                } else {
+                    $Core.Notificate('error', 'Ocurrió un error en la solicitud');
+                }
+
+            }, function ($response) {
+
+                alert("ERROR ", $response);
+
+            });
 
         },
 

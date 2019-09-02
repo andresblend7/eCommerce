@@ -17,7 +17,7 @@ namespace WebApiCore.DataAccess.Mapper
         {
 
             //Categorias
-            CreateMap<Dic_Categories, Categories>()
+            CreateMap<Dic_Categories, Category>()
                 .ForMember(x => x.Name, src => src.MapFrom(o => o.Cat_Name))
                 .ForMember(x => x.Description, src => src.MapFrom(o => o.Cat_Description))
                 .ForMember(x => x.CreationUser, src => src.MapFrom(o => o.Cat_CreationUserIdFk))
@@ -25,23 +25,31 @@ namespace WebApiCore.DataAccess.Mapper
 
 
             //SubCategorias
-            CreateMap<Dic_SubCategories, SubCategories>()
+            CreateMap<Dic_SubCategories, SubCategory>()
                 .ForMember(x => x.Name, src => src.MapFrom(o => o.Sca_Name))
                 .ForMember(x => x.Description, src => src.MapFrom(o => o.Sca_Description))
                 .ForMember(x => x.Category, src => src.MapFrom(o => o.Category))
                 .ForMember(x => x.CategoryId, src => src.MapFrom(o => o.Sca_CategoryIdFk))
                 .ForMember(x => x.CreationUser, src => src.MapFrom(o => o.Sca_CreationUserIdFk))
                 .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Sca_CreationDate))
-                .ForMember(x => x.Status, src => src.MapFrom(o => o.Sca_Status)).ReverseMap();
-     
+                .ForMember(x => x.Status, src => src.MapFrom(o => o.Sca_Status));
 
+
+            //SubCategorias [No contiene Category] Para evitar Queryes mal generadas en entity
+            CreateMap<SubCategory, Dic_SubCategories>()
+                .ForMember(x => x.Sca_Name, src => src.MapFrom(o => o.Name))
+                .ForMember(x => x.Sca_Description, src => src.MapFrom(o => o.Description))
+                .ForMember(x => x.Sca_CategoryIdFk, src => src.MapFrom(o => o.CategoryId))
+                .ForMember(x => x.Sca_CreationUserIdFk, src => src.MapFrom(o => o.CreationUser))
+                .ForMember(x => x.Sca_CreationDate, src => src.MapFrom(o => o.CreationDate))
+                .ForMember(x => x.Sca_Status, src => src.MapFrom(o => o.Status));
 
             //Ciudades
-            CreateMap<Dic_Cities, Cities>()
+            CreateMap<Dic_Cities, City>()
                 .ForMember(x => x.Name, src => src.MapFrom(o => o.Cit_Name)).ReverseMap();
            
             //Usuarios
-            CreateMap<Dic_Users, Users>()
+            CreateMap<Dic_Users, User>()
                 .ForMember(x => x.FirstName, src => src.MapFrom(o => o.Use_FirstName))
                 .ForMember(x => x.LastName, src => src.MapFrom(o => o.Use_LastName))
                 .ForMember(x => x.Money, src => src.MapFrom(o => o.Use_Money))

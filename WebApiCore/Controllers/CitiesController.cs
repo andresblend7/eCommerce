@@ -29,20 +29,20 @@ namespace WebApiCore.Controllers
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<List<Cities>>> Get()
+        public async Task<ActionResult<List<City>>> Get()
         {
             //Obtenemos todas las ciudades
             var entities =  await this.model.GetAllAsync<Dic_Cities>().ToListAsync();
 
             //Mapeamos la entidad al structure
-            var cities =this.mapper.Map<List<Cities>>(entities);
+            var cities =this.mapper.Map<List<City>>(entities);
 
             return cities;
         }
 
         //// GET: api/Cities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cities>> Get(int id)
+        public async Task<ActionResult<City>> Get(int id)
         {
             this.predicate = x => x.Id == id;
 
@@ -50,7 +50,7 @@ namespace WebApiCore.Controllers
             var entities = await this.model.GetOneAsync(this.predicate);
 
             //Mapeamos la entidad al structure
-            var city = this.mapper.Map<Cities>(entities);
+            var city = this.mapper.Map<City>(entities);
 
             return city;
 

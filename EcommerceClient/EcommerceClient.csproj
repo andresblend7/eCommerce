@@ -152,11 +152,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Html\HtmlHelperExtension.cs" />
-    <Compile Include="Models\Structure\Categories.cs" />
-    <Compile Include="Models\Structure\Cities.cs" />
+    <Compile Include="Models\Structure\Category.cs" />
+    <Compile Include="Models\Structure\City.cs" />
     <Compile Include="Models\Structure\Rol.cs" />
-    <Compile Include="Models\Structure\SubCategories.cs" />
-    <Compile Include="Models\Structure\Users.cs" />
+    <Compile Include="Models\Structure\SubCategory.cs" />
+    <Compile Include="Models\Structure\User.cs" />
     <Compile Include="Models\Views\CategoriesVModel.cs" />
     <Compile Include="Models\Views\HomeVModel.cs" />
     <Compile Include="Models\Views\SubCategoriesVModel.cs" />

@@ -10,8 +10,8 @@ namespace EcommerceClient.Models.Views
     {
         public HomeVModel()
         {
-            this.Cities = new List<Cities>();
+            this.Cities = new List<City>();
         }
-        public List<Cities> Cities { get; set; }
+        public List<City> Cities { get; set; }
     }
 }

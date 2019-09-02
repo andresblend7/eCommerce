@@ -23,7 +23,7 @@ namespace EcommerceClient.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var cities = await this.webApi.GetAsync<List<Cities>>("Cities", null);
+            var cities = await this.webApi.GetAsync<List<City>>("Cities", null);
 
             var model = new HomeVModel() {
                 Cities = cities
@@ -41,7 +41,7 @@ namespace EcommerceClient.Controllers
             try
             {
                 //Enviamos las credenciales para la autenticación
-                var authUser = await this.webApi.PostAsync<Users>("users/Auth", new { email = email, hashedpass = pass });
+                var authUser = await this.webApi.PostAsync<User>("users/Auth", new { email = email, hashedpass = pass });
 
                 var control = (authUser != null);
 

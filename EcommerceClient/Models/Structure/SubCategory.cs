@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EcommerceClient.Models.Structure
 {
-    public class SubCategories
+    public class SubCategory
     {
 
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace EcommerceClient.Models.Structure
         [Required]
         public int CategoryId { get; set; }
 
-        public Categories Category { get; set; }
+        public Category Category { get; set; }
      
         public int CreationUser { get; set; }
 
