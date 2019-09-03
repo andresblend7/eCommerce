@@ -70,6 +70,9 @@ namespace WebApiCore.Controllers
             //Mapeamos el structure model al diccionario
             var entity = this.mapper.Map<Dic_SubCategories>(data);
 
+            //Limpiamos la referencia para evitar errores en entityFramework
+            entity.Category = null;
+
             //Agregamos la fecha de creación.
             entity.Sca_CreationDate = DateTime.Now;
 

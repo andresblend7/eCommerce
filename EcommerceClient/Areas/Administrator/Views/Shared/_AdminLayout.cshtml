@@ -1,8 +1,18 @@
 ﻿
 @{
-    Layout = null;
-}
 
+    //Armamos la Url Para las peticiones desde javascript
+    string scheme = Request.Url.Scheme.ToString();
+    string host = Request.Url.Host.ToString().Replace("/", String.Empty);
+    string port = ((Request.Url.Port == 80) ? string.Empty : Request.Url.Port.ToString());
+    string appPath = Request.ApplicationPath.ToString().Replace("/", String.Empty);
+    string url_layout = scheme + "://" + host + (string.IsNullOrEmpty(port) ? string.Empty : (":" + port)) + "/" + (string.IsNullOrEmpty(appPath) ? string.Empty : (appPath + "/"));
+
+}
+<script>
+    //Url de la ruta absoluta
+    var $url = '@url_layout' + 'Administrator';
+</script>
 <!DOCTYPE html>
 
 <html>
@@ -19,7 +29,7 @@
     <link href="~/Content/css/MdBootstrap.css" rel="stylesheet">
     @*<link href="~/Content/css/bootstrap.css" rel="stylesheet" />*@
     <!-- NOTY -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" />
 
     <link href="~/Content/css/Admin.css" rel="stylesheet" />
 </head>
@@ -202,7 +212,6 @@
 
     </div><!-- body-row END -->
     <!-- /#page-content-wrapper -->
-
     <!-- Menu Toggle Script -->
     <script>
         // Hide submenus

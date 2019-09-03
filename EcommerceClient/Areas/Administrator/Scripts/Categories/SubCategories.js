@@ -17,6 +17,53 @@
 
     }, methods : {
 
+        restartSubCategory: function () {
+
+            this.subcategory.id = null;
+            this.subcategory.name = null;
+            this.subcategory.description = null;
+            this.subcategory.status = true;
+            this.subcategory.categoryId = 0;
+
+            this.flagEdit = false;
+        },
+
+        deleteSubCategory: function () {
+
+            this.loading = true;
+
+            console.log(this.subcategoryTarget);
+
+            if (this.subcategoryTarget != 0) {
+                //Realizamos la petición
+                $Core.Ajax("Categories", "DeleteSubCategory", { id: this.subcategoryTarget }, function ($response) {
+
+                    //Validamos la eliminación de la Subcategoria
+                    if ($response.control) {
+                        $("#modalConfirmacion").modal("hide");
+
+                        menuAdminVueApp.succsessMsg = "Subcategoria Eliminada satisfactoriamente.";
+
+                        $("#resultModal").modal("show");
+
+                        //Actualizamos la página
+                        setTimeout(() => $Core.ReloadPage(), 1700);
+
+
+                    } else {
+                        alert("Error");
+                    }
+
+                    this.loading = false;
+
+                }, function ($response) {
+
+                    alert("ERROR ", $response);
+
+                });
+            }
+
+        },
 
         //Método encargado de la creación y actualización de la categoria
         processSubCategory: function () {
@@ -48,7 +95,7 @@
                         alert("Error");
                     }
 
-                    categoriesAppVue.loading = false;
+                    subCategoriesAppVue.loading = false;
 
                 },
                     ($response) => alert("ERROR ", $response));

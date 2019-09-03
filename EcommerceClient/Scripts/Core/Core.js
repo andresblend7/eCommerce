@@ -57,10 +57,11 @@
     //Middleware para las peticiones ajax
     Ajax: function ($controller, $action, $data, $callBackSuccess, $callBackError) {
 
+        console.log($url + '/' + $controller + '/' + $action);
         var settings = {
             type: 'POST',
-            url: $action,
-            //url: $controller + '/' + $action,
+            // [Ruta absoluta Admin ] / [controler] / [action]
+            url: $url+ '/' + $controller + '/' + $action,
             data: $data,
             success: function (response) {
                 $callBackSuccess(response);
