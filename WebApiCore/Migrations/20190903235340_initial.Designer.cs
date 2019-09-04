@@ -10,8 +10,8 @@ using WebApiCore.DataAccess;
 namespace WebApiCore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190825224748_conditionProduct")]
-    partial class conditionProduct
+    [Migration("20190903235340_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

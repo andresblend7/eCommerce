@@ -155,6 +155,7 @@
     <Compile Include="Models\Structure\Category.cs" />
     <Compile Include="Models\Structure\City.cs" />
     <Compile Include="Models\Structure\Rol.cs" />
+    <Compile Include="Models\Structure\Sales.cs" />
     <Compile Include="Models\Structure\SubCategory.cs" />
     <Compile Include="Models\Structure\User.cs" />
     <Compile Include="Models\Views\CategoriesVModel.cs" />

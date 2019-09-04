@@ -126,7 +126,7 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             var subModel = new SubCategoriesVModel()
             {
                 //Obtenemos solo las categorias activas
-                Categories = await this.webApi.GetAsync<List<Category>>("categories", new { state = true }),
+                Categories = await this.webApi.GetAsync<List<Category>>("categories"),
                 SubCategories = await this.webApi.GetAsync<List<SubCategory>>("SubCategories")
 
             };

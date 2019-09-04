@@ -122,7 +122,7 @@
                         alert("Error");
                     }
 
-                    categoriesAppVue.loading = false;
+                    subCategoriesAppVue.loading = false;
 
                 },
                     ($response) => alert("ERROR ", $response));
