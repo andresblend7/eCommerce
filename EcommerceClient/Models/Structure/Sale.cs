@@ -6,7 +6,10 @@ using System.Web;
 
 namespace EcommerceClient.Models.Structure
 {
-    public class Sales
+    /// <summary>
+    /// Información básica de la venta.
+    /// </summary>
+    public class Sale
     {
         public int Id { get; set; }
 
@@ -16,12 +19,15 @@ namespace EcommerceClient.Models.Structure
         [Required]
         public int BuyerId { get; set; }
 
-        public User UserBuyer { get; set; }
+        /// <summary>
+        /// Data del usuario que compró
+        /// </summary>
+        User User { get; set; }
 
         /// <summary>
         /// Precio total de la venta
         /// </summary>
-        public double TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
         /// <summary>
         /// Fecha de la venta efectuada

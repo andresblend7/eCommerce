@@ -137,7 +137,7 @@ namespace WebApiCore.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(int id)
         {
-
+            //Creamos el predicado
             this.predicate = x => x.Id == id;
 
             //Comprobamos que existe una entidad con ese Id
@@ -146,6 +146,14 @@ namespace WebApiCore.Controllers
             if (entity == null)
                 return BadRequest(Errors.ENTITYNOTFOUND);
 
+            //Obtenemos la lista de subcategorias asociadas.
+            var subCats = await this.model.SearchAsync<Dic_SubCategories>(x => x.Sca_CategoryIdFk == entity.Id);
+
+            //Eliminamos las subcategorias asociadas
+            if (subCats != null)
+                await this.model.DeleteListAsync(subCats);
+
+            //Eliminamos la Categoria
             return await this.model.DeleteAsync(entity);
         }
 

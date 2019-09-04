@@ -154,8 +154,12 @@
     <Compile Include="Helpers\Html\HtmlHelperExtension.cs" />
     <Compile Include="Models\Structure\Category.cs" />
     <Compile Include="Models\Structure\City.cs" />
+    <Compile Include="Models\Structure\ImagesProduct.cs" />
+    <Compile Include="Models\Structure\Product.cs" />
+    <Compile Include="Models\Structure\ProductSubCategories.cs" />
     <Compile Include="Models\Structure\Rol.cs" />
-    <Compile Include="Models\Structure\Sales.cs" />
+    <Compile Include="Models\Structure\Sale.cs" />
+    <Compile Include="Models\Structure\SaleHistory.cs" />
     <Compile Include="Models\Structure\SubCategory.cs" />
     <Compile Include="Models\Structure\User.cs" />
     <Compile Include="Models\Views\CategoriesVModel.cs" />

@@ -31,6 +31,10 @@ namespace WebApiCore.Migrations
                         .IsRequired()
                         .HasMaxLength(64);
 
+                    b.Property<string>("Imp_Path")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
                     b.Property<int>("Imp_ProductIdFk");
 
                     b.Property<bool>("Imp_Status");
@@ -71,7 +75,7 @@ namespace WebApiCore.Migrations
 
                     b.Property<int>("Shi_BuyerIdFk");
 
-                    b.Property<double>("Shi_ProductCurrentPrice");
+                    b.Property<decimal>("Shi_ProductCurrentPrice");
 
                     b.Property<int>("Shi_ProductIdFk");
 
@@ -79,7 +83,7 @@ namespace WebApiCore.Migrations
 
                     b.Property<int>("Shi_SaleIdFk");
 
-                    b.Property<double>("Shi_TotalPrice");
+                    b.Property<decimal>("Shi_TotalPrice");
 
                     b.HasKey("Id");
 
@@ -212,7 +216,7 @@ namespace WebApiCore.Migrations
 
                     b.Property<int>("Sal_BuyerId");
 
-                    b.Property<double>("Sal_TotalPrice");
+                    b.Property<decimal>("Sal_TotalPrice");
 
                     b.Property<DateTime>("Shi_SaleDate");
 

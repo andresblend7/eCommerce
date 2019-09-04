@@ -27,7 +27,7 @@ namespace WebApiCore.Entities
         /// <summary>
         /// Precio total de la venta
         /// </summary>
-        public double Sal_TotalPrice { get; set; }
+        public decimal Sal_TotalPrice { get; set; }
 
         /// <summary>
         /// Fecha de la venta efectuada

@@ -1,101 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace WebApiCore.Entities
+namespace EcommerceClient.Models.Structure
 {
-    public class Dic_Products
+    public class Product
     {
+        public Product()
+        {
+            this.Images = new List<ImagesProduct>();
+        }
+
         public int Id { get; set; }
         /// <summary>
         /// Llave Foránea hacia la categoría principal del producto.
         /// </summary>
         [Required]
-        [ForeignKey("Categories")]
-        public int Pro_CategoryIdFk { get; set; }
+        public int CategoryId { get; set; }
 
-       
+
         /// <summary>
         /// Usuario que creó el producto.
         /// </summary>
         [Required]
-        [ForeignKey("Users")]
-        public int Pro_CreationUserIdFk { get; set; }
+        public int CreationUserId { get; set; }
 
         /// <summary>
-        /// Foránea del id de la ciudad.
+        /// Foránea del id de la ciudad dónde se venderá el producto
         /// </summary>
         [Required]
-        public int Pro_CityIdFk { get; set; }
+        public int CityId { get; set; }
 
         /// <summary>
         /// Guid del producto.
         /// </summary>
         [Required]
         [MaxLength(64)]
-        public string Pro_GuId { get; set; }
+        public string GuId { get; set; }
 
         /// <summary>
         /// Condición del producto {nuevo / usado}
         /// </summary>
         [Required]
-        public bool Pro_Condition { get; set; }
-     
+        public bool Condition { get; set; }
+
         [Required]
         [MaxLength(64)]
-        public string Pro_Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Descripción del producto.
         /// </summary>
         [MaxLength(512)]
-        public string Pro_Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Precio original del producto
         /// </summary>
-        public decimal Pro_Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Stock Disponible del producto
         /// </summary>
         [Required]
-        public int Pro_Stock { get; set; }
+        public int Stock { get; set; }
 
         /// <summary>
         /// Precio con descuento.
         /// </summary>
-        public decimal Pro_OutletPrice { get; set; }
+        public decimal OutletPrice { get; set; }
 
         /// <summary>
         /// Determina si tiene aplicado un descuento
         /// </summary>
-        public bool Pro_IsOutlet { get; set; }
+        public bool IsOutlet { get; set; }
 
         /// <summary>
         /// Path/ Nombre de la imágen principal del producto.
         /// </summary>
         [Required]
         [MaxLength(256)]
-        public string Pro_PrincipalImage { get; set; }
+        public string PrincipalImage { get; set; }
 
         [Required]
-        public DateTime Pro_CreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public bool Pro_status { get; set; }
+        public bool Status { get; set; }
 
-        [ForeignKey("Pro_CategoryIdFk")]
-        public Dic_Categories PrincipalCategory { get; set; }
-
-
-        [ForeignKey("Pro_CreationUserIdFk")]
-        public Dic_Users CreatorUser { get; set; }
-
-        [ForeignKey("Pro_CityIdFk")]
-        public Dic_Cities Ciudad { get; set; }
-
+        /// <summary>
+        /// Lista de imágenes secundarias del producto
+        /// </summary>
+        List<ImagesProduct> Images { get; set; }
     }
 }

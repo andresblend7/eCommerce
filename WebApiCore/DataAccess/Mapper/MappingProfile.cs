@@ -16,6 +16,31 @@ namespace WebApiCore.DataAccess.Mapper
         public MappingProfile()
         {
 
+             /*
+                Perfil de mapeo de entidades.
+                Se mapean las entidades con sus respectivos Structure Models para 
+                proporcionar una comunicaciòn segura /DTO/
+             */
+
+            //Productos
+            CreateMap<Dic_Products, Product>()
+                .ForMember(x => x.Id , src => src.MapFrom(o => o.Id))
+                .ForMember(x => x.CategoryId, src => src.MapFrom(o => o.Pro_CategoryIdFk))
+                .ForMember(x => x.CreationUserId, src => src.MapFrom(o => o.Pro_CreationUserIdFk))
+                .ForMember(x => x.CityId, src => src.MapFrom(o => o.Pro_CityIdFk))
+                .ForMember(x => x.GuId, src => src.MapFrom(o => o.Pro_GuId))
+                .ForMember(x => x.Condition, src => src.MapFrom(o => o.Pro_Condition))
+                .ForMember(x => x.Name, src => src.MapFrom(o => o.Pro_Name))
+                .ForMember(x => x.Description, src => src.MapFrom(o => o.Pro_Description))
+                .ForMember(x => x.Price, src => src.MapFrom(o => o.Pro_Price))
+                .ForMember(x => x.Stock, src => src.MapFrom(o => o.Pro_Stock))
+                .ForMember(x => x.OutletPrice, src => src.MapFrom(o => o.Pro_OutletPrice))
+                .ForMember(x => x.IsOutlet, src => src.MapFrom(o => o.Pro_IsOutlet))
+                .ForMember(x => x.PrincipalImage, src => src.MapFrom(o => o.Pro_PrincipalImage))
+                .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Pro_CreationDate))
+                .ForMember(x => x.Status, src => src.MapFrom(o => o.Pro_status));
+
+
             //Categorias
             CreateMap<Dic_Categories, Category>()
                 .ForMember(x => x.Name, src => src.MapFrom(o => o.Cat_Name))

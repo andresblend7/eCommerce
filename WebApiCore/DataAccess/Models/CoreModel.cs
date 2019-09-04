@@ -10,7 +10,9 @@ namespace WebApiCore.DataAccess.Models
 {
     public class CoreModel : ICoreModel
     {
-
+        /// <summary>
+        /// Contexto de la base de datos
+        /// </summary>
         private readonly AppDbContext db;
 
         public CoreModel(AppDbContext dbContext)
@@ -18,6 +20,12 @@ namespace WebApiCore.DataAccess.Models
             this.db = dbContext;
         }
 
+        /// <summary>
+        /// Metodo encargado de agregar una entidad a la base de datos
+        /// </summary>
+        /// <typeparam name="TEntity">Tipo de Clase</typeparam>
+        /// <param name="entity">Objeto de Clase</param>
+        /// <returns></returns>
         public async Task<bool>AddAsync<TEntity>(TEntity entity) where TEntity : class
         {
             var context =  this.db.Set<TEntity>();
@@ -25,26 +33,32 @@ namespace WebApiCore.DataAccess.Models
             return await this.SaveAsync();
         }
 
-        public Task<int> CountAsync<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : class
-        {
-            var context = this.db.Set<TEntity>();
-            context.Remove(entity);
-
-            return await this.SaveAsync();
-        }
-
+        /// <summary>
+        /// Metoeo encargado de consultar todo los registros
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns>Una entidad Iquerable</returns>
         public IQueryable<TEntity> GetAllAsync<TEntity>() where TEntity : class
         {
             //Obtenemos todos los elementos de la base de datos
             return this.db.Set<TEntity>();
         }
 
-    
+        /// <summary>
+        /// Metodo encargado de buscar registros segun la predicado
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<List<TEntity>> SearchAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        {
+            var entitiy = this.db.Set<TEntity>().Where(predicate);
+
+            var result = await entitiy.ToListAsync();
+
+            return result;
+        }
+
         /// <summary>
         /// Método Encargado de retornar una sola unidad
         /// </summary>
@@ -56,26 +70,15 @@ namespace WebApiCore.DataAccess.Models
             var entitiy = this.db.Set<TEntity>().Where(predicate);
 
             return await entitiy.FirstOrDefaultAsync();
-             
+
         }
 
-        public virtual async Task<bool> SaveAsync()
-        {
-            //Guardamos los cambios en la base de datos
-            return await this.db.SaveChangesAsync() > 0;
-        }
-
-        public async Task<List<TEntity>> SearchAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
-        {
-            var entitiy = this.db.Set<TEntity>().Where(predicate);
-
-            var result = await entitiy.ToListAsync();
-
-            return result;
-        }
-
-  
-
+        /// <summary>
+        /// Metodo encargado de actualizar una entidad
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public Task<bool> UpdateAsync<TEntity>(TEntity entity) where TEntity : class
         {
             var context = this.db.Set<TEntity>();
@@ -84,6 +87,57 @@ namespace WebApiCore.DataAccess.Models
 
         }
 
+        /// <summary>
+        /// Metodo encargado de eliminar una entidad en la base de datos
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : class
+        {
+            var context = this.db.Set<TEntity>();
+            context.Remove(entity);
+            
+            return await this.SaveAsync();
+        }
+
+        /// <summary>
+        /// Método Encargado de borrar una lista de entidades
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteListAsync<TEntity>(List<TEntity> entities) where TEntity : class
+        {
+            //Attachamos el contexto
+            var context = db.Set<TEntity>();
+
+            //Eliminamos la lista de entidades
+            context.RemoveRange(entities);
+
+            return await this.SaveAsync();
+        }
+
+        /// <summary>
+        /// Metodo encargado de obtener un conteo de filas de las filas
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public Task<int> CountAsync<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Metodo encargado de guardar los cambios en la base de datos
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<bool> SaveAsync()
+        {
+            //Guardamos los cambios en la base de datos
+            return await this.db.SaveChangesAsync() > 0;
+        }
      
     }
 }
