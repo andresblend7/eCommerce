@@ -10,8 +10,8 @@ using WebApiCore.DataAccess;
 namespace WebApiCore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190824143652_inithere")]
-    partial class inithere
+    [Migration("20190903235340_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,6 +144,8 @@ namespace WebApiCore.Migrations
                     b.Property<int>("Pro_CategoryIdFk");
 
                     b.Property<int>("Pro_CityIdFk");
+
+                    b.Property<bool>("Pro_Condition");
 
                     b.Property<DateTime>("Pro_CreationDate");
 

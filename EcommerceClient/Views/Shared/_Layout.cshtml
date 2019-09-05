@@ -9,96 +9,114 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.8/css/mdb.min.css" rel="stylesheet">
+    <link href="~/Content/css/MdBootstrap.css" rel="stylesheet">
     @*<link href="~/Content/css/bootstrap.css" rel="stylesheet" />*@
     <link href="~/Content/css/Site.css" rel="stylesheet" />
 </head>
 <body>
 
-    <!--Navbar -->
-    <nav class="mb-1 navbar navbar-expand-lg navbar-light bg-white">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
-                aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+    <div id="menu-app">
+        <!--Navbar -->
+        <nav class="mb-1 navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+                    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
 
-            <ul class="navbar-nav ml-auto mr-5 nav-flex-icons">
+                <ul class="navbar-nav ml-auto mr-5 nav-flex-icons">
 
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fas fa-shopping-cart text-corp"></i> Carrito
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-black" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user text-corp"></i> Perfil
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-default"
-                         aria-labelledby="navbarDropdownMenuLink-333">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#modalLogin">Login</a>
-                        <a class="dropdown-item" href="#">Carrito</a>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light">
+                            <i class="fas fa-shopping-cart text-corp"></i> Carrito
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-black" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user text-corp"></i> Perfil
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                             aria-labelledby="navbarDropdownMenuLink-333">
+                            <a class="dropdown-item" data-toggle="modal" data-target="#modalLogin">Login</a>
+                            <a class="dropdown-item" href="#">Carrito</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--/.Navbar -->
+        <!-- Modal Login-->
+        <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLogin"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!--/.Navbar -->
-    <!-- Modal Login-->
-    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLogin"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class=" col-md-12 text-center">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class=" col-md-12 text-center">
 
-                            <!-- Default form login -->
-                            <form class="text-center border border-light p-5" action="#!">
+                                <!-- Default form login -->
+                               
 
-                                <p class="h4 mb-4">Ingresar</p>
+                                    <p class="h4 mb-4">Ingresar</p>
 
-                                <!-- Email -->
-                                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+                                    <!-- Email -->
+                                    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" v-model="user.email">
 
-                                <!-- Password -->
-                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+                                    <!-- Password -->
+                                    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" v-model="user.pass">
 
 
 
-                                <!-- Sign in button -->
-                                <button class="btn btn-info btn-block my-4" type="submit">Ingresar!</button>
+                                    <!-- Sign in button -->
+                                    <button class="btn btn-info btn-block my-4" type="submit" v-on:click="login()">Ingresar!</button>
+                                    
+                                    <p>
+                                        {{logginMsg}}
+                                    </p>
+                                
+                                    <!-- Register -->
+                                    <p>
+                                        Not a member?
+                                        <a href="">Register</a>
+                                    </p>
 
-                                <!-- Register -->
-                                <p>
-                                    Not a member?
-                                    <a href="">Register</a>
-                                </p>
+                                
+                                <!-- Default form login -->
 
-
-
-                            </form>
-                            <!-- Default form login -->
-
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Compiled and minified JavaScript -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="~/Scripts/jquery.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="~/Scripts/Popper.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="~/Scripts/MdBootstrap.js"></script>
+    <!--Vue-->
+    <script src="~/Scripts/Vue.js"></script>
+    <!-- Core -->
+    <script src="~/Scripts/Core/Core.js"></script>
+    @*@RenderSection("scripts", required: false)*@
 
 
     <div class="container pt-4">
@@ -106,15 +124,40 @@
         <hr />
     </div>
 
-    <!-- Compiled and minified JavaScript -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.8/js/mdb.min.js"></script>
-    @*@RenderSection("scripts", required: false)*@
+    <script>
+        let vueAppMenu = new Vue({
+            el: '#menu-app',
+            data: {
+                user: {
+                    email: 'email@email.com',
+                    pass: '123'
+                },
+                logginMsg :"---"
+            },
+            methods: {
+
+                login: function () {
+                    $Core.Ajax("Home", "Login", { email: this.user.email, pass: this.user.pass }, function ($respuesta) {
+                        console.log($respuesta);
+
+                        if ($respuesta.control) {
+                            vueAppMenu.logginMsg = "Usuario autenticado correctamente.";
+                            setTimeout(()=>location.reload() , 1200);
+                        } else {
+                            vueAppMenu.logginMsg = "Usuario no existe";
+                        }
+
+                    }, function ($respuesta) {
+
+                            alert("ERROR ", $respuesta);
+
+                    });
+                }
+
+            }
+
+        });
+
+    </script>
 </body>
 </html>

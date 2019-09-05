@@ -1,0 +1,172 @@
+﻿@model EcommerceClient.Models.Views.SubCategoriesVModel
+@{
+    ViewBag.Title = "SubCategories";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="card" id="subcategories-app">
+        <div class="row">
+            <div class="col-md-11 mr-0 pr-0">
+                <h4 class="card-header">Categorias / SubCategorias</h4>
+            </div>
+            <div class="col-md-1 card-header ml-0 pl-0 text-right pr-4">
+                <a data-toggle="modal" data-target="#modalCreate" class="btn-floating btn-lg btn-primary text-white" v-on:click="restartSubCategory()">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" class="">Nombre</th>
+                                <th scope="col" class="">Descripción</th>
+                                <th scope="col" class="">Cat. Principal</th>
+                                <th scope="col" class="">Estado</th>
+                                <th scope="col" style="max-width:90px !important; width:90px !important;" class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="subCategories.length>0">
+                            <tr v-for="(subcat, idx) in subCategories">
+                                <td> {{ idx+1 }} </td>
+                                <td> {{ subcat.name }} </td>
+                                <td> {{ subcat.description }} </td>
+                                <td> {{ subcat.category.name }} </td>
+                                <td> {{ (subcat.status) ? 'Activo' : 'Inactivo' }} </td>
+                                <td class="text-center ">
+                                    <div class="row">
+                                        <div class="col-md-4 text-center p-0 m-0">
+                                            <!-- Default switch -->
+                                            <div class="custom-control custom-switch" data-toggle="tooltip" title="Cambiar estado">
+                                                <input type="checkbox" class="custom-control-input cursor-pointer" :id="'swt-'+idx" :checked="(subcat.status)" v-on:change="changeStatus(subcat, idx)">
+                                                <label class="custom-control-label cursor-pointer" :for="'swt-'+idx"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-center p-0 m-0 cursor-pointer" v-on:click="setTarget(subcat)" data-toggle="modal" data-target="#modalCreate">
+                                            <i class="fas fa-edit text-warning" data-toggle="tooltip" title="Editar"></i>
+                                        </div>
+
+                                        <div class="col-md-4 text-center pr-1 pl-0 m-0 cursor-pointer" data-toggle="modal" data-target="#modalConfirmacion" v-on:click="setTarget(subcat)">
+                                            <i class="fas fa-trash text-danger" data-toggle="tooltip" title="Eliminar"></i>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal Create-->
+        <div class="modal fade right" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{ (flagEdit) ? 'Editar' : 'Crear' }} una categoria
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <!-- Material form register -->
+                                    <form>
+
+                                        <div class="">
+                                            <label>Categoria principal:</label>
+                                            <select class="form-control" v-model="subcategory.categoryId">
+                                                <option value="0">
+                                                    Seleccione
+                                                </option>
+                                                <option v-for="category in categories" :value="category.id">
+                                                    {{ category.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+
+
+                                        <!-- Material input text -->
+                                        <div class="md-form">
+                                            <input type="text" id="materialFormCardNameEx" class="form-control" v-model="subcategory.name">
+                                            <label for="materialFormCardNameEx" class="font-weight-light">Nombre de la subcategoría</label>
+                                        </div>
+
+
+                                        <!-- Material textarea message -->
+                                        <div class="md-form form-sm">
+                                            <textarea type="text" id="materialFormMessageModalEx1"
+                                                      class="md-textarea form-control" v-model="subcategory.description"></textarea>
+                                            <label for="materialFormMessageModalEx1">Descripción de la subcategoría.</label>
+                                        </div>
+
+                                    </form>
+                                    <!-- Material form register -->
+                                </div>
+                                <!-- Card body -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" v-on:click="processSubCategory">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Confirmación -->
+        <div class="modal fade right" id="modalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalPreviewLabel">
+                            Confirmación
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Eliminar esta SubCategoria permanentemente?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteSubCategory()" :disabled="loading">Eliminar</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+
+    </div>
+<!-- APP -->
+
+<script src="~/Areas/Administrator/Scripts/Categories/SubCategories.js"></script>
+
+<script>
+
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+
+    $( document ).ready(function() {
+        subCategoriesAppVue.initData($model);
+    });
+
+</script>

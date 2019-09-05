@@ -49,6 +49,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -141,29 +144,49 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
+    <Compile Include="Areas\Administrator\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ProductsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Structure\Categories.cs" />
-    <Compile Include="Models\Structure\Cities.cs" />
+    <Compile Include="Helpers\Html\HtmlHelperExtension.cs" />
+    <Compile Include="Models\Structure\Category.cs" />
+    <Compile Include="Models\Structure\City.cs" />
+    <Compile Include="Models\Structure\ImagesProduct.cs" />
+    <Compile Include="Models\Structure\Product.cs" />
+    <Compile Include="Models\Structure\ProductSubCategories.cs" />
     <Compile Include="Models\Structure\Rol.cs" />
-    <Compile Include="Models\Structure\Users.cs" />
+    <Compile Include="Models\Structure\Sale.cs" />
+    <Compile Include="Models\Structure\SaleHistory.cs" />
+    <Compile Include="Models\Structure\SubCategory.cs" />
+    <Compile Include="Models\Structure\User.cs" />
+    <Compile Include="Models\Views\CategoriesVModel.cs" />
+    <Compile Include="Models\Views\HomeVModel.cs" />
+    <Compile Include="Models\Views\SubCategoriesVModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IWebApiCoreService.cs" />
     <Compile Include="Services\WebApiCoreService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Administrator\Scripts\Categories\SubCategories.js" />
+    <Content Include="Content\css\Admin.css" />
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\MdBootstrap.css" />
     <Content Include="Content\css\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Areas\Administrator\Scripts\Categories\Categories.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\Core\Core.js" />
+    <Content Include="Scripts\Home\Home.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\MdBootstrap.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Popper.js" />
+    <Content Include="Scripts\Vue.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -179,10 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administrator\Controllers\" />
     <Folder Include="Areas\Administrator\Models\" />
-    <Folder Include="Areas\Administrator\Views\Shared\" />
-    <Folder Include="Models\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -191,6 +211,21 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="libman.json" />
     <Content Include="Areas\Administrator\Views\web.config" />
+    <Content Include="Content\font\roboto\Roboto-Light.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Bold.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Medium.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Regular.ttf" />
+    <Content Include="Content\font\roboto\Roboto-Thin.ttf" />
+    <Content Include="Areas\Administrator\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Administrator\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Categories\Index.cshtml" />
+    <Content Include="Content\font\roboto\Roboto-Bold.woff" />
+    <Content Include="Content\font\roboto\Roboto-Bold.woff2" />
+    <Content Include="Content\font\roboto\Roboto-Light.woff2" />
+    <Content Include="Content\font\roboto\Roboto-Ligth.woff2" />
+    <Content Include="Content\font\roboto\Roboto-Regular.woff2" />
+    <Content Include="Areas\Administrator\Views\Categories\SubCategories.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>

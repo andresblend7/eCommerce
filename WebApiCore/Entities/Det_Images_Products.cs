@@ -22,6 +22,13 @@ namespace WebApiCore.Entities
         [MaxLength(64)]
         public string Imp_Name { get; set; }
 
+        [Required]
+        [MaxLength(256)]
+        /// <summary>
+        /// Ruta parcial dónde se encuentra la imágen
+        /// </summary>
+        public string Imp_Path { get; set; }
+
         public DateTime Imp_CreationDate { get; set; }
 
         public bool Imp_Status { get; set; }

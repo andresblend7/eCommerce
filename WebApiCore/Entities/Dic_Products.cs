@@ -37,6 +37,12 @@ namespace WebApiCore.Entities
         [Required]
         [MaxLength(64)]
         public string Pro_GuId { get; set; }
+
+        /// <summary>
+        /// Condición del producto {nuevo / usado}
+        /// </summary>
+        [Required]
+        public bool Pro_Condition { get; set; }
      
         [Required]
         [MaxLength(64)]
@@ -70,10 +76,10 @@ namespace WebApiCore.Entities
         public bool Pro_IsOutlet { get; set; }
 
         /// <summary>
-        /// Nombre de la imágen principal del producto.
+        /// Path/ Nombre de la imágen principal del producto.
         /// </summary>
         [Required]
-        [MaxLength(64)]
+        [MaxLength(256)]
         public string Pro_PrincipalImage { get; set; }
 
         [Required]

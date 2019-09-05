@@ -50,7 +50,7 @@ namespace WebApiCore.Entities
         /// Precio del producto en el momento de ralizar la compra
         /// </summary>
         [Required]
-        public double Shi_ProductCurrentPrice { get; set; }
+        public decimal Shi_ProductCurrentPrice { get; set; }
 
         /// <summary>
         /// Cantidad del producto vendidos
@@ -62,7 +62,7 @@ namespace WebApiCore.Entities
         /// Precio total (Cantidad * precio)
         /// </summary>
         [Required]
-        public double Shi_TotalPrice { get; set; }
+        public decimal Shi_TotalPrice { get; set; }
 
     }
 }

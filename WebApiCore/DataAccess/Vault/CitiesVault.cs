@@ -47,8 +47,10 @@ namespace WebApiCore.DataAccess.Vault
             "Yopal"
         };
 
+            //Inicializamos la lista de ciudades
             List<Dic_Cities>  citiesList = new List<Dic_Cities>();
 
+            //Recoremos el array de strings y los attachamos a la entidad de la base de datos
             foreach (var ct in cities) 
                 citiesList.Add(new Dic_Cities()
                 {

@@ -31,7 +31,7 @@ namespace WebApiCore.Controllers
 
         // GET: api/Dic_Categories
         [HttpGet]
-        public async Task<IEnumerable<Categories>> Get(bool? state = null)
+        public async Task<IEnumerable<Category>> Get(bool? state = null)
         {
             //Preparamos el predicado de acuerdo a la petición
             if (state != null)
@@ -45,12 +45,13 @@ namespace WebApiCore.Controllers
             //Mapeamos el diccionario al model Structure
             var categories = this.mapList(entities);
 
-            return categories;
+            //Retornamos las entidades ordenadas de forma descendente
+            return categories.OrderByDescending(x => x.Id);
         }
 
         // GET: api/Categories/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<Categories>> Get(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Category>> Get(int id)
         {
             //Construimos el predicado:
             this.predicate = x => x.Id == id;
@@ -67,7 +68,7 @@ namespace WebApiCore.Controllers
 
         // POST: api/Dic_Categories
         [HttpPost]
-        public async Task<ActionResult<bool>> PostAsync([FromBody] Categories data)
+        public async Task<ActionResult<bool>> PostAsync([FromBody] Category data)
         {
             //Mapeamos el structure model al diccionario
             var entity = this.mapper.Map<Dic_Categories>(data);
@@ -80,9 +81,40 @@ namespace WebApiCore.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Método Encargado de cambiar el estado de una entidad (Activo / inactivo)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("ChangeStatus")]
+        public async Task<ActionResult<bool>> ChangeStatus(int id)
+        {
+
+            this.predicate = x => x.Id == id;
+
+            //Obtenemos la entidad a actualizar
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return NotFound(Errors.ENTITYNOTFOUND);
+
+            //Cambiamos el estado
+            entity.Cat_Status = !entity.Cat_Status;
+
+            //Hacemos la actualización
+            return await this.model.UpdateAsync(entity);
+
+        }
+
+        /// <summary>
+        /// Método encargado de la actualización de los datos básicos de una categoria
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         // PUT: api/Dic_Categories/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> Put(int id, [FromBody] Categories data)
+        [HttpPut("{id}", Name = "Put")]
+        public async Task<ActionResult<bool>> Put(int id, [FromBody] Category data)
         {
             if (id != data.Id)
                 return BadRequest(Errors.INCORRECTDATA);
@@ -93,8 +125,9 @@ namespace WebApiCore.Controllers
             if (entity == null)
                 return BadRequest(Errors.ENTITYNOTFOUND);
 
+            //Actualizamos los datos básicos
             entity.Cat_Name = data.Name;
-            entity.Cat_Status = data.Status;
+            entity.Cat_Description = data.Description;
 
             return await this.model.UpdateAsync(entity);
 
@@ -104,14 +137,23 @@ namespace WebApiCore.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(int id)
         {
-
+            //Creamos el predicado
             this.predicate = x => x.Id == id;
 
-            var entity = this.model.GetOneAsync(this.predicate);
+            //Comprobamos que existe una entidad con ese Id
+            var entity = await this.model.GetOneAsync(this.predicate);
 
             if (entity == null)
                 return BadRequest(Errors.ENTITYNOTFOUND);
 
+            //Obtenemos la lista de subcategorias asociadas.
+            var subCats = await this.model.SearchAsync<Dic_SubCategories>(x => x.Sca_CategoryIdFk == entity.Id);
+
+            //Eliminamos las subcategorias asociadas
+            if (subCats != null)
+                await this.model.DeleteListAsync(subCats);
+
+            //Eliminamos la Categoria
             return await this.model.DeleteAsync(entity);
         }
 
@@ -120,9 +162,10 @@ namespace WebApiCore.Controllers
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public List<Categories> mapList(List<Dic_Categories> source) {
+        public List<Category> mapList(List<Dic_Categories> source)
+        {
 
-            return this.mapper.Map<List<Categories>>(source);
+            return this.mapper.Map<List<Category>>(source);
 
         }
 
@@ -131,9 +174,9 @@ namespace WebApiCore.Controllers
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        private Categories map(Dic_Categories source)
+        private Category map(Dic_Categories source)
         {
-            return this.mapper.Map<Categories>(source);
+            return this.mapper.Map<Category>(source);
         }
     }
 }

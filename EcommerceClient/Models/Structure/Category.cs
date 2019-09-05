@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EcommerceClient.Models.Structure
 {
-    public class Categories
+    public class Category
     {
         public int Id { get; set; }
 

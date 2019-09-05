@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApiCore.Migrations
 {
-    public partial class inithere : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,7 +61,7 @@ namespace WebApiCore.Migrations
                         column: x => x.Use_RolIdFk,
                         principalTable: "Dic_Rol",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,7 +84,7 @@ namespace WebApiCore.Migrations
                         column: x => x.Cat_CreationUserIdFk,
                         principalTable: "Dic_Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,7 +105,7 @@ namespace WebApiCore.Migrations
                         column: x => x.Sal_BuyerId,
                         principalTable: "Dic_Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,6 +118,7 @@ namespace WebApiCore.Migrations
                     Pro_CreationUserIdFk = table.Column<int>(nullable: false),
                     Pro_CityIdFk = table.Column<int>(nullable: false),
                     Pro_GuId = table.Column<string>(maxLength: 64, nullable: false),
+                    Pro_Condition = table.Column<bool>(nullable: false),
                     Pro_Name = table.Column<string>(maxLength: 64, nullable: false),
                     Pro_Description = table.Column<string>(maxLength: 512, nullable: true),
                     Pro_Price = table.Column<decimal>(nullable: false),
@@ -136,19 +137,19 @@ namespace WebApiCore.Migrations
                         column: x => x.Pro_CategoryIdFk,
                         principalTable: "Dic_Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Dic_Products_Dic_Cities_Pro_CityIdFk",
                         column: x => x.Pro_CityIdFk,
                         principalTable: "Dic_Cities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Dic_Products_Dic_Users_Pro_CreationUserIdFk",
                         column: x => x.Pro_CreationUserIdFk,
                         principalTable: "Dic_Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,13 +173,13 @@ namespace WebApiCore.Migrations
                         column: x => x.Sca_CategoryIdFk,
                         principalTable: "Dic_Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Dic_SubCategories_Dic_Users_Sca_CreationUserIdFk",
                         column: x => x.Sca_CreationUserIdFk,
                         principalTable: "Dic_Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,7 +201,7 @@ namespace WebApiCore.Migrations
                         column: x => x.Imp_ProductIdFk,
                         principalTable: "Dic_Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,19 +225,19 @@ namespace WebApiCore.Migrations
                         column: x => x.Shi_BuyerIdFk,
                         principalTable: "Dic_Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Det_SalesHistory_Dic_Products_Shi_ProductIdFk",
                         column: x => x.Shi_ProductIdFk,
                         principalTable: "Dic_Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Det_SalesHistory_Dic_Sales_Shi_SaleIdFk",
                         column: x => x.Shi_SaleIdFk,
                         principalTable: "Dic_Sales",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,13 +258,13 @@ namespace WebApiCore.Migrations
                         column: x => x.Psc_ProductIdFk,
                         principalTable: "Dic_Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Det_Products_SubCategories_Dic_SubCategories_Psc_SubCategoryIdFk",
                         column: x => x.Psc_SubCategoryIdFk,
                         principalTable: "Dic_SubCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
