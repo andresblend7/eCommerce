@@ -56,13 +56,7 @@ namespace WebApiCore.Controllers
             return subCategories.OrderByDescending(x => x.Id);
         }
 
-        // GET: api/SubCategories/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+       
         // POST: api/SubCategories
         [HttpPost]
         public async Task<ActionResult<bool>> PostAsync([FromBody] SubCategory data)

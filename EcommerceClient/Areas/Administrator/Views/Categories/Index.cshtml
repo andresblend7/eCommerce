@@ -120,7 +120,7 @@
                                             <!-- Material input text -->
                                             <div class="md-form">
                                                 <input type="text" id="materialFormCardNameEx" class="form-control" v-model="category.name">
-                                                <label for="materialFormCardNameEx" class="font-weight-light">Nombre de la categoría</label>
+                                                <label for="materialFormCardNameEx" class="font-weight-light">Nombre de la categoría *</label>
                                             </div>
 
 
@@ -133,6 +133,10 @@
 
                                         </form>
                                         <!-- Material form register -->
+
+                                        <small class="text-danger">
+                                            Datos incorrectos
+                                        </small>
                                     </div>
                                     <!-- Card body -->
                             
@@ -140,7 +144,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-info" v-on:click="processCategory()" :disabled="loading">
+                        <button type="button" class="btn btn-info" v-on:click="processCategory()" :disabled="loading || validationWrong">
                             <i class="fas fa-save"></i>
                             Guardar
                         </button>

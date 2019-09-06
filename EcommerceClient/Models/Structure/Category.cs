@@ -9,7 +9,6 @@ namespace EcommerceClient.Models.Structure
         /// <summary>
         /// Id foránea del usuario que creó la categoría.
         /// </summary>
-        [Required]
         public int CreationUser { get; set; }
 
         /// <summary>

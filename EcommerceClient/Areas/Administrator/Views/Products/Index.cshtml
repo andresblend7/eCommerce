@@ -1,4 +1,4 @@
-﻿
+﻿@model EcommerceClient.Models.Views.ProductsVModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
@@ -10,4 +10,16 @@
 
     </div>
 </div>
+
+<script src="~/Areas/Administrator/Scripts/Products/Products.js"></script>
+<script>
+
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+
+    $( document ).ready(function() {
+        ProductAppVue.initData($model);
+    });
+
+</script>
 

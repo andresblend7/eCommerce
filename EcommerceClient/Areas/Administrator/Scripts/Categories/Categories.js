@@ -10,9 +10,25 @@
         },
         //Flag para modal de ditar o crear
         flagEdit: false,
-        loading:false,
+        loading: false,
         categoryTarget: 0,
-        succsessMsg: "default"
+        succsessMsg: "default",
+        //propiedad de validación de formulario
+        validationWrong: true
+    },
+    watch: {
+
+        deep: true,
+        'category.name': {
+            handler(val) {
+                if (val.trim().length < 2 || val.trim().length > 15) {
+                        this.validationWrong = true;
+                } else {
+                   this.validationWrong = false;
+                }
+            }
+        }
+
     },
     methods: {
 
@@ -57,7 +73,7 @@
 
 
                     } else {
-                        alert("Error");
+                        
                     }
 
                     this.loading = false;
