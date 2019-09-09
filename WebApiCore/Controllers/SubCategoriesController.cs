@@ -56,7 +56,27 @@ namespace WebApiCore.Controllers
             return subCategories.OrderByDescending(x => x.Id);
         }
 
-       
+
+        /// <summary>
+        /// Método para obtener las subcategorias dependientes de una categoria
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
+        [HttpGet("GetFromCategory")]
+        public async Task<IEnumerable<SubCategory>> GetFromCategory(int idCategoria) {
+
+            //Obtenemos las subcategorias correspondientes a la categoria
+            this.predicate = x => x.Sca_CategoryIdFk == idCategoria;
+
+            var entities = await this.model.SearchAsync(this.predicate);
+
+            //Mapeamos el diccionario al model Structure
+            var subCategories = this.mapper.Map<List<SubCategory>>(entities);
+
+            //Retornamos las entidades ordenadas de forma descendente
+            return subCategories;
+        }
+
         // POST: api/SubCategories
         [HttpPost]
         public async Task<ActionResult<bool>> PostAsync([FromBody] SubCategory data)

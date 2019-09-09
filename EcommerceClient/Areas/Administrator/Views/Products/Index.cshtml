@@ -4,11 +4,153 @@
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="card">
-    <h4 class="card-header">Productos</h4>
+
+<div class="card" id="products-app">
+    <div class="row">
+        <div class="col-md-11 mr-0 pr-0">
+            <h4 class="card-header">Productos</h4>
+        </div>
+        <div class="col-md-1 card-header ml-0 pl-0 text-right pr-4">
+            <a data-toggle="modal" data-target="#modalCreate"  class="btn-floating btn-lg btn-primary text-white">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
     <div class="card-body">
 
     </div>
+
+    <!--Modal Create-->
+    <div class="modal fade right" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        {{ (flagEdit) ? 'Editar' : 'Crear' }} un producto
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <!-- Material form register -->
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Categoria principal:</label>
+                                            <select class="form-control" v-on:change="getSubCategories()" v-model="product.categoryId">
+                                                <option value="0">
+                                                    Seleccione
+                                                </option>
+                                                <option v-for="category in categories" :value="category.id" >
+                                                    {{ category.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>SubCategoria:</label>
+                                            <select class="form-control">
+                                                <option v-for="(sbcat , idx) in subCategories" :value="sbcat.<I></I>d">
+                                                    {{ sbcat.Name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Material input text -->
+                                    <div class="md-form">
+                                        <input type="text" id="materialFormCardNameEx" class="form-control" >
+                                        <label for="materialFormCardNameEx" class="font-weight-light">Nombre del Producto*</label>
+                                    </div>
+
+
+                                    <!-- Material textarea message -->
+                                    <div class="md-form form-sm">
+                                        <textarea type="text" id="materialFormMessageModalEx1"
+                                                  class="md-textarea form-control"></textarea>
+                                        <label for="materialFormMessageModalEx1">Descripción del producto:</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="md-form">
+                                                <input type="number" id="materialFormCardNameEx" class="form-control">
+                                                <label for="materialFormCardNameEx" class="font-weight-light">Precio del producto*</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="md-form">
+                                                <input type="number" id="materialFormCardNameEx" class="form-control" >
+                                                <label for="materialFormCardNameEx" class="font-weight-light">Stock Disponible</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="formgroup">
+                                                <label>Condición:</label> <br />
+                                                <!-- Default inline 1-->
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
+                                                    <label class="custom-control-label" for="defaultInline1">Nuevo</label>
+                                                </div>
+
+                                                <!-- Default inline 2-->
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample">
+                                                    <label class="custom-control-label" for="defaultInline2">Usado</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Ciudad disponible:</label>
+                                            <select class="form-control">
+                                                <option value="0">
+                                                    Seleccione
+                                                </option>
+                                                <option v-for="category in categories" :value="category.id">
+                                                    {{ category.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <!-- Material form register -->
+
+                                <small class="text-danger">
+                                    Datos incorrectos
+                                </small>
+                            </div>
+                            <!-- Card body -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" v-on:click="processCategory()" :disabled="loading">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>
 
 <script src="~/Areas/Administrator/Scripts/Products/Products.js"></script>

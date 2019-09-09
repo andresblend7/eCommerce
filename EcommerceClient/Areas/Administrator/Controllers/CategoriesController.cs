@@ -126,6 +126,26 @@ namespace EcommerceClient.Areas.Administrator.Controllers
 
         }
 
+        /// <summary>
+        /// Método para obtener las subcategorias que dependen de un id de una categoria
+        /// </summary>
+        /// <returns></returns>
+        public async Task<JsonResult> GetSubCategoriesByCategory(int idCategoria) {
+            try
+            {
+                //Obtenemos las subcategorias
+                var subcategories = await this.webApi.GetAsync<List<SubCategory>>("SubCategories/GetFromCategory", new { idCategoria });
+
+                return Json(new { control = true, data = subcategories }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ GetSubCategoriesByCategory" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
         #region SubCategorias
 
         /// <summary>

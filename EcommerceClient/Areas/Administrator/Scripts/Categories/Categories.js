@@ -3,7 +3,7 @@
     data: {
         categories: [{}],
         category: {
-            id: null,
+            id: 0,
             name: null,
             description: null,
             status: true
@@ -34,7 +34,7 @@
 
         restartCategory: function () {
 
-            this.category.id = null;
+            this.category.id = 0;
             this.category.name = null;
             this.category.description = null;
             this.category.status = true;

@@ -23,9 +23,18 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             //Obtenemos la lista de productos
             var products = await this.webApi.GetAsync<List<Product>>("Products");
 
+            //Obtenemos la lista de ciudades
+            var cities = await this.webApi.GetAsync<List<City>>("Cities");
+
+
+            //Obtenemos la lista de categorias Activas
+            var categories = await this.webApi.GetAsync<List<Category>>("Categories", new { state = true});
+
             //Los agregamos al viewModel
             var model = new ProductsVModel() {
-                Products = products
+                Products = products,
+                Categories = categories,
+                Cities = cities
             };
 
             return View(model);

@@ -13,6 +13,8 @@ namespace EcommerceClient.Models.Views
             this.Products = new List<Product>();
         }
         public List<Product> Products { get; set; }
+        public List<City> Cities { get; set; }
+        public List<Category> Categories { get; set; }
 
     }
 }
