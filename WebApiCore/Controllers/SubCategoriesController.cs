@@ -49,6 +49,7 @@ namespace WebApiCore.Controllers
                                             .Include(x=> x.Category)
                                             .ToListAsync();
 
+
             //Mapeamos el diccionario al model Structure
             var subCategories = this.mapper.Map<List<SubCategory>>(entities);
 

@@ -78,6 +78,11 @@ namespace EcommerceClient.Models.Structure
         public bool IsOutlet { get; set; }
 
         /// <summary>
+        /// Valor del porcentaje de descuento (1 - 100)
+        /// </summary>
+        public int OutletValue { get; set; }
+
+        /// <summary>
         /// Path/ Nombre de la imágen principal del producto.
         /// </summary>
         [Required]

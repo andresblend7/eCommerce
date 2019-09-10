@@ -40,9 +40,33 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             return View(model);
         }
 
-        public ActionResult Create() {
+        public async Task<JsonResult> Create(Product product)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
 
-            return View();
+                    product.CreationUserId = 1;
+
+                    //Enviamos el producto al webApi para su creación
+                    var result = await this.webApi.PostAsync<bool, Product>("Products", product, null);
+
+                    return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    return Json(new { control = false, data = "Datos inválidos" }, JsonRequestBehavior.AllowGet);
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ Create" }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

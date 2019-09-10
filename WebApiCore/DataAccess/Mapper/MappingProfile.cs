@@ -35,6 +35,7 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.Price, src => src.MapFrom(o => o.Pro_Price))
                 .ForMember(x => x.Stock, src => src.MapFrom(o => o.Pro_Stock))
                 .ForMember(x => x.OutletPrice, src => src.MapFrom(o => o.Pro_OutletPrice))
+                .ForMember(x => x.OutletValue, src => src.MapFrom(o => o.Pro_OutletValue))
                 .ForMember(x => x.IsOutlet, src => src.MapFrom(o => o.Pro_IsOutlet))
                 .ForMember(x => x.PrincipalImage, src => src.MapFrom(o => o.Pro_PrincipalImage))
                 .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Pro_CreationDate))

@@ -64,6 +64,12 @@ namespace WebApiCore.Entities
         /// </summary>
         [Required]
         public int Pro_Stock { get; set; }
+        
+
+        /// <summary>
+        /// Determina si tiene aplicado un descuento
+        /// </summary>
+        public bool Pro_IsOutlet { get; set; }
 
         /// <summary>
         /// Precio con descuento.
@@ -71,10 +77,9 @@ namespace WebApiCore.Entities
         public decimal Pro_OutletPrice { get; set; }
 
         /// <summary>
-        /// Determina si tiene aplicado un descuento
+        /// Valor del porcentaje de descuento (1 - 100)
         /// </summary>
-        public bool Pro_IsOutlet { get; set; }
-
+        public int Pro_OutletValue { get; set; }
         /// <summary>
         /// Path/ Nombre de la imágen principal del producto.
         /// </summary>
@@ -95,7 +100,7 @@ namespace WebApiCore.Entities
         public Dic_Users CreatorUser { get; set; }
 
         [ForeignKey("Pro_CityIdFk")]
-        public Dic_Cities Ciudad { get; set; }
+        public Dic_Cities City { get; set; }
 
     }
 }
