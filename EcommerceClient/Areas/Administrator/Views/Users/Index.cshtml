@@ -1,0 +1,78 @@
+﻿@model EcommerceClient.Models.Views.UsersVModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card" id="users-app">
+    <div class="row">
+        <div class="col-md-11 mr-0 pr-0">
+            <h4 class="card-header">Productos</h4>
+        </div>
+        <div class="col-md-1 card-header ml-0 pl-0 text-right pr-4">
+            <a data-toggle="modal" data-target="#modalCreate" class="btn-floating btn-lg btn-primary text-white" v-on:click="restartProduct()">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" class="">Nombres</th>
+                    <th scope="col" class="">Apellidos</th>
+                    <th scope="col" class="">Email</th>
+                    <th scope="col" class="">Teléfono</th>
+                    <th scope="col" style="max-width:80px !important; width:80px !important;" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<!-- Central Modal Medium Success -->
+<div class="modal fade" id="succesUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-success" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <p class="heading lead">Hecho!</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>
+                        {{ succsessMsg }}
+                    </p>
+                </div>
+            </div>
+
+
+
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+
+<script src="~/Areas/Administrator/Scripts/Users/Users.js"></script>
+<script>
+
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+
+    $( document ).ready(function() {
+        UsersAppVue.initData($model);
+    });
+
+</script>

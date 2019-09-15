@@ -168,11 +168,13 @@ namespace WebApiCore.Migrations
 
                     b.Property<decimal>("Pro_OutletPrice");
 
+                    b.Property<int>("Pro_OutletValue");
+
                     b.Property<decimal>("Pro_Price");
 
                     b.Property<string>("Pro_PrincipalImage")
                         .IsRequired()
-                        .HasMaxLength(64);
+                        .HasMaxLength(256);
 
                     b.Property<int>("Pro_Stock");
 
@@ -353,7 +355,7 @@ namespace WebApiCore.Migrations
                         .HasForeignKey("Pro_CategoryIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebApiCore.Entities.Dic_Cities", "Ciudad")
+                    b.HasOne("WebApiCore.Entities.Dic_Cities", "City")
                         .WithMany()
                         .HasForeignKey("Pro_CityIdFk")
                         .OnDelete(DeleteBehavior.Cascade);

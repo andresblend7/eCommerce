@@ -39,7 +39,7 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.IsOutlet, src => src.MapFrom(o => o.Pro_IsOutlet))
                 .ForMember(x => x.PrincipalImage, src => src.MapFrom(o => o.Pro_PrincipalImage))
                 .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Pro_CreationDate))
-                .ForMember(x => x.Status, src => src.MapFrom(o => o.Pro_status));
+                .ForMember(x => x.Status, src => src.MapFrom(o => o.Pro_status)).ReverseMap();
 
 
             //Categorias

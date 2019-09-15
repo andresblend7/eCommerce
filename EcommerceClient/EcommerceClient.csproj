@@ -204,6 +204,8 @@
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\FilesController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -224,6 +226,7 @@
     <Compile Include="Models\Views\HomeVModel.cs" />
     <Compile Include="Models\Views\ProductsVModel.cs" />
     <Compile Include="Models\Views\SubCategoriesVModel.cs" />
+    <Compile Include="Models\Views\UsersVModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IWebApiCoreService.cs" />
     <Compile Include="Services\WebApiCoreService.cs" />
@@ -231,6 +234,7 @@
   <ItemGroup>
     <Content Include="Areas\Administrator\Scripts\Categories\SubCategories.js" />
     <Content Include="Areas\Administrator\Scripts\Products\Products.js" />
+    <Content Include="Areas\Administrator\Scripts\Users\Users.js" />
     <Content Include="Content\css\Admin.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\MdBootstrap.css" />
@@ -263,6 +267,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administrator\Models\" />
+    <Folder Include="Uploads\" />
+    <Folder Include="Views\Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -286,6 +292,7 @@
     <Content Include="Content\font\roboto\Roboto-Ligth.woff2" />
     <Content Include="Content\font\roboto\Roboto-Regular.woff2" />
     <Content Include="Areas\Administrator\Views\Categories\SubCategories.cshtml" />
+    <Content Include="Areas\Administrator\Views\Users\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>

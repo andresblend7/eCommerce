@@ -55,6 +55,7 @@ namespace WebApiCore.Controllers
         }
 
         // POST: api/Products
+        [HttpPost]
         public async Task<ActionResult<bool>> PostAsync([FromBody] Product data)
         {
             //Mapeamos el structure model al diccionario
@@ -76,9 +77,33 @@ namespace WebApiCore.Controllers
         }
 
 
+        /// <summary>
+        /// Método Encargado de cambiar el estado de una entidad (Activo / inactivo)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("ChangeStatus")]
+        public async Task<ActionResult<bool>> ChangeStatus(int id)
+        {
+
+            this.predicate = x => x.Id == id;
+
+            //Obtenemos la entidad a actualizar
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return NotFound(Errors.ENTITYNOTFOUND);
+
+            //Cambiamos el estado
+            entity.Pro_status = !entity.Pro_status;
+
+            //Hacemos la actualización
+            return await this.model.UpdateAsync(entity);
+
+        }
 
         // PUT: api/Products/5
-        [HttpPut("{id}", Name = "Put")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<bool>> PutAsync(int id, [FromBody] Product data)
         {
             if (id != data.Id)
