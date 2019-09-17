@@ -8,6 +8,10 @@ namespace EcommerceClient.Models.Views
 {
     public class UsersVModel
     {
-        List<User> Users { get; set; }
+        public UsersVModel()
+        {
+            this.Users = new List<User>();
+        }
+        public List<User> Users { get; set; }
     }
 }

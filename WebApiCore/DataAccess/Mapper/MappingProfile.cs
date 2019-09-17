@@ -84,7 +84,24 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.Rol, src => src.MapFrom(o => o.Use_RolIdFk))
                 .ForMember(x => x.Status, src => src.MapFrom(o => o.Use_Status))
                 .ForMember(x => x.Address, src => src.MapFrom(o => o.Use_Address))
-                .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Use_CreationDate)).ReverseMap();
+                .ForMember(x => x.Email, src => src.MapFrom(o => o.Use_Email))
+                .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Use_CreationDate));
+
+
+            //Usuarios
+            CreateMap<User, Dic_Users>()
+                .ForMember(x => x.Id, src => src.MapFrom(o => o.Id))
+                .ForMember(x => x.Use_RolIdFk, src => src.MapFrom(o => o.Rol))
+                .ForMember(x => x.Use_Money, src => src.MapFrom(o => o.Money))
+                .ForMember(x => x.Use_FirstName, src => src.MapFrom(o => o.FirstName))
+                .ForMember(x => x.Use_LastName, src => src.MapFrom(o => o.LastName))
+                .ForMember(x => x.Use_Email, src => src.MapFrom(o => o.Email))
+                .ForMember(x => x.Use_Address, src => src.MapFrom(o => o.Address))
+                .ForMember(x => x.Use_Phone, src => src.MapFrom(o => o.Phone))
+                .ForMember(x => x.Use_HashPassword, src => src.MapFrom(o => o.Email))
+                .ForMember(x => x.Use_CreationDate, src => src.MapFrom(o => o.CreationDate))
+                .ForMember(x => x.Use_Status, src => src.MapFrom(o => o.Status))
+                .ForMember(x => x.Rol, src => new Rol());
 
         }
 

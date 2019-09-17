@@ -1,4 +1,5 @@
 ﻿using EcommerceClient.Models.Structure;
+using EcommerceClient.Models.Views;
 using EcommerceClient.Services;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,13 @@ namespace EcommerceClient.Areas.Administrator.Controllers
 
 
         // GET: Administrator/Users
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            UsersVModel model = new UsersVModel() {
+                    Users = await this.webApi.GetAsync<List<User>>("Users")
+            };
+
+            return View(model);
         }
 
 

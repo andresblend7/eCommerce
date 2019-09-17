@@ -4,12 +4,12 @@
         users: [{}],
         user: {
             id: 0,
-            rol: 0,
+            rol: 2,
             money: 0,
-            firstName: 0,
-            lastName: 0,
+            firstName: '',
+            lastName: '',
             email: '',
-            address: '',
+            address: 'ad',
             phone: '',
             hashPassword: '',
             status: true
@@ -23,15 +23,15 @@
     methods: {
 
         restartUser: function () {
-
-            user = {
+            this.flagEdit = false;
+            this.user = {
                 id: 0,
-                rol: 0,
+                rol: 2,
                 money: 0,
-                firstName: 0,
-                lastName: 0,
+                firstName: '',
+                lastName: '',
                 email: '',
-                address: '',
+                address: 'ad',
                 phone: '',
                 hashPassword: '',
                 status: true
@@ -146,6 +146,7 @@
 
         initData: function ($model) {
 
+            console.log($model);
             this.users = $model.users;
 
         }

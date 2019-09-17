@@ -35,7 +35,7 @@ namespace WebApiCore.Controllers
         public async Task<List<User>> Get()
         {
 
-            var entities =  this.model.GetAllAsync<Dic_Users>().ToListAsync();
+            var entities =  await this.model.GetAllAsync<Dic_Users>().ToListAsync();
 
 
             List<User> listaUsers = new List<User>();
@@ -75,19 +75,33 @@ namespace WebApiCore.Controllers
             //Comprobamos si ya existe algún usuario con ese email:
             this.predicate = x => x.Use_Email == data.Email;
 
-            var compround = this.model.GetOneAsync(this.predicate);
+            var compround = await this.model.GetOneAsync(this.predicate);
 
             if (compround != null)
                 return false;
 
             //Mapeamos el structure model al diccionario
-            var entity = this.mapper.Map<Dic_Users>(data);
+            // var entity = this.mapper.Map<Dic_Users>(data);
+            //Mapeo temporal, => error en mapper
 
-            //Agregamos la fecha de creación.
-            entity.Use_CreationDate = DateTime.Now;
             //Generamos un número de dinero aleatorio
             Random rnd = new Random();
-            entity.Use_Money = rnd.Next(100000, 4500000);  // creates a number between 1 and 12
+            var randomMoney = rnd.Next(100000, 4500000);
+
+            var entity = new Dic_Users() {
+                Id = data.Id,
+                Rol = null,
+                Use_Address= data.Address,
+                Use_Email = data.Email,
+                Use_FirstName = data.FirstName,
+                Use_HashPassword = data.HashPassword,
+                Use_LastName = data.LastName,
+                Use_CreationDate = DateTime.Now,
+                Use_Money = randomMoney,
+                Use_Phone = data.Phone,
+                Use_RolIdFk = data.Rol,
+                Use_Status = data.Status
+            };
 
             //Creamos la entidad en la base de datos.
             var result = await this.model.AddAsync(entity);
@@ -96,7 +110,7 @@ namespace WebApiCore.Controllers
         }
 
 
-        [HttpPut("{id}", Name = "Put")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<bool>> Put(int id, [FromBody] User data)
         {
             if (id != data.Id)
