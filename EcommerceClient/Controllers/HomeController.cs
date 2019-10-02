@@ -23,10 +23,19 @@ namespace EcommerceClient.Controllers
 
         public async Task<ActionResult> Index()
         {
+            //Lista de ciudades
             var cities = await this.webApi.GetAsync<List<City>>("Cities", null);
+           
+            //Categorias para el menu
+            var categories = await this.webApi.GetAsync<List<Category>>("Categories", null);
+
+            //Productos de la primer categoria
+            var products = await this.webApi.GetAsync<List<Product>>("Products/GetByCategoryAsync", new { idCategory = categories.FirstOrDefault().Id });
 
             var model = new HomeVModel() {
-                Cities = cities
+                Cities = cities,
+                Categories = categories,
+                Products = products
             };
             
             //Petición por id

@@ -54,6 +54,18 @@ namespace WebApiCore.Controllers
             return "value";
         }
 
+        [HttpGet("GetByCategoryAsync")]
+        public async Task<ActionResult<List<Product>>> GetByCategoryAsync(int idCategory) {
+
+            this.predicate = x => x.Pro_CategoryIdFk == idCategory;
+
+            var entities = await this.model.SearchAsync(this.predicate);
+
+            var products = this.mapper.Map<List<Product>>(entities);
+
+            return products;
+        }
+
         // POST: api/Products
         [HttpPost]
         public async Task<ActionResult<bool>> PostAsync([FromBody] Product data)

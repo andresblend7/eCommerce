@@ -1,9 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EcommerceClient.Models.Structure
 {
     public class Category
     {
+        public Category()
+        {
+            SubCategories = new List<SubCategory>();
+        }
+
         public int Id { get; set; }
 
         /// <summary>
@@ -25,6 +31,8 @@ namespace EcommerceClient.Models.Structure
 
         public bool Status { get; set; }
 
+
+        public List<SubCategory> SubCategories { get; set; }
 
     }
 }

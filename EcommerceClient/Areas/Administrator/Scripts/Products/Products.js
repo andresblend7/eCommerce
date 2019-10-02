@@ -12,9 +12,9 @@
             categoryId: 0,
             guId: 'guuuid',
             condition: true,
-            price: 99,
+            price: null,
             cityId: 1,
-            stock: 9
+            stock: null
         },
         outlet: {
             target: 0,
@@ -105,9 +105,9 @@
                 categoryId: 0,
                 guId: 'guuuid',
                 condition: true,
-                price: 99,
+                price: null,
                 cityId: 1,
-                stock: 9
+                stock: null
             }
 
             this.flagEdit = false;
@@ -311,7 +311,7 @@
             this.cities = $model.cities;
             this.categories = $model.categories;
 
-            console.log($model);
+            console.log(this.product);
         }
     }
 });

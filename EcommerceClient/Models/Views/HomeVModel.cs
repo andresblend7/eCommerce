@@ -11,7 +11,11 @@ namespace EcommerceClient.Models.Views
         public HomeVModel()
         {
             this.Cities = new List<City>();
+            this.Categories = new List<Category>();
+            this.Products = new List<Product>();
         }
         public List<City> Cities { get; set; }
+        public List<Category> Categories { get; set; }
+        public List<Product> Products { get; set; }
     }
 }
