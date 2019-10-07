@@ -21,16 +21,28 @@ namespace EcommerceClient.Controllers
             this.webApi = webApi;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? idCategoria, int? idSubCategoria, bool? estado, int? ciudad)
         {
             //Lista de ciudades
             var cities = await this.webApi.GetAsync<List<City>>("Cities", null);
            
             //Categorias para el menu
-            var categories = await this.webApi.GetAsync<List<Category>>("Categories", null);
+            var categories = await this.webApi.GetAsync<List<Category>>("Categories/GetWithSubCategories", null);
 
-            //Productos de la primer categoria
-            var products = await this.webApi.GetAsync<List<Product>>("Products/GetByCategoryAsync", new { idCategory = categories.FirstOrDefault().Id });
+            var products = new List<Product>();
+
+            if (idSubCategoria != null)
+            {
+                products = await this.webApi.GetAsync<List<Product>>("Products/GetBySubCat", new { idSubCategoria });
+
+            }
+            else {
+                //Productos de la primer categoria
+                products = await this.webApi.GetAsync<List<Product>>("Products/GetByCategoryAsync", new { idCategory = categories.FirstOrDefault().Id });
+
+            }
+
+
 
             var model = new HomeVModel() {
                 Cities = cities,

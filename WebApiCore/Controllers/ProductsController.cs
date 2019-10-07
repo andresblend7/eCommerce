@@ -47,6 +47,23 @@ namespace WebApiCore.Controllers
 
         }
 
+        // GET: api/Products
+        [HttpGet ("GetBySubCat")]
+        public async Task<IEnumerable<Product>> GetBySubCat(int idSubCategoria)
+        {
+            //Construimos el predicado
+           
+            this.predicate = x => x.Pro_SubCategoryIdFk == idSubCategoria;
+
+            //Obtenemos los productos
+            var entities = await this.model.SearchAsync(this.predicate);
+
+            var products = this.mapper.Map<List<Product>>(entities);
+
+            return products;
+
+        }
+
         // GET: api/Products/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
@@ -80,6 +97,7 @@ namespace WebApiCore.Controllers
 
             //Elimina referencias innecesarias
             entity.PrincipalCategory = null;
+            entity.SubCategory = null;
             entity.CreatorUser = null;
             entity.City = null;
 

@@ -20,9 +20,7 @@
                             {{ category.name }}
                         </a>
                         <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item" v-for="(sbcat) in category.subCategories" href="#" v-on:click="goToSucategory(sbcat)">{{ sbcat.name }}</a>                           
                         </div>
                     </li>
                 </ul>
@@ -91,13 +89,13 @@
         </div>
         <div class="col-md-10">
             <div class="row">
-                <div class="col-md-4">
-                    <!-- Card -->
+                <div class="col-md-4 mt-3" v-for="(product, idx) in products">
+                    <!-- Card --> 
                     <div class="card">
 
                         <!-- Card image -->
                         <div class="view overlay">
-                            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/20.jpg" alt="Card image cap">
+                            <img class="card-img-top" :src="'../Uploads/'+product.principalImage" alt="Card image cap">
                             <a href="#!">
                                 <div class="mask rgba-white-slight"></div>
                             </a>
@@ -108,15 +106,15 @@
 
                             <!-- Title -->
                             <a href="">
-                                <h4 class="card-title">Ipad X Pro 321</h4>
+                                <h4 class="card-title">{{product.name}}</h4>
                             </a>
                             <!-- Text -->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
-
+                            <p class="card-text" v-html="product.description.substring(0, 120)">
+                            </p>
                             <div class="row">
                                 <div class="col-6 text-left">
-                                    <strike class="text-secondary">$ 123.252</strike><br /> <span class="text-success"> $ 98.000</span>
+                                    <strike class="text-secondary" v-if="product.isOutlet">$ {{product.price}}</strike><br v-if="product.isOutlet" />
+                                    <span class="text-success"> $ {{ (product.isOutlet) ? product.outletPrice : product.price }}</span>
                                 </div>
                                 <div class="col-6 text-right">
                                     <button class="btn btn-primary  btn-sm">
@@ -130,84 +128,7 @@
                     </div>
                     <!-- Card -->
                 </div>
-                <div class="col-md-4">
-                    <!-- Card -->
-                    <div class="card">
 
-                        <!-- Card image -->
-                        <div class="view overlay">
-                            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/20.jpg" alt="Card image cap">
-                            <a href="#!">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-
-                        <!-- Card content -->
-                        <div class="card-body">
-
-                            <!-- Title -->
-                            <a href="">
-                                <h4 class="card-title">Ipad X Pro 321</h4>
-                            </a>
-                            <!-- Text -->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
-
-                            <div class="row">
-                                <div class="col-6 text-left">
-                                    <strike class="text-secondary">$ 123.252</strike> <span class="text-success"><br /> $ 98.000</span>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <button class="btn btn-primary  btn-sm">
-                                        <i class="fas fa-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- Card -->
-                </div>
-                <div class="col-md-4">
-                    <!-- Card -->
-                    <div class="card">
-
-                        <!-- Card image -->
-                        <div class="view overlay">
-                            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/20.jpg" alt="Card image cap">
-                            <a href="#!">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-
-                        <!-- Card content -->
-                        <div class="card-body">
-
-                            <!-- Title -->
-                            <a href="">
-                                <h4 class="card-title">Ipad X Pro 321</h4>
-                            </a>
-                            <!-- Text -->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
-
-                            <div class="row">
-                                <div class="col-6 text-left">
-                                    <strike class="text-secondary">$ 123.252</strike> <span class="text-success"><br /> $ 98.000</span>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <button class="btn btn-primary  btn-sm">
-                                        <i class="fas fa-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- Card -->
-                </div>
             </div>
         </div>
     </div>

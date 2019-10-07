@@ -20,7 +20,8 @@ namespace EcommerceClient.Models.Structure
         [Required]
         public int CategoryId { get; set; }
 
-
+        [Required]
+        public int SubCategoryId { get; set; }
         /// <summary>
         /// Usuario que creó el producto.
         /// </summary>
@@ -32,6 +33,7 @@ namespace EcommerceClient.Models.Structure
         /// </summary>
         [Required]
         public int CityId { get; set; }
+
 
         /// <summary>
         /// Guid del producto.

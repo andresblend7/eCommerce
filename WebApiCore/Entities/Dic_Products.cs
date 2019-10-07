@@ -17,7 +17,13 @@ namespace WebApiCore.Entities
         [ForeignKey("Categories")]
         public int Pro_CategoryIdFk { get; set; }
 
-       
+        /// <summary>
+        /// Subcategoria del producto
+        /// </summary>
+        [Required]
+        [ForeignKey("SubCategories")]
+        public int Pro_SubCategoryIdFk { get; set; }
+
         /// <summary>
         /// Usuario que creó el producto.
         /// </summary>
@@ -95,6 +101,8 @@ namespace WebApiCore.Entities
         [ForeignKey("Pro_CategoryIdFk")]
         public Dic_Categories PrincipalCategory { get; set; }
 
+        [ForeignKey("Pro_SubCategoryIdFk")]
+        public Dic_SubCategories SubCategory { get; set; }
 
         [ForeignKey("Pro_CreationUserIdFk")]
         public Dic_Users CreatorUser { get; set; }

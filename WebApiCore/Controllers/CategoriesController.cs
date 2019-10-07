@@ -73,7 +73,7 @@ namespace WebApiCore.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetWithSubCategories")]
-        public async Task<ActionResult<List<Category>>> GetWithSubCategories(bool? state = null)
+        public async Task<IEnumerable<Category>> GetWithSubCategories(bool? state = null)
         {
             //Construimos el predicado:
             if (state == null)
@@ -84,7 +84,7 @@ namespace WebApiCore.Controllers
             var entities = await this.model.SearchAsync(this.predicate);
 
             if (entities == null)
-                return BadRequest(Errors.ENTITYNOTFOUND);
+                return null;
 
             var categories = this.mapList(entities);
 
@@ -105,7 +105,7 @@ namespace WebApiCore.Controllers
             }
 
             //Mapeamos el Resultado
-            return categories;
+            return categories.OrderByDescending(x=> x.Id);
 
         }
 

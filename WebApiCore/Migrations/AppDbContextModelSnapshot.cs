@@ -178,6 +178,8 @@ namespace WebApiCore.Migrations
 
                     b.Property<int>("Pro_Stock");
 
+                    b.Property<int>("Pro_SubCategoryIdFk");
+
                     b.Property<bool>("Pro_status");
 
                     b.HasKey("Id");
@@ -187,6 +189,8 @@ namespace WebApiCore.Migrations
                     b.HasIndex("Pro_CityIdFk");
 
                     b.HasIndex("Pro_CreationUserIdFk");
+
+                    b.HasIndex("Pro_SubCategoryIdFk");
 
                     b.ToTable("Dic_Products");
                 });
@@ -363,6 +367,11 @@ namespace WebApiCore.Migrations
                     b.HasOne("WebApiCore.Entities.Dic_Users", "CreatorUser")
                         .WithMany()
                         .HasForeignKey("Pro_CreationUserIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApiCore.Entities.Dic_SubCategories", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("Pro_SubCategoryIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

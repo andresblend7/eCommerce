@@ -14,7 +14,8 @@
             condition: true,
             price: null,
             cityId: 1,
-            stock: null
+            stock: null,
+            subCategoryId : 0
         },
         outlet: {
             target: 0,
@@ -107,7 +108,8 @@
                 condition: true,
                 price: null,
                 cityId: 1,
-                stock: null
+                stock: null,
+                subCategoryId: 0
             }
 
             this.flagEdit = false;

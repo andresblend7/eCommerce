@@ -115,8 +115,9 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label>SubCategoria:</label>
-                                                <select class="form-control">
-                                                    <option v-for="(sbcat , idx) in subCategories" :value="sbcat.id">
+                                                <select class="form-control" v-model="product.subCategoryId">
+                                                    <option value="0"> Seleccione</option>
+                                                    <option v-for="(sbcat , idx) in subCategories" :value="sbcat.Id">
                                                         {{ sbcat.Name }}
                                                     </option>
                                                 </select>

@@ -16,15 +16,15 @@ namespace WebApiCore.DataAccess.Mapper
         public MappingProfile()
         {
 
-             /*
-                Perfil de mapeo de entidades.
-                Se mapean las entidades con sus respectivos Structure Models para 
-                proporcionar una comunicaciòn segura /DTO/
-             */
+            /*
+               Perfil de mapeo de entidades.
+               Se mapean las entidades con sus respectivos Structure Models para 
+               proporcionar una comunicaciòn segura /DTO/
+            */
 
             //Productos
             CreateMap<Dic_Products, Product>()
-                .ForMember(x => x.Id , src => src.MapFrom(o => o.Id))
+                .ForMember(x => x.Id, src => src.MapFrom(o => o.Id))
                 .ForMember(x => x.CategoryId, src => src.MapFrom(o => o.Pro_CategoryIdFk))
                 .ForMember(x => x.CreationUserId, src => src.MapFrom(o => o.Pro_CreationUserIdFk))
                 .ForMember(x => x.CityId, src => src.MapFrom(o => o.Pro_CityIdFk))
@@ -39,6 +39,7 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.IsOutlet, src => src.MapFrom(o => o.Pro_IsOutlet))
                 .ForMember(x => x.PrincipalImage, src => src.MapFrom(o => o.Pro_PrincipalImage))
                 .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Pro_CreationDate))
+                .ForMember(x => x.SubCategoryId, src => src.MapFrom(o => o.Pro_SubCategoryIdFk))
                 .ForMember(x => x.Status, src => src.MapFrom(o => o.Pro_status)).ReverseMap();
 
 

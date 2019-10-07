@@ -1,4 +1,9 @@
-﻿.text-black {
+﻿.view.overlay {
+    min-height: 216px;
+    max-height: 216px;
+}
+
+.text-black {
     color : #212121;
 }
 

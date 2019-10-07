@@ -7,6 +7,9 @@
         products: [{}]
     },
     methods: {
+        goToSucategory:function ($subCategory) {
+            window.location.href = 'home?idSubCategoria=' + $subCategory.id;
+        },
         //Método encargado de inicializar la información.
         initData: function ($model) {
 
