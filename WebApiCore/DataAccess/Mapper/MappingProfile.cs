@@ -104,6 +104,15 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.Use_Status, src => src.MapFrom(o => o.Status))
                 .ForMember(x => x.Rol, src => new Rol());
 
+            //Carrito de compras
+            CreateMap<Det_ShopCar, ShopCar>()
+                .ForMember(x => x.Id, src => src.MapFrom(o => o.Id))
+                .ForMember(x => x.IdUser, src => src.MapFrom(o => o.Shc_IdUserFk))
+                .ForMember(x => x.IdProduct, src => src.MapFrom(o => o.Shc_IdProductFk))
+                .ForMember(x => x.IdStatus , src => src.MapFrom(o => o.Shc_Status))
+                .ForMember(x => x.DateCreation, src => src.MapFrom(o => o.Shc_DateCreation))
+                .ForMember(x => x.Quantity, src => src.MapFrom(o => o.Shc_Quantity)).ReverseMap();
+
         }
 
     }

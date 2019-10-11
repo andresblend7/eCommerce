@@ -1,0 +1,18 @@
+﻿@model EcommerceClient.Models.Views.ProductInfoVModel
+@{
+    ViewBag.Title = "ProductInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ProductInfo</h2>
+
+<code>
+
+</code>
+
+<script>
+
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+    console.log($model);
+</script>

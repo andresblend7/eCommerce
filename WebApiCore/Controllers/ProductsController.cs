@@ -65,10 +65,17 @@ namespace WebApiCore.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("GetById")]
+        public async Task<ActionResult<Product>> GetById(string reff)
         {
-            return "value";
+
+            this.predicate = x => x.Pro_GuId == reff;
+
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            var product = this.mapper.Map<Product>(entity);
+
+            return product;
         }
 
         [HttpGet("GetByCategoryAsync")]

@@ -57,6 +57,18 @@ namespace EcommerceClient.Controllers
         }
 
 
+        public async Task<ActionResult> ProductInfo(string product) {
+
+            //Obtenemos el producto
+            var productResult = await this.webApi.GetAsync<Product>("Products/GetById", new { reff = product });
+
+            var modelv = new ProductInfoVModel() { 
+                Product = productResult
+            };
+
+            return View(modelv);
+        }
+
         public async Task<JsonResult> Login(string email, string pass) {
 
             try

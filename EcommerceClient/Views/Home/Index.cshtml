@@ -91,7 +91,7 @@
             <div class="row">
                 <div class="col-md-4 mt-3" v-for="(product, idx) in products">
                     <!-- Card --> 
-                    <div class="card">
+                    <div class="card" v-on:click="getProduct(product)">
 
                         <!-- Card image -->
                         <div class="view overlay">

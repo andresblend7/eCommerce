@@ -7,6 +7,9 @@
         products: [{}]
     },
     methods: {
+        getProduct: function ($product) {
+            window.location.href = 'Home/ProductInfo?product=' + $product.guId;
+        },
         goToSucategory:function ($subCategory) {
             window.location.href = 'home?idSubCategoria=' + $subCategory.id;
         },

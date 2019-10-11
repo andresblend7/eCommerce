@@ -14,21 +14,21 @@ namespace WebApiCore.Entities
         /// Llave Foránea hacia la categoría principal del producto.
         /// </summary>
         [Required]
-        [ForeignKey("Categories")]
+        [ForeignKey("Dic_Categories")]
         public int Pro_CategoryIdFk { get; set; }
 
         /// <summary>
         /// Subcategoria del producto
         /// </summary>
         [Required]
-        [ForeignKey("SubCategories")]
+        [ForeignKey("Dic_SubCategories")]
         public int Pro_SubCategoryIdFk { get; set; }
 
         /// <summary>
         /// Usuario que creó el producto.
         /// </summary>
         [Required]
-        [ForeignKey("Users")]
+        [ForeignKey("Dic_Users")]
         public int Pro_CreationUserIdFk { get; set; }
 
         /// <summary>
