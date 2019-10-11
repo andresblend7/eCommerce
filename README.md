@@ -8,3 +8,7 @@ Pasos para iniciar el proyecto:
 3) Editar el onDelete: Reference.Cascade por onDelete: Reference.NoAction.
 4) NugetConsole / [WebApiCore] : update-database.
 5) Run! :smile:
+
+
+**********************************************************
+Url de administración: {localPath}/Administrator
