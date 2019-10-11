@@ -248,6 +248,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\Core\Core.js" />
     <Content Include="Scripts\Home\Home.js" />
+    <Content Include="Scripts\Home\ProductInfo.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\MdBootstrap.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />

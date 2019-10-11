@@ -15,6 +15,28 @@
     color: #1e88e5;
 }
 
+.img-infoProduct {
+    min-height: 400px;
+    max-height: 400px;
+    height: 400px !important;
+    max-width : 100% !important;
+}
+
+.price-productInfo {
+
+    font-size: 25px;
+}
+
+.cursor-pointer{
+    cursor:pointer;
+}
+
+
+.img-cart {
+    width: 64px;
+    max-width: 64px !important;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;

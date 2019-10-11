@@ -25,5 +25,7 @@ namespace EcommerceClient.Models.Structure
         public int IdStatus { get; set; }
         public DateTime DateCreation { get; set; }
 
+        public Product product { get; set; }
+
     }
 }

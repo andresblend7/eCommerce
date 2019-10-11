@@ -8,7 +8,7 @@
     },
     methods: {
         getProduct: function ($product) {
-            window.location.href = 'Home/ProductInfo?product=' + $product.guId;
+            window.location.href = $url+'Home/ProductInfo?product=' + $product.guId;
         },
         goToSucategory:function ($subCategory) {
             window.location.href = 'home?idSubCategoria=' + $subCategory.id;
@@ -22,6 +22,10 @@
             this.products = $model.products;
 
             console.log($model);
+        },
+        addToCart: function ($product) {
+
+            vueAppMenu.addToCar($product);
         }
 
     },

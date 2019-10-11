@@ -1,4 +1,21 @@
-﻿<!DOCTYPE html>
+﻿@{
+
+    //Armamos la Url Para las peticiones desde javascript
+    string scheme = Request.Url.Scheme.ToString();
+    string host = Request.Url.Host.ToString().Replace("/", String.Empty);
+    string port = ((Request.Url.Port == 80) ? string.Empty : Request.Url.Port.ToString());
+    string appPath = Request.ApplicationPath.ToString().Replace("/", String.Empty);
+    string url_layout = scheme + "://" + host + (string.IsNullOrEmpty(port) ? string.Empty : (":" + port)) + "/" + (string.IsNullOrEmpty(appPath) ? string.Empty : (appPath + "/"));
+
+}
+<script>
+    //Url de la ruta absoluta
+    var $url = '@url_layout';
+</script>
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,37 +31,96 @@
     <link href="~/Content/css/MdBootstrap.css" rel="stylesheet">
     @*<link href="~/Content/css/bootstrap.css" rel="stylesheet" />*@
     <link href="~/Content/css/Site.css" rel="stylesheet" />
+
+    <!-- NOTY -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" />
 </head>
 <body>
 
     <div id="menu-app">
         <!--Navbar -->
-        <nav class="mb-1 navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="mb-1 navbar  fixed-top navbar-expand-lg navbar-light bg-white">
             <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
                     aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-
+               
                 <ul class="navbar-nav ml-auto mr-5 nav-flex-icons">
-
+                    @if (Session["LoggedIn"] != null)
+                    {
+                        if (Session["rol"].ToString() == "1")
+                        {
+                            <li class="nav-item" title="Dinero disponible">
+                                <a class="nav-link waves-effect waves-light"  target="_blank" href="@Url.Action("Index", "Users", new { Area = "Administrator" })">
+                                    <i class="fas fa-tools text-corp"></i>
+                                    Admin
+                                </a>
+                            </li>
+                        }
+                    }
                     <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light">
-                            <i class="fas fa-shopping-cart text-corp"></i> Carrito
+                        <a class="nav-link waves-effect waves-light" v-on:click="seeCar()">
+                            <i class="fas fa-shopping-cart text-corp"></i>
+                            Carrito
+                            <span class="badge badge-pill badge-danger">{{ itemsinCar }}</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-black" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user text-corp"></i> Perfil
+                            <i class="fas fa-user text-corp"></i>
+                            @{
+
+                                var ses = "";
+                                if (Session["LoggedIn"] == null)
+                                {
+                                    // Response.Redirect("YourSignInPage.aspx");
+                                    ses = ("Ingreso");
+                                }
+                                else
+                                {
+                                    ses = "Perfil";
+
+                                }
+                            }
+                            @ses
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-default"
                              aria-labelledby="navbarDropdownMenuLink-333">
-                            <a class="dropdown-item" data-toggle="modal" data-target="#modalLogin">Login</a>
-                            <a class="dropdown-item" href="#">Carrito</a>
+                            @{
+
+                                if (Session["LoggedIn"] == null)
+                                {
+                                    // Response.Redirect("YourSignInPage.aspx");
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#modalLogin">Login</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" v-on:click="logOut()"> Cerrar Session</a>
+
+                                }
+                            }
+
+                            <input type="hidden" id="sessionControl" value="@(Session["LoggedIn"] == null ? 0 : 1)" />
+                            <a class="dropdown-item" href="#">Mis compras</a>
                         </div>
                     </li>
+                    @if (Session["LoggedIn"] != null)
+                    {
+                        <li class="nav-item" title="Dinero disponible">
+                            <a class="nav-link waves-effect waves-light">
+                                <i class="fas fa-wallet text-corp"></i>
+
+                                <span class="text-success">
+                                    $ @Session["money"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+
                 </ul>
             </div>
         </nav>
@@ -64,32 +140,32 @@
                             <div class=" col-md-12 text-center">
 
                                 <!-- Default form login -->
-                               
-
-                                    <p class="h4 mb-4">Ingresar</p>
-
-                                    <!-- Email -->
-                                    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" v-model="user.email">
-
-                                    <!-- Password -->
-                                    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" v-model="user.pass">
 
 
+                                <p class="h4 mb-4">Ingresar</p>
 
-                                    <!-- Sign in button -->
-                                    <button class="btn btn-info btn-block my-4" type="submit" v-on:click="login()">Ingresar!</button>
-                                    
-                                    <p>
-                                        {{logginMsg}}
-                                    </p>
-                                
-                                    <!-- Register -->
-                                    <p>
-                                        Not a member?
-                                        <a href="">Register</a>
-                                    </p>
+                                <!-- Email -->
+                                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" v-model="user.email">
 
-                                
+                                <!-- Password -->
+                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" v-model="user.pass">
+
+
+
+                                <!-- Sign in button -->
+                                <button class="btn btn-info btn-block my-4" type="submit" v-on:click="login()">Ingresar!</button>
+
+                                <p>
+                                    {{logginMsg}}
+                                </p>
+
+                                <!-- Register -->
+                                <p>
+                                    Not a member?
+                                    <a href="">Register</a>
+                                </p>
+
+
                                 <!-- Default form login -->
 
                             </div>
@@ -101,6 +177,64 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Modal Carrito -->
+        <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="modalLogin"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="row mt-4">
+                            <div class=" col-md-12 text-left">
+                                <!-- Default form login -->
+                                <h5 class="text-primary">Productos en el carrito: ({{ itemsinCar }})</h5>
+                                <hr />
+                            </div>
+
+                        </div>
+
+                        <div v-if="shopCar.length" class="row mt-3" v-for="(car, idx) in shopCar">
+                            <div class="col-md-10 offset-md-1 hoverable border-bottom border-secondary">
+                                <div class="row">
+                                    <div class="col-md-4 p-3">
+                                        <img :src="'../Uploads/'+car.product.PrincipalImage" class="img-cart" alt="" />
+                                    </div>
+                                    <div class="col-md-8 p-3">
+                                        <h6 class="text-info">
+                                            {{car.product.Name }}
+                                        </h6>
+                                        <span class="text-success"> $ {{ (car.product.IsOutlet) ? car.product.OutletPrice : car.product.Price }}</span>
+                                        <span class="float-right cursor-pointer text-danger" v-on:click="removeCarItem(car, idx)">Eliminar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-center mt-3">
+                                Total :  <span class="text-success">$ {{totalValueCar}}</span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3" v-if="msgBuy.valid">
+                            <div class="col-md-12 p-4">
+                                <div :class="'alert fade show ' + msgBuy.class" role="alert">
+                                    {{ msgBuy.msg }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" v-on:click="buyItemsCar()">Terminar compra</button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Compiled and minified JavaScript -->
@@ -118,6 +252,7 @@
     <script src="~/Scripts/Core/Core.js"></script>
     @*@RenderSection("scripts", required: false)*@
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js"></script>
 
     <div class="container pt-4">
         @RenderBody()
@@ -132,7 +267,15 @@
                     email: 'email@email.com',
                     pass: '123'
                 },
-                logginMsg :"---"
+                itemsinCar: 0,
+                totalValueCar: 0,
+                shopCar: [{}],
+                msgBuy: {
+                    valid: false,
+                    class: 'alert-warning',
+                    msg: 'No cuentas con los fondos suficientes, por favor elimina algun producto'
+                },
+                logginMsg: "---"
             },
             methods: {
 
@@ -142,20 +285,155 @@
 
                         if ($respuesta.control) {
                             vueAppMenu.logginMsg = "Usuario autenticado correctamente.";
-                            setTimeout(()=>location.reload() , 1200);
+                            setTimeout(() => location.reload(), 1200);
                         } else {
                             vueAppMenu.logginMsg = "Usuario no existe";
                         }
 
                     }, function ($respuesta) {
 
-                            alert("ERROR ", $respuesta);
+                        alert("ERROR ", $respuesta);
 
                     });
+                },
+
+                logOut: function () {
+                    $Core.Ajax("Home", "LogOut", {}, function ($respuesta) {
+
+                        setTimeout(() => location.reload(), 150);
+
+                    }, function ($respuesta) {
+
+                        alert("ERROR ", $respuesta);
+
+                    });
+                },
+                seeCar: function () {
+
+                    vueAppMenu.msgBuy =
+                        {
+                            valid: false,
+                            class: 'alert-info',
+                            msg: ""
+                        }
+
+                    if ($("#sessionControl").val() == "0") {
+
+                        $("#modalLogin").modal("show");
+
+                    } else {
+
+                        $("#modalCart").modal("show");
+
+                    }
+
+                },
+
+                getShopCar: function () {
+
+                    if ($("#sessionControl").val() != "0") {
+
+                        $Core.Ajax("Home", "GetShopCar", {}, function ($respuesta) {
+
+                            console.log("", $respuesta);
+
+                            vueAppMenu.shopCar = $respuesta.data;
+
+                            vueAppMenu.itemsinCar = $respuesta.data.length;
+
+                            vueAppMenu.totalValueCar = 0;
+
+                            vueAppMenu.shopCar.forEach(function (cart) {
+
+                                vueAppMenu.totalValueCar += (cart.product.IsOutlet) ? parseInt(cart.product.OutletPrice) : parseInt(cart.product.Price);
+
+                            });
+
+                        }, function ($respuesta) {
+                            console.log("Error shopCar =>", $respuesta)
+                        });
+                    }
+                },
+
+                addToCar: function ($product) {
+                    if ($("#sessionControl").val() == "0") {
+
+                        $("#modalLogin").modal("show");
+
+                    } else {
+
+                        var $itemToCart = {
+                            Id: 0,
+                            IdProduct: $product.id,
+                            Quantity: 1,
+                            IdStatus: 1
+                        }
+
+                        $Core.Ajax("Home", "AddItemToShopCar", { data: $itemToCart }, function ($respuesta) {
+                            console.log("Add TO Cart =>", $respuesta);
+
+                            if ($respuesta.data) {
+                                vueAppMenu.getShopCar();
+                                $Core.Notificate('success', 'Producto agregado al carrito correctamente');
+                            } else {
+                                $Core.Notificate('error', 'Ocurrió un error!');
+                            }
+
+                        });
+
+                    }
+                },
+
+                buyItemsCar: function () {
+
+
+                    if ($("#sessionControl").val() != "0") {
+
+                        $Core.Ajax("Home", "BuyShopCar", {}, function ($respuesta) {
+
+                            console.log("Buy Result =", $respuesta);
+
+                            if ($respuesta.data) {
+
+                                vueAppMenu.msgBuy =
+                                    {
+                                        valid: true,
+                                        class: 'alert-success',
+                                        msg: $respuesta.message
+                                    }
+                                setTimeout(() => location.reload(), 1200)
+                            } else {
+                                vueAppMenu.msgBuy =
+                                    {
+                                        valid: true,
+                                        class: 'alert-danger',
+                                        msg: $respuesta.message
+                                    }
+                            }
+
+                        });
+                    }
+
+                },
+
+                removeCarItem: function ($cart, $index) {
+
+                    console.log("Removiendo", $cart);
+
+                    if ($("#sessionControl").val() != "0") {
+
+                        $Core.Ajax("Home", "RemoveShopCarItem", { id: $cart.Id }, function ($respuesta) {
+
+                            if ($respuesta.data)
+                                vueAppMenu.getShopCar();
+
+                        });
+                    }
                 }
+            }, mounted: function () {
 
+                this.getShopCar();
             }
-
         });
 
     </script>

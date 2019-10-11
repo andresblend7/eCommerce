@@ -96,6 +96,29 @@ namespace WebApiCore.Migrations
                     b.ToTable("Det_SalesHistory");
                 });
 
+            modelBuilder.Entity("WebApiCore.Entities.Det_ShopCar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Shc_DateCreation");
+
+                    b.Property<int>("Shc_IdProductFk");
+
+                    b.Property<int>("Shc_IdUserFk");
+
+                    b.Property<int>("Shc_Quantity");
+
+                    b.Property<int>("Shc_Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Shc_IdProductFk");
+
+                    b.ToTable("Det_ShopCar");
+                });
+
             modelBuilder.Entity("WebApiCore.Entities.Dic_Categories", b =>
                 {
                     b.Property<int>("Id")
@@ -341,6 +364,14 @@ namespace WebApiCore.Migrations
                     b.HasOne("WebApiCore.Entities.Dic_Sales", "Sale")
                         .WithMany()
                         .HasForeignKey("Shi_SaleIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApiCore.Entities.Det_ShopCar", b =>
+                {
+                    b.HasOne("WebApiCore.Entities.Dic_Products", "Product")
+                        .WithMany()
+                        .HasForeignKey("Shc_IdProductFk")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

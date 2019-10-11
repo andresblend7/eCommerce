@@ -3,7 +3,7 @@
     ViewBag.Title = "eCommerce";
 }
 
-<div id="home-view">
+<div id="home-view" style="margin-top:60px;">
     <div class="row">
         <!--Navbar -->
         <nav class="mb-1 navbar navbar-expand-lg navbar-dark blue darken-1 full-width">
@@ -91,10 +91,10 @@
             <div class="row">
                 <div class="col-md-4 mt-3" v-for="(product, idx) in products">
                     <!-- Card --> 
-                    <div class="card" v-on:click="getProduct(product)">
+                    <div class="card" >
 
                         <!-- Card image -->
-                        <div class="view overlay">
+                        <div class="view overlay" v-on:click="getProduct(product)">
                             <img class="card-img-top" :src="'../Uploads/'+product.principalImage" alt="Card image cap">
                             <a href="#!">
                                 <div class="mask rgba-white-slight"></div>
@@ -105,7 +105,7 @@
                         <div class="card-body">
 
                             <!-- Title -->
-                            <a href="">
+                            <a href="#" v-on:click="getProduct(product)">
                                 <h4 class="card-title">{{product.name}}</h4>
                             </a>
                             <!-- Text -->
@@ -117,7 +117,7 @@
                                     <span class="text-success"> $ {{ (product.isOutlet) ? product.outletPrice : product.price }}</span>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <button class="btn btn-primary  btn-sm">
+                                    <button class="btn btn-primary  btn-sm" v-on:click="addToCart(product)">
                                         <i class="fas fa-cart-plus"></i>
                                     </button>
                                 </div>

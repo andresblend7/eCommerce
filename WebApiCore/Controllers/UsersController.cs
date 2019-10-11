@@ -47,6 +47,20 @@ namespace WebApiCore.Controllers
             return listaUsers;
         }
 
+
+        [HttpGet("{id}")]
+        public async Task<User> Get(int id)
+        {
+
+            var entity = await this.model.GetOneAsync<Dic_Users>(x => x.Id == id);
+
+
+            //Se mapea el diccionario d ela base de datos al model structure
+            var user = this.mapper.Map<User>(entity);
+
+
+            return user;
+        }
         /// <summary>
         /// Método para realizar la autorización de login
         /// </summary>
@@ -86,7 +100,7 @@ namespace WebApiCore.Controllers
 
             //Generamos un número de dinero aleatorio
             Random rnd = new Random();
-            var randomMoney = rnd.Next(100000, 4500000);
+            var randomMoney = rnd.Next(4000000, 16000000);
 
             var entity = new Dic_Users() {
                 Id = data.Id,
