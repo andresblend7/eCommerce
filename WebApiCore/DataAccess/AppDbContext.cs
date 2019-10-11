@@ -19,5 +19,7 @@ namespace WebApiCore.DataAccess
         public DbSet<Dic_SubCategories> Dic_SubCategories { get; set; }
         public DbSet<Det_SalesHistory> Det_SalesHistory { get; set; }
         public DbSet<Det_Products_SubCategories> Det_Products_SubCategories { get; set; }
+        public DbSet<Det_ShopCar> Det_ShopCar { get; set; }
+
     }
 }

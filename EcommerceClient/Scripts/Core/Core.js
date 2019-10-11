@@ -72,6 +72,31 @@
         };
         $.ajax(settings);
 
+    },
+
+    //MiddleWare para la carga de archivos
+    UploadFile: function ($action, $formData, $callBackSuccess, $callBackError) {
+
+        let $controller = 'Files';
+
+        jQuery.ajax({
+            url: $url + '/' + $controller + '/' + $action,
+            data: $formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST', // For jQuery < 1.9
+            success: function (data) {
+                $callBackSuccess(data);
+            },
+            error: function (data) {
+                $callBackError(data);
+            }
+
+        });
+
+
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceClient.Models.Structure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,48 @@ namespace WebApiCore.Controllers
 
             //Mapeamos el Resultado
             return this.map(entity);
+
+        }
+
+        /// <summary>
+        /// Método Encargado de traer categorias con las subcategorias 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("GetWithSubCategories")]
+        public async Task<IEnumerable<Category>> GetWithSubCategories(bool? state = null)
+        {
+            //Construimos el predicado:
+            if (state == null)
+                this.predicate = x => x.Id > 0;
+            else
+                this.predicate = x => x.Cat_Status == state;
+
+            var entities = await this.model.SearchAsync(this.predicate);
+
+            if (entities == null)
+                return null;
+
+            var categories = this.mapList(entities);
+
+            //Obtenemos las subcategorias de cada categoria
+            foreach (var category in categories)
+            {
+
+                //Obtenemos los datos necesarios de las subcategorias
+                category.SubCategories = await this.model.GetAllAsync<Dic_SubCategories>()
+                                                    .Where(x => x.Sca_CategoryIdFk == category.Id)
+                                                    .Select(x => new SubCategory()
+                                                    {
+                                                        Id = x.Id,
+                                                        Name = x.Sca_Name,
+                                                        Description = x.Sca_Description
+                                                    })
+                                                    .ToListAsync();
+            }
+
+            //Mapeamos el Resultado
+            return categories.OrderByDescending(x=> x.Id);
 
         }
 

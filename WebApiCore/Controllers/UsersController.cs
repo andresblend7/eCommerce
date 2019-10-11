@@ -7,8 +7,10 @@ using AutoMapper;
 using EcommerceClient.Models.Structure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApiCore.DataAccess.Models;
 using WebApiCore.Entities;
+using WebApiCore.Helpers.Messages;
 
 namespace WebApiCore.Controllers
 {
@@ -32,10 +34,10 @@ namespace WebApiCore.Controllers
         [HttpGet]
         public async Task<List<User>> Get()
         {
-            //Seteamos la tabla para obtener los registros.
-            this.predicate = x => x.Id > 0;
 
-            var entities =  await this.model.SearchAsync(this.predicate);
+            var entities =  await this.model.GetAllAsync<Dic_Users>().ToListAsync();
+
+
             List<User> listaUsers = new List<User>();
 
             //Se mapea el diccionario d ela base de datos al model structure
@@ -45,6 +47,20 @@ namespace WebApiCore.Controllers
             return listaUsers;
         }
 
+
+        [HttpGet("{id}")]
+        public async Task<User> Get(int id)
+        {
+
+            var entity = await this.model.GetOneAsync<Dic_Users>(x => x.Id == id);
+
+
+            //Se mapea el diccionario d ela base de datos al model structure
+            var user = this.mapper.Map<User>(entity);
+
+
+            return user;
+        }
         /// <summary>
         /// Método para realizar la autorización de login
         /// </summary>
@@ -68,22 +84,111 @@ namespace WebApiCore.Controllers
 
         // POST: api/Usuarios
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<bool>> Post([FromBody] User data)
         {
+            //Comprobamos si ya existe algún usuario con ese email:
+            this.predicate = x => x.Use_Email == data.Email;
+
+            var compround = await this.model.GetOneAsync(this.predicate);
+
+            if (compround != null)
+                return false;
+
+            //Mapeamos el structure model al diccionario
+            // var entity = this.mapper.Map<Dic_Users>(data);
+            //Mapeo temporal, => error en mapper
+
+            //Generamos un número de dinero aleatorio
+            Random rnd = new Random();
+            var randomMoney = rnd.Next(4000000, 16000000);
+
+            var entity = new Dic_Users() {
+                Id = data.Id,
+                Rol = null,
+                Use_Address= data.Address,
+                Use_Email = data.Email,
+                Use_FirstName = data.FirstName,
+                Use_HashPassword = data.HashPassword,
+                Use_LastName = data.LastName,
+                Use_CreationDate = DateTime.Now,
+                Use_Money = randomMoney,
+                Use_Phone = data.Phone,
+                Use_RolIdFk = data.Rol,
+                Use_Status = data.Status
+            };
+
+            //Creamos la entidad en la base de datos.
+            var result = await this.model.AddAsync(entity);
+
+            return result;
         }
 
-        // PUT: api/Usuarios/5
+
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<bool>> Put(int id, [FromBody] User data)
         {
+            if (id != data.Id)
+                return BadRequest(Errors.INCORRECTDATA);
+
+            this.predicate = x => x.Id == id;
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return BadRequest(Errors.ENTITYNOTFOUND);
+
+            entity.Rol = null;
+
+            //Actualizamos los datos básicos
+            entity.Use_FirstName = data.FirstName;
+            entity.Use_LastName = data.LastName;
+            entity.Use_Phone = data.Phone;
+            entity.Use_RolIdFk = data.Rol;
+
+            return await this.model.UpdateAsync(entity);
+
+        }
+
+
+   
+        // PUT: api/Usuarios/5
+        [HttpPut("ChangeStatus")]
+        public async Task<ActionResult<bool>> ChangeStatus(int id)
+        {
+
+            this.predicate = x => x.Id == id;
+
+            //Obtenemos la entidad a actualizar
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return NotFound(Errors.ENTITYNOTFOUND);
+
+            //Cambiamos el estado
+            entity.Use_Status = !entity.Use_Status;
+
+            //Hacemos la actualización
+            return await this.model.UpdateAsync(entity);
+
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
+            //Creamos el predicado
+            this.predicate = x => x.Id == id;
+
+            //Comprobamos que existe una entidad con ese Id
+            var entity = await this.model.GetOneAsync(this.predicate);
+
+            if (entity == null)
+                return BadRequest(Errors.ENTITYNOTFOUND);            
+
+            //Eliminamos la Categoria
+            return await this.model.DeleteAsync(entity);
         }
 
+   
    
     }
 }

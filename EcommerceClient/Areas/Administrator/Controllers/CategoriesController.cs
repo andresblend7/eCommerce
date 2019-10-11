@@ -39,12 +39,23 @@ namespace EcommerceClient.Areas.Administrator.Controllers
         {
             try
             {
-                category.CreationUser = 1;
+                if (ModelState.IsValid)
+                {
 
-                //Enviamos la categoria al webApi para su creación
-                var result = await this.webApi.PostAsync<bool, Category>("Categories", category, null);
+                    category.CreationUser = 1;
 
-                return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
+                    //Enviamos la categoria al webApi para su creación
+                    var result = await this.webApi.PostAsync<bool, Category>("Categories", category, null);
+
+                    return Json(new { control = result, data = "" }, JsonRequestBehavior.AllowGet);
+
+                }
+                else {
+                    return Json(new { control = false, data = "Datos inválidos" }, JsonRequestBehavior.AllowGet);
+
+                }
+
+                
             }
             catch (Exception)
             {
@@ -111,6 +122,26 @@ namespace EcommerceClient.Areas.Administrator.Controllers
             {
 
                 return Json(new { control = false, data = "Error 500 _ Delete" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        /// <summary>
+        /// Método para obtener las subcategorias que dependen de un id de una categoria
+        /// </summary>
+        /// <returns></returns>
+        public async Task<JsonResult> GetSubCategoriesByCategory(int idCategoria) {
+            try
+            {
+                //Obtenemos las subcategorias
+                var subcategories = await this.webApi.GetAsync<List<SubCategory>>("SubCategories/GetFromCategory", new { idCategoria });
+
+                return Json(new { control = true, data = subcategories }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return Json(new { control = false, data = "Error 500 _ GetSubCategoriesByCategory" }, JsonRequestBehavior.AllowGet);
             }
 
         }

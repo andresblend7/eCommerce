@@ -1,0 +1,51 @@
+﻿@model EcommerceClient.Models.Views.ProductInfoVModel
+@{
+    ViewBag.Title = "ProductInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+    <div class="col-md-12 text-right mt-5">
+        <a href="javascript:history.go(-1)"><< Volver</a>
+    </div>
+
+    <div class="row" id="productinfo-view">
+
+
+        <div class="col-md-12 z-depth-1 mt-3">
+            <div class="row pt-3 pb-5">
+                <div class="col-md-6 mt-5 pl-5">
+
+                    <img :src="'../Uploads/'+product.principalImage"  class="img-infoProduct" alt="" />
+                </div>
+
+                <div class="col-md-6 mt-5">
+                    <h4 class="text-primary">{{product.name}}</h4>
+                    <hr />
+
+                    <br /> <br />
+                    <p v-html="product.description" class="pb-3"></p>
+
+
+                    <span class="text-success price-productInfo"> $ {{ (product.isOutlet) ? product.outletPrice : product.price }}</span> <span class="m-1" v-if="product.isOutlet">  </span>
+                    <strike class="text-secondary price-productInfo" v-if="product.isOutlet">$ {{product.price}}</strike>
+                    <button class="btn btn-info text-rigth float-right" v-on:click="addToCart(product)">
+                        <i class="fas fa-shopping-cart text-white pr-3"></i>
+                        Añadir al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/Scripts/Home/ProductInfo.js"></script>
+<script>
+
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+    $( document ).ready(function() {
+        vueProductInfo.initData($model);
+    });
+</script>

@@ -16,15 +16,15 @@ namespace WebApiCore.DataAccess.Mapper
         public MappingProfile()
         {
 
-             /*
-                Perfil de mapeo de entidades.
-                Se mapean las entidades con sus respectivos Structure Models para 
-                proporcionar una comunicaciòn segura /DTO/
-             */
+            /*
+               Perfil de mapeo de entidades.
+               Se mapean las entidades con sus respectivos Structure Models para 
+               proporcionar una comunicaciòn segura /DTO/
+            */
 
             //Productos
             CreateMap<Dic_Products, Product>()
-                .ForMember(x => x.Id , src => src.MapFrom(o => o.Id))
+                .ForMember(x => x.Id, src => src.MapFrom(o => o.Id))
                 .ForMember(x => x.CategoryId, src => src.MapFrom(o => o.Pro_CategoryIdFk))
                 .ForMember(x => x.CreationUserId, src => src.MapFrom(o => o.Pro_CreationUserIdFk))
                 .ForMember(x => x.CityId, src => src.MapFrom(o => o.Pro_CityIdFk))
@@ -35,10 +35,12 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.Price, src => src.MapFrom(o => o.Pro_Price))
                 .ForMember(x => x.Stock, src => src.MapFrom(o => o.Pro_Stock))
                 .ForMember(x => x.OutletPrice, src => src.MapFrom(o => o.Pro_OutletPrice))
+                .ForMember(x => x.OutletValue, src => src.MapFrom(o => o.Pro_OutletValue))
                 .ForMember(x => x.IsOutlet, src => src.MapFrom(o => o.Pro_IsOutlet))
                 .ForMember(x => x.PrincipalImage, src => src.MapFrom(o => o.Pro_PrincipalImage))
                 .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Pro_CreationDate))
-                .ForMember(x => x.Status, src => src.MapFrom(o => o.Pro_status));
+                .ForMember(x => x.SubCategoryId, src => src.MapFrom(o => o.Pro_SubCategoryIdFk))
+                .ForMember(x => x.Status, src => src.MapFrom(o => o.Pro_status)).ReverseMap();
 
 
             //Categorias
@@ -83,7 +85,33 @@ namespace WebApiCore.DataAccess.Mapper
                 .ForMember(x => x.Rol, src => src.MapFrom(o => o.Use_RolIdFk))
                 .ForMember(x => x.Status, src => src.MapFrom(o => o.Use_Status))
                 .ForMember(x => x.Address, src => src.MapFrom(o => o.Use_Address))
-                .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Use_CreationDate)).ReverseMap();
+                .ForMember(x => x.Email, src => src.MapFrom(o => o.Use_Email))
+                .ForMember(x => x.CreationDate, src => src.MapFrom(o => o.Use_CreationDate));
+
+
+            //Usuarios
+            CreateMap<User, Dic_Users>()
+                .ForMember(x => x.Id, src => src.MapFrom(o => o.Id))
+                .ForMember(x => x.Use_RolIdFk, src => src.MapFrom(o => o.Rol))
+                .ForMember(x => x.Use_Money, src => src.MapFrom(o => o.Money))
+                .ForMember(x => x.Use_FirstName, src => src.MapFrom(o => o.FirstName))
+                .ForMember(x => x.Use_LastName, src => src.MapFrom(o => o.LastName))
+                .ForMember(x => x.Use_Email, src => src.MapFrom(o => o.Email))
+                .ForMember(x => x.Use_Address, src => src.MapFrom(o => o.Address))
+                .ForMember(x => x.Use_Phone, src => src.MapFrom(o => o.Phone))
+                .ForMember(x => x.Use_HashPassword, src => src.MapFrom(o => o.Email))
+                .ForMember(x => x.Use_CreationDate, src => src.MapFrom(o => o.CreationDate))
+                .ForMember(x => x.Use_Status, src => src.MapFrom(o => o.Status))
+                .ForMember(x => x.Rol, src => new Rol());
+
+            //Carrito de compras
+            CreateMap<Det_ShopCar, ShopCar>()
+                .ForMember(x => x.Id, src => src.MapFrom(o => o.Id))
+                .ForMember(x => x.IdUser, src => src.MapFrom(o => o.Shc_IdUserFk))
+                .ForMember(x => x.IdProduct, src => src.MapFrom(o => o.Shc_IdProductFk))
+                .ForMember(x => x.IdStatus , src => src.MapFrom(o => o.Shc_Status))
+                .ForMember(x => x.DateCreation, src => src.MapFrom(o => o.Shc_DateCreation))
+                .ForMember(x => x.Quantity, src => src.MapFrom(o => o.Shc_Quantity)).ReverseMap();
 
         }
 

@@ -20,7 +20,8 @@ namespace EcommerceClient.Models.Structure
         [Required]
         public int CategoryId { get; set; }
 
-
+        [Required]
+        public int SubCategoryId { get; set; }
         /// <summary>
         /// Usuario que creó el producto.
         /// </summary>
@@ -32,6 +33,7 @@ namespace EcommerceClient.Models.Structure
         /// </summary>
         [Required]
         public int CityId { get; set; }
+
 
         /// <summary>
         /// Guid del producto.
@@ -76,6 +78,11 @@ namespace EcommerceClient.Models.Structure
         /// Determina si tiene aplicado un descuento
         /// </summary>
         public bool IsOutlet { get; set; }
+
+        /// <summary>
+        /// Valor del porcentaje de descuento (1 - 100)
+        /// </summary>
+        public int OutletValue { get; set; }
 
         /// <summary>
         /// Path/ Nombre de la imágen principal del producto.

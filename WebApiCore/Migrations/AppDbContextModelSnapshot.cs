@@ -96,6 +96,29 @@ namespace WebApiCore.Migrations
                     b.ToTable("Det_SalesHistory");
                 });
 
+            modelBuilder.Entity("WebApiCore.Entities.Det_ShopCar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Shc_DateCreation");
+
+                    b.Property<int>("Shc_IdProductFk");
+
+                    b.Property<int>("Shc_IdUserFk");
+
+                    b.Property<int>("Shc_Quantity");
+
+                    b.Property<int>("Shc_Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Shc_IdProductFk");
+
+                    b.ToTable("Det_ShopCar");
+                });
+
             modelBuilder.Entity("WebApiCore.Entities.Dic_Categories", b =>
                 {
                     b.Property<int>("Id")
@@ -168,13 +191,17 @@ namespace WebApiCore.Migrations
 
                     b.Property<decimal>("Pro_OutletPrice");
 
+                    b.Property<int>("Pro_OutletValue");
+
                     b.Property<decimal>("Pro_Price");
 
                     b.Property<string>("Pro_PrincipalImage")
                         .IsRequired()
-                        .HasMaxLength(64);
+                        .HasMaxLength(256);
 
                     b.Property<int>("Pro_Stock");
+
+                    b.Property<int>("Pro_SubCategoryIdFk");
 
                     b.Property<bool>("Pro_status");
 
@@ -185,6 +212,8 @@ namespace WebApiCore.Migrations
                     b.HasIndex("Pro_CityIdFk");
 
                     b.HasIndex("Pro_CreationUserIdFk");
+
+                    b.HasIndex("Pro_SubCategoryIdFk");
 
                     b.ToTable("Dic_Products");
                 });
@@ -338,6 +367,14 @@ namespace WebApiCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebApiCore.Entities.Det_ShopCar", b =>
+                {
+                    b.HasOne("WebApiCore.Entities.Dic_Products", "Product")
+                        .WithMany()
+                        .HasForeignKey("Shc_IdProductFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WebApiCore.Entities.Dic_Categories", b =>
                 {
                     b.HasOne("WebApiCore.Entities.Dic_Users", "CreatorUser")
@@ -353,7 +390,7 @@ namespace WebApiCore.Migrations
                         .HasForeignKey("Pro_CategoryIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebApiCore.Entities.Dic_Cities", "Ciudad")
+                    b.HasOne("WebApiCore.Entities.Dic_Cities", "City")
                         .WithMany()
                         .HasForeignKey("Pro_CityIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -361,6 +398,11 @@ namespace WebApiCore.Migrations
                     b.HasOne("WebApiCore.Entities.Dic_Users", "CreatorUser")
                         .WithMany()
                         .HasForeignKey("Pro_CreationUserIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApiCore.Entities.Dic_SubCategories", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("Pro_SubCategoryIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

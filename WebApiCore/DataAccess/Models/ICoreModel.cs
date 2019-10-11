@@ -52,6 +52,7 @@ namespace WebApiCore.DataAccess.Models
         /// <param name="entity"></param>
         /// <returns></returns>
         Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : class;
+
         /// <summary>
         /// Método Encargado de borrar una lista de entidades
         /// </summary>

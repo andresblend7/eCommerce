@@ -14,15 +14,21 @@ namespace WebApiCore.Entities
         /// Llave Foránea hacia la categoría principal del producto.
         /// </summary>
         [Required]
-        [ForeignKey("Categories")]
+        [ForeignKey("Dic_Categories")]
         public int Pro_CategoryIdFk { get; set; }
 
-       
+        /// <summary>
+        /// Subcategoria del producto
+        /// </summary>
+        [Required]
+        [ForeignKey("Dic_SubCategories")]
+        public int Pro_SubCategoryIdFk { get; set; }
+
         /// <summary>
         /// Usuario que creó el producto.
         /// </summary>
         [Required]
-        [ForeignKey("Users")]
+        [ForeignKey("Dic_Users")]
         public int Pro_CreationUserIdFk { get; set; }
 
         /// <summary>
@@ -64,6 +70,12 @@ namespace WebApiCore.Entities
         /// </summary>
         [Required]
         public int Pro_Stock { get; set; }
+        
+
+        /// <summary>
+        /// Determina si tiene aplicado un descuento
+        /// </summary>
+        public bool Pro_IsOutlet { get; set; }
 
         /// <summary>
         /// Precio con descuento.
@@ -71,10 +83,9 @@ namespace WebApiCore.Entities
         public decimal Pro_OutletPrice { get; set; }
 
         /// <summary>
-        /// Determina si tiene aplicado un descuento
+        /// Valor del porcentaje de descuento (1 - 100)
         /// </summary>
-        public bool Pro_IsOutlet { get; set; }
-
+        public int Pro_OutletValue { get; set; }
         /// <summary>
         /// Path/ Nombre de la imágen principal del producto.
         /// </summary>
@@ -90,12 +101,14 @@ namespace WebApiCore.Entities
         [ForeignKey("Pro_CategoryIdFk")]
         public Dic_Categories PrincipalCategory { get; set; }
 
+        [ForeignKey("Pro_SubCategoryIdFk")]
+        public Dic_SubCategories SubCategory { get; set; }
 
         [ForeignKey("Pro_CreationUserIdFk")]
         public Dic_Users CreatorUser { get; set; }
 
         [ForeignKey("Pro_CityIdFk")]
-        public Dic_Cities Ciudad { get; set; }
+        public Dic_Cities City { get; set; }
 
     }
 }

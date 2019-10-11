@@ -119,20 +119,22 @@
 
                                             <!-- Material input text -->
                                             <div class="md-form">
-                                                <input type="text" id="materialFormCardNameEx" class="form-control" v-model="category.name">
-                                                <label for="materialFormCardNameEx" class="font-weight-light">Nombre de la categoría</label>
+                                                <input type="text" id="name" class="form-control" v-model="category.name">
+                                                <label for="name" class="font-weight-light">Nombre de la categoría *</label>
                                             </div>
 
 
                                             <!-- Material textarea message -->
                                             <div class="md-form form-sm">
-                                                <textarea type="text" id="materialFormMessageModalEx1"
+                                                <textarea type="text" id="description"
                                                           class="md-textarea form-control" v-model="category.description"></textarea>
-                                                <label for="materialFormMessageModalEx1">Descripción de la categoría.</label>
+                                                <label for="description">Descripción de la categoría.</label>
                                             </div>
 
                                         </form>
                                         <!-- Material form register -->
+
+                                     
                                     </div>
                                     <!-- Card body -->
                             
@@ -140,7 +142,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-info" v-on:click="processCategory()" :disabled="loading">
+                        <button type="button" class="btn btn-info" v-on:click="processCategory()" :disabled="loading || validationWrong">
                             <i class="fas fa-save"></i>
                             Guardar
                         </button>

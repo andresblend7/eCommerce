@@ -1,0 +1,208 @@
+﻿@model EcommerceClient.Models.Views.UsersVModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="card" id="users-app">
+        <div class="row">
+            <div class="col-md-11 mr-0 pr-0">
+                <h4 class="card-header">Usuarios</h4>
+            </div>
+            <div class="col-md-1 card-header ml-0 pl-0 text-right pr-4">
+                <a data-toggle="modal" data-target="#modalCreate" class="btn-floating btn-lg btn-primary text-white" v-on:click="restartUser()">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" class="">Nombres</th>
+                        <th scope="col" class="">Apellidos</th>
+                        <th scope="col" class="">Email</th>
+                        <th scope="col" class="">Teléfono</th>
+                        <th scope="col" style="max-width:80px !important; width:80px !important;" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(user, idx) in users">
+                        <td>
+                            {{idx+1}}
+                        </td>
+                        <td>
+                            {{user.firstName}}
+                        </td>
+                        <td>
+                            {{user.lastName}}
+                        </td>
+                        <td>
+                            {{user.email}}
+                        </td>
+                        <td>
+                            {{user.phone}}
+                        </td>
+                        <td class="text-center ">
+
+                            <div class="row">
+                                <div class="col-md-6 text-center p-0 m-0">
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch" data-toggle="tooltip" title="Cambiar estado">
+                                        <input type="checkbox" class="custom-control-input cursor-pointer" :id="'swt-'+idx" :checked="(user.status)" v-on:change="changeStatus(user, idx)">
+                                        <label class="custom-control-label cursor-pointer" :for="'swt-'+idx"></label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 text-center p-0 m-0 cursor-pointer" v-on:click="setTarget(user)" data-toggle="modal" data-target="#modalCreate">
+                                    <i class="fas fa-edit text-warning" data-toggle="tooltip" title="Editar"></i>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Central Modal Medium Success -->
+        <div class="modal fade" id="succesUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-notify modal-success" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Hecho!</p>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                            <p>
+                                {{ succsessMsg }}
+                            </p>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+        <!--Modal Create-->
+        <div class="modal fade right" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{ (flagEdit) ? 'Editar' : 'Crear' }} un usuario
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <!-- Material form register -->
+                                    <form>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!-- Material input text -->
+                                                <div class="md-form">
+                                                    <input type="text" id="materialFormCardNameEx" class="form-control" v-model="user.firstName">
+                                                    <label for="firstName" class="font-weight-light">Nombres*</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <!-- Material input text -->
+                                                <div class="md-form">
+                                                    <input type="text" id="lastName" class="form-control" v-model="user.lastName">
+                                                    <label for="lastName" class="font-weight-light">Apellidos*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="md-form" v-if="!flagEdit">
+                                                    <input type="text" id="email" class="form-control" v-model="user.email">
+                                                    <label for="email" class="font-weight-light">Email*</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="md-form">
+                                                    <input type="number" id="phone" class="form-control" v-model="user.phone">
+                                                    <label for="phone" class="font-weight-light">Teléfono</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+
+                                                <label>Rol</label>
+                                                <select class="form-control" v-model="user.rol">
+                                                    <option value="2">Cliente</option>
+                                                    <option value="1">Administrador</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="md-form" v-if="!flagEdit">
+                                                    <input type="password" id="hashPassword" class="form-control" v-model="user.hashPassword">
+                                                    <label for="hashPassword" class="font-weight-light">Contraseña*</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <!-- Card body -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" v-on:click="processUser()" :disabled="loading">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+<script src="~/Areas/Administrator/Scripts/Users/Users.js"></script>
+<script>
+
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+
+    $( document ).ready(function() {
+        UsersAppVue.initData($model);
+    });
+
+</script>

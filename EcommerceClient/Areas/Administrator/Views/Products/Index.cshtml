@@ -1,13 +1,303 @@
-﻿
+﻿@model EcommerceClient.Models.Views.ProductsVModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="card">
-    <h4 class="card-header">Productos</h4>
-    <div class="card-body">
+
+    <div class="card" id="products-app">
+        <div class="row">
+            <div class="col-md-11 mr-0 pr-0">
+                <h4 class="card-header">Productos</h4>
+            </div>
+            <div class="col-md-1 card-header ml-0 pl-0 text-right pr-4">
+                <a data-toggle="modal" data-target="#modalCreate" class="btn-floating btn-lg btn-primary text-white" v-on:click="restartProduct()">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" class="">Nombre</th>
+                        <th scope="col" class="">Precio</th>
+                        <th scope="col" class="">Outlet</th>
+                        <th scope="col" class="">Stock</th>
+                        <th scope="col" class="">Estado</th>
+                        <th scope="col" style="max-width:135px !important; width:135px !important;" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(product, idx) in products">
+                        <td>{{ idx+1 }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>$ {{ (product.isOutlet) ? product.outletPrice : product.price}}</td>
+                        <td>{{product.isOutlet}} </td>
+                        <td>{{product.stock}} </td>
+                        <td>{{product.status}} </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-3 text-center p-0 m-0">
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch" data-toggle="tooltip" title="Cambiar estado">
+                                        <input type="checkbox" class="custom-control-input cursor-pointer" :id="'swt-'+idx" :checked="(product.status)" v-on:change="changeStatus(product, idx)">
+                                        <label class="custom-control-label cursor-pointer" :for="'swt-'+idx"></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 text-center p-0 m-0">
+                                    <i class="fas fa-funnel-dollar text-success cursor-pointer" data-toggle="modal" data-target="#modalOutlet" v-on:click="setOutletTarget(product, idx)" title="Aplicar Descuento"></i>
+                                </div>
+
+                                <div class="col-md-2 text-center p-0 m-0">
+                                    <i :class="(product.isOutlet) ? 'fa fa-times text-secondary cursor-pointer' : 'fa fa-times text-muted' " data-toggle="tooltip" v-on:click="removeDiscount(product)" title="Remover descuento"></i>
+                                </div>
+
+                                <div class="col-md-2 text-center p-0 m-0 cursor-pointer" v-on:click="setTarget(product)" data-toggle="modal" data-target="#modalCreate">
+                                    <i class="fas fa-edit text-warning" data-toggle="tooltip" title="Editar"></i>
+                                </div>
+
+                                <div class="col-md-2 text-center pr-1 pl-0 m-0 cursor-pointer" data-toggle="modal" data-target="#modalConfirmacion" v-on:click="setTarget(product)">
+                                    <i class="fas fa-trash text-danger" data-toggle="tooltip" title="Eliminar"></i>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--Modal Create-->
+        <div class="modal fade right" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{ (flagEdit) ? 'Editar' : 'Crear' }} un producto
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <!-- Material form register -->
+                                    <form>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-12" v-if="!flagEdit">
+                                                <label>Imágen principal:</label>
+                                                <input type="file" class="form-control" id="imgprincipal" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Categoria principal:</label>
+                                                <select class="form-control" v-on:change="getSubCategories()" v-model="product.categoryId">
+                                                    <option value="0">
+                                                        Seleccione
+                                                    </option>
+                                                    <option v-for="category in categories" :value="category.id">
+                                                        {{ category.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>SubCategoria:</label>
+                                                <select class="form-control" v-model="product.subCategoryId">
+                                                    <option value="0"> Seleccione</option>
+                                                    <option v-for="(sbcat , idx) in subCategories" :value="sbcat.Id">
+                                                        {{ sbcat.Name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Material input text -->
+                                        <div class="md-form">
+                                            <input type="text" id="materialFormCardNameEx" class="form-control" v-model="product.name">
+                                            <label for="materialFormCardNameEx" class="font-weight-light">Nombre del Producto*</label>
+                                        </div>
+
+
+                                        <!-- Material textarea message -->
+                                        <div class="md-form form-sm">
+                                            <textarea type="text" id="materialFormMessageModalEx1"
+                                                      class="md-textarea form-control" v-model="product.description"></textarea>
+                                            <label for="materialFormMessageModalEx1">Descripción del producto:</label>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="md-form">
+                                                    <input type="number" id="price" class="form-control" v-model="product.price">
+                                                    <label for="price" class="font-weight-light">Precio del producto*</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="md-form">
+                                                    <input type="number" id="stock" class="form-control" v-model="product.stock">
+                                                    <label for="stock" class="font-weight-light">Stock Disponible </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="formgroup">
+                                                    <label>Condición:</label> <br />
+                                                    <!-- Default inline 1-->
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" v-model="product.condition" value="true">
+                                                        <label class="custom-control-label" for="defaultInline1">Nuevo</label>
+                                                    </div>
+
+                                                    <!-- Default inline 2-->
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample" v-model="product.condition" value="false">
+                                                        <label class="custom-control-label" for="defaultInline2">Usado</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Ciudad disponible:</label>
+                                                <select class="form-control">
+                                                    <option v-for="city in cities" :value="city.id">
+                                                        {{ city.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <!-- Material form register -->
+
+                                </div>
+                                <!-- Card body -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" v-on:click="processProduct()" :disabled="loading">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Outlet -->
+        <div class="modal fade right" id="modalOutlet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Aplicar descuento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-md-8 offset-md-2 text-left">
+                                <div class="form-group">
+                                    <label for="customRange3">Descuento a aplicar: <b class="text-success">Base: ($ {{outlet.base}} )</b> </label>
+                                    <input type="range" class="custom-range" min="1" max="99" step="1" id="customRange3" v-model="outlet.value"> {{outlet.value}} %
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" v-on:click="applyDiscount()">
+                            Aplicar Descuento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Confirmación -->
+        <div class="modal fade right" id="modalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalPreviewLabel">
+                            Confirmación
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Eliminar este producto permanentemente?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteProduct()">Eliminar</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Modal Medium Success -->
+        <div class="modal fade" id="successCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-notify modal-success" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Hecho!</p>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                            <p>
+                                {{ succsessMsg }}
+                            </p>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+
 
     </div>
-</div>
+
+<script src="~/Areas/Administrator/Scripts/Products/Products.js"></script>
+<script>
+
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+
+    $( document ).ready(function() {
+        ProductAppVue.initData($model);
+    });
+
+</script>
 
