@@ -111,7 +111,12 @@
                             <!-- Text -->
                             <p class="card-text" v-html="product.description.substring(0, 120)">
                             </p>
-                            <div class="row">
+                            <div class="row" v-if="product.stock == 0">
+                                <div class="col-md-12 text-center">
+                                    <span class="badge badge-danger p-2">Producto Agotado   </span>
+                                </div>
+                            </div>
+                            <div class="row" v-if="product.stock>0">
                                 <div class="col-6 text-left">
                                     <strike class="text-secondary" v-if="product.isOutlet">$ {{product.price}}</strike><br v-if="product.isOutlet" />
                                     <span class="text-success"> $ {{ (product.isOutlet) ? product.outletPrice : product.price }}</span>
@@ -122,6 +127,7 @@
                                     </button>
                                 </div>
                             </div>
+
 
                         </div>
 

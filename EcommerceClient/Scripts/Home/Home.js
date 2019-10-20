@@ -26,7 +26,7 @@
         addToCart: function ($product) {
 
             vueAppMenu.addToCar($product);
-        }
+        } 
 
     },
     mounted: function () {
