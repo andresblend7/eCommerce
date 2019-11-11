@@ -42,6 +42,11 @@ namespace EcommerceClient.Controllers
 
             }
 
+            if (estado != null) {
+
+                products = products.Where(x => x.Condition == estado).ToList();
+
+            }
 
 
             var model = new HomeVModel() {

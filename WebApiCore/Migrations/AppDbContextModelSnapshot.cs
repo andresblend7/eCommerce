@@ -75,6 +75,10 @@ namespace WebApiCore.Migrations
 
                     b.Property<int>("Shi_BuyerIdFk");
 
+                    b.Property<int>("Shi_CategoryIdFk");
+
+                    b.Property<int>("Shi_CityIdFk");
+
                     b.Property<decimal>("Shi_ProductCurrentPrice");
 
                     b.Property<int>("Shi_ProductIdFk");
@@ -88,6 +92,10 @@ namespace WebApiCore.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Shi_BuyerIdFk");
+
+                    b.HasIndex("Shi_CategoryIdFk");
+
+                    b.HasIndex("Shi_CityIdFk");
 
                     b.HasIndex("Shi_ProductIdFk");
 
@@ -354,6 +362,16 @@ namespace WebApiCore.Migrations
                     b.HasOne("WebApiCore.Entities.Dic_Users", "UserBuyer")
                         .WithMany()
                         .HasForeignKey("Shi_BuyerIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApiCore.Entities.Dic_Categories", "Category")
+                        .WithMany()
+                        .HasForeignKey("Shi_CategoryIdFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApiCore.Entities.Dic_Cities", "City")
+                        .WithMany()
+                        .HasForeignKey("Shi_CityIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApiCore.Entities.Dic_Products", "Producto")

@@ -24,13 +24,13 @@
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline my-1">
+                @*<form class="form-inline my-1">
                     <div class="md-form form-sm my-0">
                         <input class="form-control form-control-sm mr-sm-2 mb-0" type="text" placeholder="Buscar"
                                aria-label="Buscar">
                     </div>
                     <button class="btn btn-outline-white btn-sm my-0" type="submit">Buscar</button>
-                </form>
+                </form>*@
             </div>
         </nav>
         <!--/.Navbar -->
@@ -43,13 +43,13 @@
                     <h5>Estado:</h5>
                     <!-- Default unchecked -->
                     <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios" checked>
+                        <input type="radio" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios" value="true" v-on:click="getByStatus(true)">
                         <label class="custom-control-label" for="defaultUnchecked">Nuevo</label>
                     </div>
 
                     <!-- Default checked -->
                     <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="defaultChecked" name="defaultExampleRadios">
+                        <input type="radio" class="custom-control-input" id="defaultChecked" value="false"  v-on:click="getByStatus(false)" name="defaultExampleRadios">
                         <label class="custom-control-label" for="defaultChecked">Usado</label>
                     </div>
                     <hr />
@@ -58,18 +58,18 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h5>Precio:</h5>
+                    @*<h5>Precio:</h5>*@
                     <!-- Default unchecked -->
-                    <div class="custom-control custom-radio">
+                    @*<div class="custom-control custom-radio">
                         <input type="radio" class="custom-control-input" id="defaultUnchecked2" name="defaultExampleRadios2" checked>
                         <label class="custom-control-label" for="defaultUnchecked2">Más alto</label>
-                    </div>
+                    </div>*@
 
                     <!-- Default checked -->
-                    <div class="custom-control custom-radio">
+                    @*<div class="custom-control custom-radio">
                         <input type="radio" class="custom-control-input" id="defaultChecked3" name="defaultExampleRadios2">
                         <label class="custom-control-label" for="defaultChecked3">Más bajo</label>
-                    </div>
+                    </div>*@
                     <hr />
                 </div>
             </div>

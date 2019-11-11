@@ -7,11 +7,36 @@
         products: [{}]
     },
     methods: {
+        getByStatus: function (status) {
+            let comodin = "";
+
+      
+            var actualLocation = window.location.href;
+            actualLocation = actualLocation.replace("?estado=false", "");
+            actualLocation = actualLocation.replace("?estado=true", "");
+            actualLocation = actualLocation.replace("&estado=false", "");
+            actualLocation = actualLocation.replace("&estado=true", "");
+            console.log(actualLocation);
+
+
+            if (actualLocation.indexOf('?') != -1) {
+                // will not be triggered because str has _..
+                comodin = "&";
+            } else {
+
+                comodin = "?";
+
+            }
+
+
+            window.location.href = actualLocation    + comodin + 'estado='+status;
+           
+        },
         getProduct: function ($product) {
             window.location.href = $url+'Home/ProductInfo?product=' + $product.guId;
         },
         goToSucategory:function ($subCategory) {
-            window.location.href = 'home?idSubCategoria=' + $subCategory.id;
+            window.location.href = $url+'/Home?idSubCategoria=' + $subCategory.id;
         },
         //Método encargado de inicializar la información.
         initData: function ($model) {
