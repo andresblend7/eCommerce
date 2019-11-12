@@ -1,0 +1,52 @@
+﻿@model EcommerceClient.Models.Views.ReportsVModel
+@{
+    ViewBag.Title = "ByCity";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card" id="products-app">
+    <div class="row">
+        <div class="col-md-12 mr-0 pr-0">
+            <h4 class="card-header">
+                Reportes by Ciudad:
+            </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-md-1 col-md-4">
+            <select class="form-control" id="citygraph">
+                <option value="1">Bogotá</option>
+                <option value="2">Arauca</option>
+            </select>
+        </div>
+        <div class="col-md-7">
+            <button class="btn btn-sm btn-success"  onclick="changeUrl()">
+                Buscar
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7 offset-md-3">
+            <div id="grafica"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <br /><br /><br /><br /><br />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="~/Areas/Administrator/Scripts/Reports/Charts.js"></script>
+<script>
+    let $model = ($.parseJSON(`@Html.ToJson(Model)`));
+
+    $(document).ready(function () {
+        initChart($model);
+    });
+</script>

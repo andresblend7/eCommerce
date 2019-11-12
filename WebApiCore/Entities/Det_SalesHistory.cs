@@ -21,6 +21,8 @@ namespace WebApiCore.Entities
         [ForeignKey("Sales")]
         public int Shi_SaleIdFk { get; set; }
 
+
+
         [ForeignKey("Shi_SaleIdFk")]
         public Dic_Sales Sale { get; set; }
 
@@ -42,9 +44,32 @@ namespace WebApiCore.Entities
         [ForeignKey("Products")]
         public int Shi_ProductIdFk { get; set; }
 
+
+        /// <summary>
+        /// Id de la categoria  
+        /// </summary>
+        [Required]
+        [ForeignKey("Categories")]
+        public int Shi_CategoryIdFk { get; set; }
+
+
+        /// <summary>
+        /// Ciudad de la compra
+        /// </summary>
+        [Required]
+        [ForeignKey("Cities")]
+        public int Shi_CityIdFk { get; set; }
+
         [ForeignKey("Shi_ProductIdFk")]
         public Dic_Products Producto { get; set; }
 
+
+        [ForeignKey("Shi_CategoryIdFk")]
+        public Dic_Categories Category { get; set; }
+
+
+        [ForeignKey("Shi_CityIdFk")]
+        public Dic_Cities City { get; set; }
 
         /// <summary>
         /// Precio del producto en el momento de ralizar la compra

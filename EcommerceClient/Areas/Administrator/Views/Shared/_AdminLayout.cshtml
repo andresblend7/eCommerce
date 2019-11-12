@@ -122,10 +122,10 @@
                 </a>
                 <div id='submenu2' class="collapse sidebar-submenu">
                     @*<a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                        <span class="menu-collapsed">
-                            Crear
-                        </span>
-                    </a>*@
+                            <span class="menu-collapsed">
+                                Crear
+                            </span>
+                        </a>*@
                     <a href="@Url.Action("Index", "Users", new { Area = "Administrator"})" class="list-group-item list-group-item-action bg-dark text-white">
                         <span class="menu-collapsed">
                             Admin
@@ -134,20 +134,35 @@
                 </div>
 
 
-
-                <!-- Separator with title -->
-                <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center">
-                    <small class="menu-collapsed">Details</small>
-                </li>
-                <!-- /END Separator -->
-                <a href="#" class="bg-dark list-group-item list-group-item-action">
+                <!-- USUARIOS content -->
+                <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fas fa-chart-pie fa-fw mr-3"></span>
+                        <span class="fa fa-chart-pie fa-fw mr-3"></span>
                         <span class="menu-collapsed">
                             Reportes
                         </span>
+                        <span class=" menu-collapsed ml-auto">
+                            <i class="fas fa-caret-down"></i>
+                        </span>
                     </div>
                 </a>
+                <div id='submenu3' class="collapse sidebar-submenu">
+                    <a href="@Url.Action("ByCity", "Reports", new { Area = "Administrator"})" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">
+                            Ciudades
+                        </span>
+                    </a>
+                    <a href="@Url.Action("ByCategories", "Reports", new { Area = "Administrator"})" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">
+                            Categorias
+                        </span>
+                    </a>
+                    <a href="@Url.Action("ByProducts", "Reports", new { Area = "Administrator"})" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">
+                            Productos
+                        </span>
+                    </a>
+                </div>
             </ul><!-- List Group END-->
         </div><!-- sidebar-container END -->
         <!-- MAIN -->

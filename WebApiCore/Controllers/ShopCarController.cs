@@ -128,6 +128,13 @@ namespace WebApiCore.Controllers
                     item.Shc_Status = (int) EnumEstadosShopCar.Buyed;
 
                    _ = await this.model.UpdateAsync(item);
+
+
+                    //Descontamos el stock de los productos
+                    var product = await this.model.GetOneAsync<Dic_Products>(x => x.Id == item.Shc_IdProductFk);
+                    product.Pro_Stock -= 1;
+                    _ = await this.model.UpdateAsync(product);
+
                 }
 
                 result = new KeyValuePair<bool, string>(true, "Compra exitosa");
